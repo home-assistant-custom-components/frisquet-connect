@@ -5,7 +5,6 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from custom_components.frisquet_connect.domains.exceptions import ForbiddenAccessException
 from custom_components.frisquet_connect.domains.site.site import Site
-from custom_components.frisquet_connect.domains.site.site_light import SiteLight
 from custom_components.frisquet_connect.services.frisquet_connect_service import FrisquetConnectService
 
 

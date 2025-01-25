@@ -14,7 +14,7 @@ LOGGER = logging.getLogger(__name__)
 class AlarmEntity(SensorEntity, CoordinatorEntity):
     _site: Site
 
-    def __init__(self, coordinator: FrisquetConnectCoordinator, idx) -> None:
+    def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator)
 
         self._site = coordinator.site

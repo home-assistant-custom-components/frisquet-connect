@@ -1,4 +1,3 @@
-from enum import Enum
 from custom_components.frisquet_connect.const import AlarmType
 from custom_components.frisquet_connect.domains.model_base import ModelBase
 

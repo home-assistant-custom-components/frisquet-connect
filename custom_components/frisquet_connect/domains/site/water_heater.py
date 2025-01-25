@@ -1,6 +1,5 @@
 from custom_components.frisquet_connect.const import CoreEcsMode, EcsType
 from custom_components.frisquet_connect.domains.model_base import ModelBase
-from enum import Enum
 
 
 class WaterHeater(ModelBase):

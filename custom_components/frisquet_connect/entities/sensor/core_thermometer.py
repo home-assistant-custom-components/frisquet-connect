@@ -1,9 +1,7 @@
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass, SensorStateClass
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from custom_components.frisquet_connect.const import DOMAIN
 from custom_components.frisquet_connect.domains.site.site import Site
-from custom_components.frisquet_connect.domains.site.zone import Zone
 from custom_components.frisquet_connect.services.frisquet_connect_coordinator import FrisquetConnectCoordinator
 
 

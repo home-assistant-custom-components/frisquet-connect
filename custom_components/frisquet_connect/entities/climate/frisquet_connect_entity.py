@@ -1,5 +1,4 @@
 import logging
-from custom_components.entities.climate.utils import get_hvac_and_preset_mode_for_a_zone, get_target_temperature
 from custom_components.frisquet_connect.const import (
     DEVICE_MANUFACTURER,
     DOMAIN,
@@ -8,6 +7,10 @@ from custom_components.frisquet_connect.const import (
 )
 from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.domains.site.zone import Zone
+from custom_components.frisquet_connect.entities.climate.utils import (
+    get_hvac_and_preset_mode_for_a_zone,
+    get_target_temperature,
+)
 from custom_components.frisquet_connect.services.frisquet_connect_coordinator import FrisquetConnectCoordinator
 
 from homeassistant.helpers.entity import DeviceInfo

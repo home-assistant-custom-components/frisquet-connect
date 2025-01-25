@@ -1,5 +1,5 @@
-from custom_components.entities.climate.frisquet_connect_entity import FrisquetConnectEntity
 from custom_components.frisquet_connect.const import DOMAIN
+from custom_components.frisquet_connect.entities.climate.frisquet_connect_entity import FrisquetConnectEntity
 from custom_components.frisquet_connect.services.frisquet_connect_coordinator import FrisquetConnectCoordinator
 from custom_components.frisquet_connect.services.frisquet_connect_service import FrisquetConnectService
 import logging

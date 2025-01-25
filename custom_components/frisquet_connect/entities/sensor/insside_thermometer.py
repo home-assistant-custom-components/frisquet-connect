@@ -1,6 +1,6 @@
-from custom_components.entities.sensor.core_thermometer import CoreThermometer
 from custom_components.frisquet_connect.const import OUTSIDE_THERMOMETER_LABEL
 from custom_components.frisquet_connect.domains.site.zone import Zone
+from custom_components.frisquet_connect.entities.sensor.core_thermometer import CoreThermometer
 from custom_components.frisquet_connect.services.frisquet_connect_coordinator import FrisquetConnectCoordinator
 
 

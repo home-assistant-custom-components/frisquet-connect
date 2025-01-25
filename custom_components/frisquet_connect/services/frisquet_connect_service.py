@@ -1,7 +1,7 @@
 import logging
 from homeassistant.config_entries import ConfigEntry
 
-from custom_components.frisquet_connect.const import PRESET_MODE_ORDERS_MAPPING, ZoneSelector
+from custom_components.frisquet_connect.const import ZoneSelector
 from custom_components.frisquet_connect.domains.authentication.authentication import Authentication
 from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.domains.site.site_light import SiteLight
