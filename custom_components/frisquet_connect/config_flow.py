@@ -36,7 +36,7 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
         # Then update user_input
         self._user_input.update(user_input)
 
-        # Otherwise, go th next step
+        # Finally, go to the next step
         return self._set_auhentication_step(user_input)
 
     async def _set_auhentication_step(self, user_input: dict | None = None) -> FlowResult:
@@ -49,7 +49,7 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
             except Exception as e:
                 return self.async_abort(reason=e.message)
 
-        # Otherwise, go th next step
+        # Finally, go to the next step
         return self._set_site_step()
 
     async def _set_site_step(self) -> FlowResult:
