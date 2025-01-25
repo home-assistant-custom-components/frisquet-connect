@@ -1,0 +1,42 @@
+{
+    "title": "Frisquet Connect",
+    "config": {
+        "flow_title": "Frisquet Connect configuration",
+        "step": {
+            "credentials": {
+                "title": "Authentication form",
+                "description": "Enter your credential to connect to Frisquet Connect",
+                "data": {
+                    "email": "Email",
+                    "password": "Password"
+                }
+            },
+            "site_id": {
+                "data": {
+                    "site": "Site"
+                },
+                "title": "Several site has been found",
+                "description": "Select the site"
+            }
+        }
+    },
+    "entity": {
+        "climate": {
+            "frisquet_connect": {
+                "state_attributes": {
+                    "preset_mode": {
+                        "state": {
+                            "auto": "Auto",
+                            "boost": "Boost",
+                            "home": "Exemption confort",
+                            "away": "Exemption reduced",
+                            "comfort": "Comfort",
+                            "sleep": "Reduced",
+                            "eco": "Frost protection"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

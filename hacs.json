@@ -1,0 +1,8 @@
+{
+    "name": "Frisquet Connect",
+    "content_in_root": false,
+    "homeassistant": "2025.1.4",
+    "country": [
+        "FR"
+    ]
+}

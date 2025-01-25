@@ -1,0 +1,42 @@
+{
+    "title": "Frisquet Connect",
+    "config": {
+        "flow_title": "Frisquet Connect configuration",
+        "step": {
+            "credentials": {
+                "title": "Formulaire d'authentification",
+                "description": "Entrer vos identifiants pour se connecter à Frisquet Connect",
+                "data": {
+                    "email": "E-mail",
+                    "password": "Mot de passe"
+                }
+            },
+            "site_id": {
+                "data": {
+                    "site": "Site"
+                },
+                "title": "Plusieurs installations trouvées",
+                "description": "Sélectionner le site"
+            }
+        }
+    },
+    "entity": {
+        "climate": {
+            "frisquet_connect": {
+                "state_attributes": {
+                    "preset_mode": {
+                        "state": {
+                            "auto": "Auto",
+                            "boost": "Boost",
+                            "home": "Dérogation confort",
+                            "away": "Dérogation réduit",
+                            "comfort": "Confort",
+                            "sleep": "Reduit",
+                            "eco": "Hors-gel"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "entity": {
+        "climate": {
+            "frisquet_connect": {
+                "state_attributes": {
+                    "preset_mode": {
+                        "default": "mdi:crosshairs-question",
+                        "state": {
+                            "auto": "mdi:thermostat-auto",
+                            "boost": "mdi:rocket-launch",
+                            "home": "mdi:home-outline",
+                            "away": "mdi:home-off-outline",
+                            "comfort": "mdi:weather-sunny",
+                            "sleep": "mdi:moon-waxing-crescent",
+                            "eco": "mdi:snowflake"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

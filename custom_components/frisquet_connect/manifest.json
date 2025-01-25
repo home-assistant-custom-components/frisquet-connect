@@ -1,0 +1,14 @@
+{
+    "domain": "frisquet_connect",
+    "name": "Frisquet Connect",
+    "codeowners": [
+        "@brunohead"
+    ],
+    "config_flow": true,
+    "documentation": "https://github.com/home-assistant-custom-components/frisquet-connect",
+    "integration_type": "device",
+    "iot_class": "cloud_polling",
+    "issue_tracker": "https://github.com/home-assistant-custom-components/issues",
+    "quality_scale": "silver",
+    "version": "1.0.0"
+}
