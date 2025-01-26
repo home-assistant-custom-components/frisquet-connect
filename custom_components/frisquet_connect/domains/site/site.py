@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List
+from custom_components.frisquet_connect.const import SanitaryWaterMode
 from custom_components.frisquet_connect.domains.model_base import ModelBase
 from custom_components.frisquet_connect.domains.site.alarm import Alarm
 from custom_components.frisquet_connect.domains.site.product import Product
@@ -22,6 +23,7 @@ class Site(ModelBase):
     _external_temperature: int
     _water_heater: WaterHeater
     _zones: List[Zone]
+    _modes_ecs: list[dict]
     _alarms: List[Alarm]
 
     def __init__(self, response_json: dict):
@@ -29,7 +31,7 @@ class Site(ModelBase):
         if "carac_site" in response_json:
             self._detail = SiteDetail(response_json["carac_site"])
         if "ecs" in response_json:
-            self._water_heater = SiteDetail(response_json["ecs"])
+            self._water_heater = WaterHeater(response_json["ecs"])
         if "environnement" in response_json:
             self._external_temperature = response_json["environnement"]["T_EXT"]
         if "zones" in response_json:
@@ -67,19 +69,23 @@ class Site(ModelBase):
 
     @property
     def detail(self) -> SiteDetail:
-        return self.detail
+        return self._detail
 
     @property
     def water_heater(self) -> WaterHeater:
-        return self.water_heater
+        return self._water_heater
 
     @property
     def zones(self) -> List[Zone]:
-        return self.zones
+        return self._zones
+
+    @property
+    def available_sanitary_water_modes(self) -> list[SanitaryWaterMode]:
+        return [SanitaryWaterMode(mode["id"]) for mode in self._modes_ecs]
 
     @property
     def alarms(self) -> List[Alarm]:
-        return self.alarms
+        return self._alarms
 
     def get_zone_by_label_id(self, zone_label_id: int) -> Zone:
         for zone in self.zones:

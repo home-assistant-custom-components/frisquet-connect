@@ -31,7 +31,7 @@ from homeassistant.components.climate.const import (
 LOGGER = logging.getLogger(__name__)
 
 
-class FrisquetConnectEntity(ClimateEntity, CoordinatorEntity):
+class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
     _site: Site
     _zone: Zone
 

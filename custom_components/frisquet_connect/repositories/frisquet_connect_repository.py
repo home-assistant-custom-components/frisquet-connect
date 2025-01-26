@@ -3,7 +3,9 @@ import logging
 from custom_components.frisquet_connect.const import (
     BOOST_ORDER_LABEL,
     EXEMPTION_ORDER_LABEL,
+    SANITARY_WATER_ORDER_LABEL,
     SELECTOR_ORDER_LABEL,
+    SanitaryWaterMode,
     ZoneMode,
     ZoneModeLabelOrder,
     ZoneSelector,
@@ -57,6 +59,13 @@ class FrisquetConnectRepository:
         key = f"{mode_target}_{zone_id}"
 
         payload = [{"cle": key, "valeur": temperature}]
+        response_json = await self._do_site_action(site_id, token, payload)
+        return response_json
+
+    async def set_sanitary_water_mode(self, site_id: str, sanitary_water_mode: SanitaryWaterMode, token: str) -> dict:
+        LOGGER.debug("Setting sanitary water mode")
+
+        payload = [{"cle": SANITARY_WATER_ORDER_LABEL, "valeur": sanitary_water_mode.value}]
         response_json = await self._do_site_action(site_id, token, payload)
         return response_json
 

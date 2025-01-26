@@ -24,7 +24,7 @@ class SiteLight(ModelBase):
 
     @property
     def alarms(self) -> list[Alarm]:
-        return self.alarms
+        return self._alarms
 
     def __repr__(self):
         return f"{self.name} ({self.site_id})"

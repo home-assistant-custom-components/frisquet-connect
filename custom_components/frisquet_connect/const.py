@@ -25,6 +25,9 @@ HEATING_CONSUMPTION_LABEL = "Consommation Chauffage"  # TODO : use translation
 INSIDE_THERMOMETER_LABEL = "Consommation Eau Chaude"  # TODO : use translation
 OUTSIDE_THERMOMETER_LABEL = "Consommation Chauffage"  # TODO : use translation
 
+CANCEL_EXEMPTION_BUTTON_LABEL = "Annulation de la dérogation"  # TODO : use translation
+CANCEL_BOOST_BUTTON_LABEL = "Annulation du Boost"  # TODO : use translation
+
 
 class AlarmType(Enum):
     NO_ALARM = 0
@@ -32,11 +35,28 @@ class AlarmType(Enum):
     UNKNOWN = 9
 
 
-class EcsType(Enum):
-    UNDEFINED = 0
+class ButtonState(Enum):
+    DISABLED = 0
+    ENABLED = 1
 
 
-class CoreEcsMode(Enum):  # StrEnum
+class BoostButtonState(StrEnum):
+    DISABLED = "Activer le boost"
+    ENABLED = "Désactiver le Boost"
+
+
+class ExemptionButtonState(StrEnum):
+    DISABLED = "Aucune action"
+    ENABLED = "Annuler la dérogation"
+
+
+class SanitaryWaterType(Enum):
+    NORMAL = 0
+    SOLAR = 1
+    HEAT_PUMP = 2
+
+
+class SanitaryWaterMode(Enum):  # StrEnum
     MAX = 0  # "Max"
     ECO = 1  # "Eco"
     ECO_TIMER = 2  # "Eco Timer"
@@ -64,6 +84,7 @@ class ZoneSelector(Enum):
     FROST_PROTECTION = 8
 
 
+SANITARY_WATER_ORDER_LABEL = "MODE_ECS"
 SELECTOR_ORDER_LABEL = "SELECTEUR"
 EXEMPTION_ORDER_LABEL = "MODE_DERO"
 BOOST_ORDER_LABEL = "ACTIVITE_BOOST"

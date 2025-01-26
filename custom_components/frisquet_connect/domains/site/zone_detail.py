@@ -5,51 +5,51 @@ from custom_components.frisquet_connect.domains.site.utils import convert_api_te
 
 
 class ZoneDetail(ModelBase):
-    MODE: ZoneMode
-    SELECTEUR: ZoneSelector
-    TAMB: int  # current temperature
-    CAMB: int  # target temperature
-    DERO: bool
-    CONS_RED: int  # consigne reduite
-    CONS_CONF: int  # consigne confort
-    CONS_HG: int  # consigne hors gel
-    ACTIVITE_BOOST: bool
+    _MODE: ZoneMode
+    _SELECTEUR: ZoneSelector
+    _TAMB: int  # current temperature
+    _CAMB: int  # target temperature
+    _DERO: bool
+    _CONS_RED: int  # consigne reduite
+    _CONS_CONF: int  # consigne confort
+    _CONS_HG: int  # consigne hors gel
+    _ACTIVITE_BOOST: bool
 
     def __init__(self, response_json: dict):
         super().__init__(response_json)
 
     @property
     def current_temperature(self) -> float:
-        return convert_api_temperature_to_float(self.TAMB)
+        return convert_api_temperature_to_float(self._TAMB)
 
     @property
     def target_temperature(self) -> float:
-        return convert_api_temperature_to_float(self.CAMB)
+        return convert_api_temperature_to_float(self._CAMB)
 
     @property
     def is_exemption_enabled(self) -> bool:
-        return self.DERO
+        return self._DERO
 
     @property
     def reduced_temperature(self) -> float:
-        return convert_api_temperature_to_float(self.CONS_RED)
+        return convert_api_temperature_to_float(self._CONS_RED)
 
     @property
     def comfort_temperature(self) -> float:
-        return convert_api_temperature_to_float(self.CONS_CONF)
+        return convert_api_temperature_to_float(self._CONS_CONF)
 
     @property
     def frost_protection_temperature(self) -> float:
-        return convert_api_temperature_to_float(self.CONS_HG)
+        return convert_api_temperature_to_float(self._CONS_HG)
 
     @property
     def is_boosting(self) -> bool:
-        return self.ACTIVITE_BOOST
+        return self._ACTIVITE_BOOST
 
     @property
     def mode(self) -> ZoneMode:
-        return ZoneMode(self.MODE)
+        return ZoneMode(self._MODE)
 
     @property
     def selector(self) -> ZoneSelector:
-        return ZoneSelector(self.SELECTEUR)
+        return ZoneSelector(self._SELECTEUR)

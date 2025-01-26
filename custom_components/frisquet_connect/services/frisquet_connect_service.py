@@ -1,7 +1,7 @@
 import logging
 from homeassistant.config_entries import ConfigEntry
 
-from custom_components.frisquet_connect.const import ZoneSelector
+from custom_components.frisquet_connect.const import SanitaryWaterMode, ZoneSelector
 from custom_components.frisquet_connect.domains.authentication.authentication import Authentication
 from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.domains.site.site_light import SiteLight
@@ -48,6 +48,10 @@ class FrisquetConnectService:
 
     async def set_selector(self, site_id: str, zone: Zone, selector: ZoneSelector) -> None:
         await self._repository.set_selector(site_id, zone.label_id, selector, self._token)
+
+    async def set_sanitary_water_mode(self, site_id: str, mode: str) -> None:
+        mapped_mode = SanitaryWaterMode(mode)
+        await self._repository.set_sanitary_water_mode(site_id, mapped_mode, self._token)
 
     ###
 
