@@ -1,4 +1,4 @@
- from typing import List
+from typing import List
 
 from custom_components.frisquet_connect_unofficial.domains.site.site_light import SiteLight
 
