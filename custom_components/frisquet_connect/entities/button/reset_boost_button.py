@@ -1,6 +1,6 @@
 import logging
 
-from custom_components.frisquet_connect.const import BoostButtonState, ButtonState
+from custom_components.frisquet_connect.const import BoostButtonStateLabel, ButtonState
 from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.domains.site.zone import Zone
 from custom_components.frisquet_connect.entities.button.core_reset_button import CoreResetButton
@@ -21,4 +21,4 @@ class ResetBoostButtonEntity(CoreResetButton):
 
     async def async_update(self):
         self._attr_state = ButtonState.ENABLED if self._zone.detail.is_boosting else ButtonState.DISABLED
-        self._attr_native_value = BoostButtonState[self._attr_state].value
+        self._attr_native_value = BoostButtonStateLabel[self._attr_state].value

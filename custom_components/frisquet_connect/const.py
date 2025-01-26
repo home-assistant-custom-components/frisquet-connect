@@ -11,7 +11,7 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
-DOMAIN = "frisquet_connect"
+DOMAIN = "frisquet_connect_unofficial"
 DEVICE_MANUFACTURER = "Frisquet"
 PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.SENSOR, Platform.WATER_HEATER]
 TRANSLATIONS_ENTITY_NAME = DOMAIN
@@ -25,8 +25,15 @@ HEATING_CONSUMPTION_LABEL = "Consommation Chauffage"  # TODO : use translation
 INSIDE_THERMOMETER_LABEL = "Consommation Eau Chaude"  # TODO : use translation
 OUTSIDE_THERMOMETER_LABEL = "Consommation Chauffage"  # TODO : use translation
 
-CANCEL_EXEMPTION_BUTTON_LABEL = "Annulation de la dérogation"  # TODO : use translation
-CANCEL_BOOST_BUTTON_LABEL = "Annulation du Boost"  # TODO : use translation
+
+class BoostButtonStateLabel(StrEnum):  # TODO : use translation
+    DISABLED = "Activer le boost"
+    ENABLED = "Désactiver le Boost"
+
+
+class ExemptionButtonStateLabel(StrEnum):  # TODO : use translation
+    DISABLED = "Aucune action"
+    ENABLED = "Annuler la dérogation"
 
 
 class AlarmType(Enum):
@@ -38,16 +45,6 @@ class AlarmType(Enum):
 class ButtonState(Enum):
     DISABLED = 0
     ENABLED = 1
-
-
-class BoostButtonState(StrEnum):
-    DISABLED = "Activer le boost"
-    ENABLED = "Désactiver le Boost"
-
-
-class ExemptionButtonState(StrEnum):
-    DISABLED = "Aucune action"
-    ENABLED = "Annuler la dérogation"
 
 
 class SanitaryWaterType(Enum):

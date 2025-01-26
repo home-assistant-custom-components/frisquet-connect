@@ -22,7 +22,7 @@
     },
     "entity": {
         "climate": {
-            "frisquet_connect": {
+            "frisquet_connect_unofficial": {
                 "state_attributes": {
                     "preset_mode": {
                         "state": {
