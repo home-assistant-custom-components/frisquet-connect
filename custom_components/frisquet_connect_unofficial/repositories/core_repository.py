@@ -1,7 +1,10 @@
 import logging
 import requests
 
-from custom_components.frisquet_connect_unofficial.domains.exceptions import CallApiException, ForbiddenAccessException
+from custom_components.frisquet_connect_unofficial.domains.exceptions.call_api_exception import CallApiException
+from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_access_exception import (
+    ForbiddenAccessException,
+)
 
 
 LOGGER = logging.getLogger(__name__)

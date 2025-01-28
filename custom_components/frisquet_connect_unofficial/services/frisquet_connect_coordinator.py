@@ -3,7 +3,9 @@ import logging
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from custom_components.frisquet_connect_unofficial.domains.exceptions import ForbiddenAccessException
+from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_access_exception import (
+    ForbiddenAccessException,
+)
 from custom_components.frisquet_connect_unofficial.domains.site.site import Site
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
 

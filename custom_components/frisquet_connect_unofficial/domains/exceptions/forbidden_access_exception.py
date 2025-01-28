@@ -1,8 +1,8 @@
-from custom_components.frisquet_connect_unofficial.domains.exceptions import TechnicalException
+from custom_components.frisquet_connect_unofficial.domains.exceptions.technical_exception import TechnicalException
 
 
 class ForbiddenAccessException(TechnicalException):
     """Exception raised when the user is not allowed to access the resource"""
 
-    def __init__(self, message):
+    def __init__(self, message: str):
         super().__init__(message)
