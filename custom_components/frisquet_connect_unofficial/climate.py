@@ -16,7 +16,8 @@ LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     service: FrisquetConnectService = hass.data[DOMAIN][entry.unique_id]
-    coordinator = FrisquetConnectCoordinator(hass, service)
+    coordinator = FrisquetConnectCoordinator(hass, service, entry.data["site_id"])
+    await coordinator._async_update()
 
     entites = []
     for zone in coordinator.site.zones:

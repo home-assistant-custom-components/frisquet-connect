@@ -25,11 +25,13 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
             LOGGER,
             name="Frisquet Connect Coordinator",
             update_interval=SCAN_INTERVAL,
+            update_method=self._async_update,
         )
         self._service = service
         self._site_id = site_id
+        self._site = None
 
-    async def _async_update_data(self):
+    async def _async_update(self):
         try_count = 1
         while try_count >= 0:
             try_count -= 1

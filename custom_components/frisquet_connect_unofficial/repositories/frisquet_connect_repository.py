@@ -15,7 +15,7 @@ from custom_components.frisquet_connect_unofficial.domains.authentication.authen
 )
 from custom_components.frisquet_connect_unofficial.domains.authentication.authentication import Authentication
 from custom_components.frisquet_connect_unofficial.domains.site.site import Site
-from custom_components.frisquet_connect_unofficial.repositories.core_repository import do_get, do_post
+from custom_components.frisquet_connect_unofficial.repositories.core_repository import async_do_get, async_do_post
 
 
 FRISQUET_CONNECT_URL = "https://fcutappli.frisquet.com/api/v1"
@@ -35,21 +35,21 @@ class FrisquetConnectRepository:
         LOGGER.debug("Getting token and existing sites")
 
         payload = AuthenticationRequest(email, password).to_dict()
-        response_json = await do_post(AUTH_ENDPOINT, payload)
+        response_json = await async_do_post(AUTH_ENDPOINT, payload)
         return Authentication(response_json)
 
     async def get_site_info(self, site_id: str, token: str) -> Site:
         LOGGER.debug("Getting site info")
 
         params = {"token": token}
-        response_json = await do_get(f"{SITES_ENDPOINT}/{site_id}", params)
+        response_json = await async_do_get(f"{SITES_ENDPOINT}/{site_id}", params)
         return Site(response_json)
 
     async def get_site_conso(self, site_id: str, token: str) -> dict:
         LOGGER.debug("Getting site conso")
 
         params = {"token": token, "types": ["CHF", "SAN"]}
-        response_json = await do_get(SITES_CONSO_ENDPOINT.format(site_id=site_id), params)
+        response_json = await async_do_get(SITES_CONSO_ENDPOINT.format(site_id=site_id), params)
         return response_json  # TODO do an object for this
 
     async def set_temperature(
@@ -110,5 +110,5 @@ class FrisquetConnectRepository:
         LOGGER.debug("Doing site action")
 
         params = {"token": token}
-        response_json = await do_post(f"{SITES_CONSO_ENDPOINT}/{site_id}", payload, params)
+        response_json = await async_do_post(f"{SITES_CONSO_ENDPOINT}/{site_id}", payload, params)
         return response_json

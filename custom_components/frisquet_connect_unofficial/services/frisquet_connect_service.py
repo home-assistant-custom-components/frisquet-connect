@@ -24,6 +24,8 @@ class FrisquetConnectService:
     def __init__(self, entry: ConfigEntry):
         self._entry = entry
         self._repository = FrisquetConnectRepository()
+        self._sites = []
+        self._token = ""
 
     def _get_email(self) -> str:
         return self._entry.data["email"]
@@ -32,7 +34,7 @@ class FrisquetConnectService:
         return self._entry.data["password"]
 
     async def refresh_token_and_sites(self) -> Authentication:
-        authentication = self._repository.get_token_and_sites(self._get_email(), self._get_password())
+        authentication = await self._repository.get_token_and_sites(self._get_email(), self._get_password())
         self._token = authentication.token
         self._sites = authentication.sites
         return authentication
