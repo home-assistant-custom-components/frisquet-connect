@@ -1,5 +1,7 @@
 import os
+from aiohttp import ClientSession
 import dotenv
+from mockito import patch
 import pytest
 from unittest.mock import AsyncMock
 from homeassistant.core import HomeAssistant
@@ -44,6 +46,30 @@ def mock_add_entities():
     return AsyncMock(spec=AddEntitiesCallback)
 
 
+# TODO : Continue the implementation of the test
+def mock_repository_authentication_endpoint():
+    # TODO: Read json file
+    mock_response = {
+        "status": "success",
+        "data": {
+            "site": {
+                "name": "Site de test",
+                "zones": [{"label_id": "Z1", "name": "Zone 1"}, {"label_id": "Z2", "name": "Zone 2"}],
+            }
+        },
+    }
+
+    async def mock_get(*args, **kwargs):
+        class MockResponse:
+            async def json(self):
+                return mock_response
+
+        return MockResponse()
+
+    patcher = patch.object(ClientSession, "get", new=mock_get)
+    patcher.start()
+
+
 @pytest.mark.asyncio
 async def test_async_setup_entry_success(
     mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
@@ -66,3 +92,20 @@ async def test_async_setup_entry_success(
         site: Site = entity.coordinator_typed.site
         assert site is not None
         assert site.name == "Site de test"
+
+        # TODO: Add more assertions here with the data mocked in the test
+
+
+@pytest.mark.asyncio
+async def test_async_setup_entry_no_site_id(
+    mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
+):
+    mock_entry.data = {"site_id ": None}
+
+    service = FrisquetConnectService(mock_entry)
+    mock_hass.data[DOMAIN] = {mock_entry.unique_id: service}
+    await async_setup_entry(mock_hass, mock_entry, mock_add_entities)
+
+    mock_add_entities.assert_called_once()
+    entities = mock_add_entities.call_args[0][0]
+    assert len(entities) == 0

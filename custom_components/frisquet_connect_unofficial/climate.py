@@ -1,9 +1,6 @@
+from custom_components.core_setup_entity import async_initialize_entity
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.entities.climate.default_climate import DefaultClimateEntity
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
-    FrisquetConnectCoordinator,
-)
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
 import logging
 
 from homeassistant.core import HomeAssistant
@@ -15,12 +12,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
-    service: FrisquetConnectService = hass.data[DOMAIN][entry.unique_id]
-    coordinator = FrisquetConnectCoordinator(hass, service, entry.data["site_id"])
-    await coordinator._async_update()
-
-    if not coordinator.is_site_loaded:
-        LOGGER.error("Site not found")
+    (initialization_success, coordinator) = await async_initialize_entity(hass, entry)
+    if not initialization_success:
+        async_add_entities([], update_before_add=False)
         return
 
     entities: list[DefaultClimateEntity] = []
