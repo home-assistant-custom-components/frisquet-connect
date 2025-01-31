@@ -43,6 +43,10 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
                 LOGGER.error(f"Error unknown during fetching data: {e}")
 
     @property
+    def is_site_loaded(self) -> bool:
+        return self._site is not None
+
+    @property
     def site(self) -> Site:
         return self._site
 

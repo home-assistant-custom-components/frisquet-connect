@@ -6,5 +6,4 @@ class ModelBase:
 
         for key, value in response_json.items():
             attr_name = f"_{key}"
-            if hasattr(self, attr_name):
-                setattr(self, attr_name, value)
+            setattr(self, attr_name, value)

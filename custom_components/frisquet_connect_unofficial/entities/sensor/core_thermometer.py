@@ -1,20 +1,17 @@
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass, SensorStateClass
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from custom_components.frisquet_connect_unofficial.domains.site.site import Site
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 
 
 class CoreThermometer(SensorEntity, CoordinatorEntity):
-    _site: Site
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, suffix_id: str, label: str) -> None:
         super().__init__(coordinator)
 
-        self._site = coordinator.site
-        self._attr_unique_id = f"{self._site.site_id}_{suffix_id}"
+        self._attr_unique_id = f"{self.coordinator.site.site_id}_{suffix_id}"
         self._attr_name = label
         self._attr_has_entity_name = True
 

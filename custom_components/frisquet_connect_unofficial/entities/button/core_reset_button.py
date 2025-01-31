@@ -14,14 +14,11 @@ LOGGER = logging.getLogger(__name__)
 
 
 class CoreResetButton(ButtonEntity, CoordinatorEntity):
-    _site: Site
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, suffix_id: str) -> None:
         super().__init__(coordinator)
 
-        self._site = coordinator.site
-
-        self._attr_unique_id = f"{self._site.name}_reset_{suffix_id}"
+        self._attr_unique_id = f"{coordinator.site.name}_reset_{suffix_id}"
         self._attr_has_entity_name = True
         self._attr_name = f"Handle {suffix_id} button"
 

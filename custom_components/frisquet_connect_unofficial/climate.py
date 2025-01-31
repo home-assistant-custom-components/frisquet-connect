@@ -19,9 +19,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     coordinator = FrisquetConnectCoordinator(hass, service, entry.data["site_id"])
     await coordinator._async_update()
 
-    entites = []
+    if not coordinator.is_site_loaded:
+        LOGGER.error("Site not found")
+        return
+
+    entities: list[DefaultClimateEntity] = []
     for zone in coordinator.site.zones:
         entity = DefaultClimateEntity(coordinator, zone.label_id)
-        entites.append(entity)
+        entities.append(entity)
 
-    async_add_entities(entites, update_before_add=False)
+    async_add_entities(entities, update_before_add=False)

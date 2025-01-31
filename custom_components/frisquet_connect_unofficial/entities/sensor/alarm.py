@@ -14,13 +14,11 @@ LOGGER = logging.getLogger(__name__)
 
 
 class AlarmEntity(SensorEntity, CoordinatorEntity):
-    _site: Site
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator)
 
-        self._site = coordinator.site
-        self._attr_unique_id = f"{self._site.site_id}-alert"
+        self._attr_unique_id = f"{coordinator.site.site_id}-alert"
         self._attr_name = ALARM_CARD_NAME
 
     @property
@@ -32,11 +30,15 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
         """Poll for those entities"""
         return True
 
+    @property
+    def coordinator_typed(self) -> FrisquetConnectCoordinator:
+        return self.coordinator
+
     async def async_update(self):
         self._attr_state = AlarmType
         value: str = NO_ALARM
         state: str
-        for alarm in self._site.alarms:
+        for alarm in self.coordinator_typed.site.alarms:
             value = alarm.description
             state = alarm.alarme_type.name
 

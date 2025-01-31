@@ -10,19 +10,17 @@ from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coo
 
 
 class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
-    _site: Site
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator)
 
-        self._site = coordinator.site
-        self._attr_unique_id = f"water_heater_{self._site.site_id}"
-        self._attr_name = f"Water Heater at {self._site.name}"
+        self._attr_unique_id = f"water_heater_{coordinator.site.site_id}"
+        self._attr_name = f"Water Heater at {coordinator.site.name}"
         self._attr_has_entity_name = True
 
         self._attr_supported_features = WaterHeaterEntityFeature.OPERATION_MODE
         self._attr_temperature_unit = "°C"
-        self._attr_operation_list = self._site.available_sanitary_water_modes
+        self._attr_operation_list = coordinator.site.available_sanitary_water_modes
 
     @property
     def should_poll(self) -> bool:

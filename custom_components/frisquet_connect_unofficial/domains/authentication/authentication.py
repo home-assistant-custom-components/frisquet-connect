@@ -14,11 +14,12 @@ class Authentication:
         for key, value in response_json.items():
             attr_name = f"_{key}"
             if key == "utilisateur":
-                if "sites" in response_json:
+                utilisateur = response_json.get("utilisateur")
+                if "sites" in utilisateur:
                     self._sites = []
-                    for site in response_json["sites"]:
+                    for site in utilisateur.get("sites"):
                         self._sites.append(SiteLight(site))
-            elif hasattr(self, attr_name):
+            else:
                 setattr(self, attr_name, value)
 
     @property
