@@ -1,8 +1,8 @@
 import logging
 from custom_components.frisquet_connect_unofficial.const import (
+    CLIMATE_TRANSLATIONS_KEY,
     DEVICE_MANUFACTURER,
     DOMAIN,
-    TRANSLATIONS_ENTITY_NAME,
     ZoneSelector,
 )
 from custom_components.frisquet_connect_unofficial.domains.site.site import Site
@@ -44,7 +44,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
         self._attr_unique_id = f"{coordinator.site.name}_{zone_label_id}"
         self._attr_has_entity_name = True
         self._attr_name = f"{coordinator.site.name} - {self._zone.name}"
-        self._attr_translation_key = TRANSLATIONS_ENTITY_NAME
+        self._attr_translation_key = CLIMATE_TRANSLATIONS_KEY
 
         self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.PRESET_MODE
         self._attr_hvac_modes = [HVACMode.AUTO, HVACMode.HEAT, HVACMode.OFF]

@@ -5,6 +5,7 @@ from homeassistant.config_entries import ConfigEntry
 from custom_components.frisquet_connect_unofficial import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN, PLATFORMS
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
+from tests.core_setup_entry import async_core_setup_entry_no_site_id
 from tests.utils import read_json_file
 
 
@@ -46,10 +47,5 @@ async def test_async_setup_entry_success(mock_hass: HomeAssistant, mock_entry: C
 
 
 @pytest.mark.asyncio
-async def test_async_setup_entry_no_site_id(mock_hass, mock_entry):
-    mock_entry.data = {"site_id ": None}
-
-    result = await async_setup_entry(mock_hass, mock_entry)
-
-    assert result is False
-    assert DOMAIN not in mock_hass.data
+async def test_async_setup_entry_no_site_id(mock_hass: HomeAssistant, mock_entry: ConfigEntry):
+    async_core_setup_entry_no_site_id(async_setup_entry, mock_hass, mock_entry)

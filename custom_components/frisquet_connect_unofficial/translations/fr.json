@@ -21,6 +21,22 @@
         }
     },
     "entity": {
+        "button": {
+            "boost": {
+                "name": "Gérer le boost pour {zone_name}",
+                "state": {
+                    "off": "Activer le boost",
+                    "on": "Désactiver le Boost"
+                }
+            },
+            "exemption": {
+                "name": "Gérer la dérogation pour toutes les zones",
+                "state": {
+                    "off": "Aucune action",
+                    "on": "Annuler la dérogation"
+                }
+            }
+        },
         "climate": {
             "frisquet_connect_unofficial": {
                 "state_attributes": {

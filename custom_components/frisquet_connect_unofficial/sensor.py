@@ -3,7 +3,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from custom_components.core_setup_entity import async_initialize_entity
+from custom_components.frisquet_connect_unofficial.core_setup_entity import async_initialize_entity
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.entities.sensor.alarm import AlarmEntity
 from custom_components.frisquet_connect_unofficial.entities.sensor.core_consumption import CoreConsumption

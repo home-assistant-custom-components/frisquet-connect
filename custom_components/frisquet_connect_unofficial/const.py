@@ -11,10 +11,17 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
-DOMAIN = "frisquet_connect_unofficial"
+DOMAIN = "yet_another_frisquet_connect"
 DEVICE_MANUFACTURER = "Frisquet"
 PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.SENSOR, Platform.WATER_HEATER]
-TRANSLATIONS_ENTITY_NAME = DOMAIN
+
+BOOST_BUTTON_KEY = "boost"
+EXEMPTION_BUTTON_KEY = "exemption"
+
+### TRANSLATIONS KEYS
+CLIMATE_TRANSLATIONS_KEY = "default_climate"
+BOOST_BUTTON_TRANSLATIONS_KEY = "boost_button"
+EXEMPTION_BUTTON_TRANSLATIONS_KEY = "exemption_button"
 
 ALARM_CARD_NAME = "Alert"  # TODO : use translation
 NO_ALARM = "Aucune alerte en cours"  # TODO : use translation
@@ -26,25 +33,24 @@ INSIDE_THERMOMETER_LABEL = "Consommation Eau Chaude"  # TODO : use translation
 OUTSIDE_THERMOMETER_LABEL = "Consommation Chauffage"  # TODO : use translation
 
 
-class BoostButtonStateLabel(StrEnum):  # TODO : use translation
-    DISABLED = "Activer le boost"
-    ENABLED = "Désactiver le Boost"
+class ZoneModeLabelOrder(StrEnum):
+    COMFORT = "CONS_CONF"
+    REDUCED = "CONS_RED"
+    FROST_PROTECTION = "CONS_HG"
 
 
-class ExemptionButtonStateLabel(StrEnum):  # TODO : use translation
-    DISABLED = "Aucune action"
-    ENABLED = "Annuler la dérogation"
+SANITARY_WATER_ORDER_LABEL = "MODE_ECS"
+SELECTOR_ORDER_LABEL = "SELECTEUR"
+EXEMPTION_ORDER_LABEL = "MODE_DERO"
+BOOST_ORDER_LABEL = "ACTIVITE_BOOST"
+
+## ENUMS
 
 
 class AlarmType(Enum):
     NO_ALARM = 0
     DISCONNECTED = 5
     UNKNOWN = 9
-
-
-class ButtonState(Enum):
-    DISABLED = 0
-    ENABLED = 1
 
 
 class SanitaryWaterType(Enum):
@@ -68,23 +74,12 @@ class ZoneMode(Enum):  # StrEnum ?
     FROST_PROTECTION = 8
 
 
-class ZoneModeLabelOrder(StrEnum):
-    COMFORT = "CONS_CONF"
-    REDUCED = "CONS_RED"
-    FROST_PROTECTION = "CONS_HG"
-
-
 class ZoneSelector(Enum):
     AUTO = 5
     COMFORT_PERMANENT = 6
     REDUCED_PERMANENT = 7
     FROST_PROTECTION = 8
 
-
-SANITARY_WATER_ORDER_LABEL = "MODE_ECS"
-SELECTOR_ORDER_LABEL = "SELECTEUR"
-EXEMPTION_ORDER_LABEL = "MODE_DERO"
-BOOST_ORDER_LABEL = "ACTIVITE_BOOST"
 
 PRESET_MODE_ORDERS_MAPPING = {
     PRESET_BOOST: {"key_order": BOOST_ORDER_LABEL, "mode": ZoneMode.COMFORT},

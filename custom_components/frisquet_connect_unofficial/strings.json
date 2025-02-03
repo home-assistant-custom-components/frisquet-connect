@@ -21,8 +21,24 @@
         }
     },
     "entity": {
+        "button": {
+            "boost": {
+                "name": "Handle boost for {zone_name}",
+                "state": {
+                    "off": "Enable boost for {zone_name}",
+                    "on": "Disable boost for {zone_name}"
+                }
+            },
+            "exemption": {
+                "name": "Handle exemption for all zones",
+                "state": {
+                    "off": "No action available",
+                    "on": "Cancel the exemption"
+                }
+            }
+        },
         "climate": {
-            "frisquet_connect_unofficial": {
+            "default_climate": {
                 "state_attributes": {
                     "preset_mode": {
                         "state": {

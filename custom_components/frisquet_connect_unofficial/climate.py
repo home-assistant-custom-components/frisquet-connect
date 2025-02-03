@@ -1,4 +1,4 @@
-from custom_components.core_setup_entity import async_initialize_entity
+from custom_components.frisquet_connect_unofficial.core_setup_entity import async_initialize_entity
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.entities.climate.default_climate import DefaultClimateEntity
 import logging

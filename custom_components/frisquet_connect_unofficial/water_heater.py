@@ -7,7 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from custom_components.core_setup_entity import async_initialize_entity
+from custom_components.frisquet_connect_unofficial.core_setup_entity import async_initialize_entity
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.entities.water_heater.default_water_heater import (
     DefaultWaterHeaterEntity,
