@@ -1,15 +1,12 @@
 import os
-import dotenv
 import pytest
 from unittest.mock import AsyncMock
 from homeassistant.core import HomeAssistant
-from homeassistant.const import STATE_ON, STATE_OFF
+from homeassistant.const import STATE_OFF
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from custom_components.frisquet_connect_unofficial.button import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
-from custom_components.frisquet_connect_unofficial.domains.site.site import Site
-from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
 from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import CoreResetButton
 from custom_components.frisquet_connect_unofficial.entities.button.reset_boost_button import ResetBoostButtonEntity
 from custom_components.frisquet_connect_unofficial.entities.button.reset_exemption_button import (
@@ -17,9 +14,7 @@ from custom_components.frisquet_connect_unofficial.entities.button.reset_exempti
 )
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
 from tests.core_setup_entry import async_core_setup_entry_no_site_id
-from tests.utils import read_json_file
-
-dotenv.load_dotenv()
+from tests.utils import read_json_file_as_json
 
 
 @pytest.fixture
@@ -31,7 +26,7 @@ def mock_hass():
 
 @pytest.fixture
 def mock_entry():
-    mock_entry_file = read_json_file("mock_entry.json")
+    mock_entry_file = read_json_file_as_json("mock_entry")
     mock = AsyncMock(spec=ConfigEntry)
     mock.data = mock_entry_file.get("data")
     mock.unique_id = mock_entry_file.get("unique_id")

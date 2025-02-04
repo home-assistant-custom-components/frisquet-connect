@@ -4,6 +4,9 @@ import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.components.climate import DOMAIN
+from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_access_exception import (
+    ForbiddenAccessException,
+)
 from custom_components.frisquet_connect_unofficial.domains.site.site_light import SiteLight
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
 
@@ -44,6 +47,9 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
             try:
                 authentication = await service.refresh_token_and_sites()
                 self._user_input["sites"] = authentication.sites
+            except ForbiddenAccessException:
+                errors = {"base": "invalid_credentials"}
+                return self.async_show_form(step_id="credentials", data_schema=self._get_vol_schema(), errors=errors)
             except Exception as e:
                 return self.async_abort(reason=e.message)
 

@@ -1,6 +1,6 @@
 aiohttp
-python-dotenv
 homeassistant
 mockito
+python-dotenv
 pytest
-pytest-asyncio
+pytest-mock

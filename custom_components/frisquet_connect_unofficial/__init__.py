@@ -31,4 +31,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 
 async def update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    # TODO: Check if enough
     await hass.config_entries.async_reload(entry.entry_id)
+
+
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    # Unload platforms
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
+        # Cleanup
+        hass.data[DOMAIN].pop(entry.unique_id)
+    return unload_ok

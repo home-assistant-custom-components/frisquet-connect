@@ -7,6 +7,9 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
 
+# For debug purpose with real data
+# dotenv.load_dotenv()
+
 
 async def async_core_setup_entry_no_site_id(
     async_setup_entry: Coroutine[Any, Any, None],

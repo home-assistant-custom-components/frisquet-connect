@@ -6,7 +6,7 @@ from custom_components.frisquet_connect_unofficial import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN, PLATFORMS
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
 from tests.core_setup_entry import async_core_setup_entry_no_site_id
-from tests.utils import read_json_file
+from tests.utils import read_json_file_as_json
 
 
 async def async_magic():
@@ -26,7 +26,7 @@ def mock_hass():
 
 @pytest.fixture
 def mock_entry():
-    mock_entry_file = read_json_file("mock_entry.json")
+    mock_entry_file = read_json_file_as_json("mock_entry")
     mock = AsyncMock(spec=ConfigEntry)
     mock.data = mock_entry_file.get("data")
     mock.unique_id = mock_entry_file.get("unique_id")

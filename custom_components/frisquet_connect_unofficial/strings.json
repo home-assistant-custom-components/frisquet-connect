@@ -1,6 +1,9 @@
 {
     "title": "Frisquet Connect",
     "config": {
+        "error": {
+            "invalid_credentials": "Invalid credential"
+        },
         "flow_title": "Frisquet Connect configuration",
         "step": {
             "credentials": {

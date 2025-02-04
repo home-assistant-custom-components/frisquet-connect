@@ -37,6 +37,7 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
             try_count -= 1
             try:
                 self._site = await self._service.get_site_info(self._site_id)
+                break
             except ForbiddenAccessException:
                 await self._service.refresh_token_and_sites()
             except Exception as e:
