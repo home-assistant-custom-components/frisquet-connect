@@ -22,4 +22,4 @@ class ResetBoostButtonEntity(CoreResetButton):
         self._attr_translation_placeholders = {"zone_name": self._zone.name}
 
     async def async_update(self):
-        self._attr_state = STATE_ON if self._zone.detail.is_exemption_enabled else STATE_OFF
+        self._attr_state = STATE_ON if self._zone.detail.is_boosting else STATE_OFF

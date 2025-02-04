@@ -28,6 +28,8 @@ class Site(ModelBase):
 
     def __init__(self, response_json: dict):
         super().__init__(response_json)
+        if "produit" in response_json:
+            self._produit = Product(response_json["produit"])
         if "carac_site" in response_json:
             self._detail = SiteDetail(response_json["carac_site"])
         if "ecs" in response_json:
@@ -61,7 +63,7 @@ class Site(ModelBase):
 
     @property
     def last_updated(self) -> datetime:
-        return convert_from_epoch_to_datetime(self._date_derniere_remontee)
+        return convert_from_epoch_to_datetime(int(self._date_derniere_remontee))
 
     @property
     def external_temperature(self) -> int:

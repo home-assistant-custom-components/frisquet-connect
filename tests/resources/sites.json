@@ -60,7 +60,7 @@
                 "SELECTEUR": 5,
                 "TAMB": 170,
                 "CAMB": 185,
-                "DERO": false,
+                "DERO": true,
                 "CONS_RED": 185,
                 "CONS_CONF": 200,
                 "CONS_HG": 80,
