@@ -39,10 +39,10 @@ async def _async_call_api(url, method: str, data_json: dict = None, params: dict
             response.raise_for_status()
             return await response.json()
         except aiohttp.ClientResponseError as e:
-            error_message = f"API call failed: {e.code} - {e.message}"
+            error_message = f"API call failed: {e.status} - {e.message}"
             class_exception = CallApiException
 
-            if e.code == 403:
+            if e.status == 403:
                 class_exception = ForbiddenAccessException
 
             LOGGER.error(error_message)

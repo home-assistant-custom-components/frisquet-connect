@@ -1,7 +1,5 @@
 import json
 import aiohttp
-from homeassistant.core import HomeAssistant
-from homeassistant.config_entries import ConfigEntry
 
 from mockito import contains, unstub, when, ANY
 from custom_components.frisquet_connect_unofficial.repositories.frisquet_connect_repository import (
@@ -11,30 +9,6 @@ from custom_components.frisquet_connect_unofficial.repositories.frisquet_connect
 from unittest.mock import AsyncMock, Mock
 
 RESOURCES_PATH = "./tests/resources"
-
-
-def mock_hass():
-    mock = AsyncMock(spec=HomeAssistant)
-    mock.data = {}
-    return mock
-
-
-def mock_entry():
-    mock_entry_file = read_json_file_as_json("mock_entry")
-    mock = AsyncMock(spec=ConfigEntry)
-    mock.data = mock_entry_file.get("data")
-    mock.unique_id = mock_entry_file.get("unique_id")
-
-    # For debug purpose with real data
-    # dotenv.load_dotenv()
-
-    # Use environment variables if available to override the mock data
-    # if os.getenv("EMAIL") and os.getenv("PASSWORD") and os.getenv("SITE_ID"):
-    #     mock.data["email"] = os.getenv("EMAIL")
-    #     mock.data["password"] = os.getenv("PASSWORD")
-    #     mock.data["site_id"] = os.getenv("SITE_ID")
-
-    return mock
 
 
 #
@@ -92,13 +66,17 @@ def mock_authentication_endpoint() -> None:
     mock = MockResponse(read_json_file_as_text("authentication"), 200)
     when(aiohttp.ClientSession).post(contains(AUTH_ENDPOINT), headers=ANY, json=ANY).thenReturn(mock)
 
+
 def unstub_all():
     unstub()
+
+
 #
 # Read content of a file
 #
 def read_json_file_as_json(file_path) -> dict:
     return json.loads(read_json_file_as_text(file_path))
+
 
 def read_json_file_as_text(file_path) -> str:
     with open(f"{RESOURCES_PATH}/{file_path}.json", "r", encoding="utf-8") as file:

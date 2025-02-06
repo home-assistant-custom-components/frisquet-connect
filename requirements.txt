@@ -2,5 +2,7 @@ aiohttp
 homeassistant
 mockito
 python-dotenv
+pre-commit
 pytest
 pytest-mock
+pytest-cov

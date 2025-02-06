@@ -66,7 +66,7 @@ class Site(ModelBase):
         return convert_from_epoch_to_datetime(int(self._date_derniere_remontee))
 
     @property
-    def external_temperature(self) -> int:
+    def external_temperature(self) -> float:
         return convert_api_temperature_to_float(self._external_temperature)
 
     @property

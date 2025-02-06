@@ -14,7 +14,7 @@ LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry)
     if not initialization_success:
-        async_add_entities([], update_before_add=False)
+        await async_add_entities([], update_before_add=False)
         return
 
     entities: list[DefaultClimateEntity] = []
@@ -22,4 +22,4 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         entity = DefaultClimateEntity(coordinator, zone.label_id)
         entities.append(entity)
 
-    async_add_entities(entities, update_before_add=False)
+    await async_add_entities(entities, update_before_add=False)

@@ -14,7 +14,7 @@ class SiteDetail(ModelBase):
 
     @property
     def current_boiler_timestamp(self) -> datetime:
-        return convert_from_epoch_to_datetime(self._DATE_HEURE_CHAUDIERE)
+        return convert_from_epoch_to_datetime(int(self._DATE_HEURE_CHAUDIERE))
 
     @property
     def is_boiler_standby(self) -> bool:

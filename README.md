@@ -70,8 +70,24 @@ Both are in KiloWatt / hour, with a daily update.
 
 ## For local usage
 
+
+### 1. Initialize
+
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r .\requirements.txt
+```
+
+### 2. Run tests & coverage
+```
+pytest --cov=. tests/
+```
+
+### 3. Misc for commit purpose (not available yet)
+```
+# https://pre-commit.com/
+pre-commit autoupdate --repo https://github.com/pre-commit/pre-commit-hooks
+pre-commit installed at .git/hooks/pre-commit
+pre-commit install
 ```
