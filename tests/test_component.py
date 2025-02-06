@@ -6,7 +6,7 @@ from homeassistant.config_entries import ConfigEntry
 from custom_components.frisquet_connect_unofficial import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN, PLATFORMS
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
-from tests.conftest import async_core_setup_entry_no_site_id
+from tests.conftest import async_core_setup_entry_with_site_id_mutated
 from tests.utils import mock_endpoints, unstub_all
 
 
@@ -30,5 +30,5 @@ async def test_async_setup_entry_success(mock_hass: HomeAssistant, mock_entry: C
 
 @pytest.mark.asyncio
 async def test_async_setup_entry_no_site_id(mock_hass: HomeAssistant, mock_entry: ConfigEntry):
-    await async_core_setup_entry_no_site_id(async_setup_entry, None, mock_hass, mock_entry)
+    await async_core_setup_entry_with_site_id_mutated(async_setup_entry, None, mock_hass, mock_entry)
     unstub_all()

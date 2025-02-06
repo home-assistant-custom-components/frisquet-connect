@@ -43,15 +43,16 @@ def mock_entry():
     return mock
 
 
-async def async_core_setup_entry_no_site_id(
+async def async_core_setup_entry_with_site_id_mutated(
     async_setup_entry: Coroutine[Any, Any, None],
     mock_add_entities: AddEntitiesCallback = None,
     hass: HomeAssistant = None,
     entry: ConfigEntry = None,
+    site_id: str = None,
 ):
     # Initialize the mocks
     mock_endpoints()
-    entry.data = {"site_id ": None}
+    entry.data = {"site_id": site_id}
 
     service = FrisquetConnectService(entry)
     hass.data[DOMAIN] = {entry.unique_id: service}

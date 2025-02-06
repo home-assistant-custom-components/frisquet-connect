@@ -29,10 +29,6 @@ async def _async_call_api(url, method: str, data_json: dict = None, params: dict
                 response = await session.get(url, params=params)
             elif method == "POST":
                 response = await session.post(url, headers=headers, json=data_json)
-            elif method == "PUT":
-                response = await session.put(url, headers=headers, json=data_json)
-            elif method == "DELETE":
-                response = await session.delete(url, headers=headers)
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
 
@@ -47,7 +43,6 @@ async def _async_call_api(url, method: str, data_json: dict = None, params: dict
 
             LOGGER.error(error_message)
             raise class_exception(error_message)
-    session.close()
 
 
 async def async_do_get(url: str, params: dict) -> dict:

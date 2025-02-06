@@ -13,7 +13,7 @@ from custom_components.frisquet_connect_unofficial.entities.button.reset_exempti
     ResetExemptionButtonEntity,
 )
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
-from tests.conftest import async_core_setup_entry_no_site_id
+from tests.conftest import async_core_setup_entry_with_site_id_mutated
 from tests.utils import mock_endpoints
 
 
@@ -61,4 +61,4 @@ async def test_async_setup_entry_success(
 async def test_async_setup_entry_no_site_id(
     mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
 ):
-    await async_core_setup_entry_no_site_id(async_setup_entry, mock_add_entities, mock_hass, mock_entry)
+    await async_core_setup_entry_with_site_id_mutated(async_setup_entry, mock_add_entities, mock_hass, mock_entry)

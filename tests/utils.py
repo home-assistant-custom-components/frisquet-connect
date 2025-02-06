@@ -47,24 +47,31 @@ class MockResponse(AsyncMock):
 def mock_endpoints() -> None:
     mock_authentication_endpoint()
     mock_sites_endpoint_with_forbidden()
+    mock_sites_endpoint_not_found()
     mock_sites_endpoint()
-
-
-def mock_sites_endpoint_with_forbidden() -> None:
-    mock = MockResponse('{"message": "Echec d\'authentification"}', 403)
-    mock_params = {"token": ""}
-    when(aiohttp.ClientSession).get(contains(SITES_ENDPOINT), params=mock_params).thenReturn(mock)
-
-
-def mock_sites_endpoint() -> None:
-    mock = MockResponse(read_json_file_as_text("sites"), 200)
-    mock_params = {"token": "00000000000000000000000000000000"}
-    when(aiohttp.ClientSession).get(contains(SITES_ENDPOINT), params=mock_params).thenReturn(mock)
 
 
 def mock_authentication_endpoint() -> None:
     mock = MockResponse(read_json_file_as_text("authentication"), 200)
     when(aiohttp.ClientSession).post(contains(AUTH_ENDPOINT), headers=ANY, json=ANY).thenReturn(mock)
+
+
+def mock_sites_endpoint_with_forbidden() -> None:
+    mock = MockResponse('{"message": "Echec d\'authentification"}', 403)
+    mock_params = {"token": ""}
+    when(aiohttp.ClientSession).get(contains(f"{SITES_ENDPOINT}/12345678901234"), params=mock_params).thenReturn(mock)
+
+
+def mock_sites_endpoint() -> None:
+    mock = MockResponse(read_json_file_as_text("sites"), 200)
+    mock_params = {"token": "00000000000000000000000000000000"}
+    when(aiohttp.ClientSession).get(contains(f"{SITES_ENDPOINT}/12345678901234"), params=mock_params).thenReturn(mock)
+
+
+def mock_sites_endpoint_not_found() -> None:
+    mock = MockResponse('{"code": 404, "message": "Not Found" }', 404)
+    mock_params = {"token": "00000000000000000000000000000000"}
+    when(aiohttp.ClientSession).get(contains(f"{SITES_ENDPOINT}/not_found"), params=mock_params).thenReturn(mock)
 
 
 def unstub_all():
