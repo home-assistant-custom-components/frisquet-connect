@@ -36,10 +36,10 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
         while try_count >= 0:
             try_count -= 1
             try:
-                self._site = await self._service.get_site_info(self._site_id)
+                self._site = await self._service.async_get_site_info(self._site_id)
                 break
             except ForbiddenAccessException:
-                await self._service.refresh_token_and_sites()
+                await self._service.async_refresh_token_and_sites()
             except Exception as e:
                 LOGGER.error(f"Error unknown during fetching data: {e}")
 

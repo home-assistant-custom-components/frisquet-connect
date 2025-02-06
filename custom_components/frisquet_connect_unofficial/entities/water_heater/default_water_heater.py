@@ -28,7 +28,7 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
 
     async def async_set_operation_mode(self, operation_mode: str) -> None:
         coordinator: FrisquetConnectCoordinator = self.coordinator
-        coordinator.service.set_sanitary_water_mode(self._site, operation_mode)
+        coordinator.service.async_set_sanitary_water_mode(self._site, operation_mode)
 
     async def async_update(self):
         self.current_operation = self._site.water_heater.sanitary_water_mode

@@ -88,40 +88,46 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
             selector = ZoneSelector.FROST_PROTECTION
 
         coordinator: FrisquetConnectCoordinator = self.coordinator
-        coordinator.service.set_selector(self.coordinator_typed.site.site_id, self._zone, selector)
+        coordinator.service.async_set_selector(self.coordinator_typed.site.site_id, self._zone, selector)
 
-    async def async_set_preset_mode(self, preset_mode):
+    async def async_set_preset_mode(self, preset_mode: str):
         coordinator: FrisquetConnectCoordinator = self.coordinator
         if preset_mode == PRESET_BOOST:
             # TODO: Only available when the zone is in COMFORT mode
-            coordinator.service.enable_boost(self.coordinator_typed.site.site_id, self._zone)
+            await coordinator.service.async_enable_boost(self.coordinator_typed.site.site_id, self._zone)
         elif preset_mode == PRESET_HOME:
             # TODO: Only available when HVACMode is in AUTO mode and the zone is in REDUCED mode or BOOST mode
             # TODO: If boost is active, it must be disabled before
-            coordinator.service.set_exemption(self.coordinator_typed.site.site_id, ZoneSelector.COMFORT_PERMANENT)
+            await coordinator.service.async_set_exemption(
+                self.coordinator_typed.site.site_id, ZoneSelector.COMFORT_PERMANENT
+            )
         elif preset_mode == PRESET_AWAY:
             # TODO: Only available when HVACMode is in AUTO mode and the zone is in COMFORT mode
             # TODO: If boost is active, it must be disabled before
-            coordinator.service.set_exemption(self.coordinator_typed.site.site_id, ZoneSelector.REDUCED_PERMANENT)
+            await coordinator.service.async_set_exemption(
+                self.coordinator_typed.site.site_id, ZoneSelector.REDUCED_PERMANENT
+            )
         elif preset_mode == PRESET_COMFORT:
             # TODO: Only available when HVACMode is in HEAT mode
-            coordinator.service.set_selector(
+            await coordinator.service.async_set_selector(
                 self.coordinator_typed.site.site_id, self._zone, ZoneSelector.COMFORT_PERMANENT
             )
         elif preset_mode == PRESET_SLEEP:
             # TODO: Only available when HVACMode is in HEAT mode
-            coordinator.service.set_selector(
+            await coordinator.service.async_set_selector(
                 self.coordinator_typed.site.site_id, self._zone, ZoneSelector.REDUCED_PERMANENT
             )
         elif preset_mode == PRESET_ECO:
             # TODO: Only available when HVACMode is in OFF mode
-            coordinator.service.set_selector(
+            await coordinator.service.async_set_selector(
                 self.coordinator_typed.site.site_id, self._zone, ZoneSelector.FROST_PROTECTION
             )
 
     async def async_set_temperature(self, **kwargs):
         coordinator: FrisquetConnectCoordinator = self.coordinator
-        coordinator.service.set_temperature(self.coordinator_typed.site.site_id, self._zone, kwargs["temperature"])
+        coordinator.service.async_set_temperature(
+            self.coordinator_typed.site.site_id, self._zone, kwargs["temperature"]
+        )
 
     async def async_update(self):
         (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self._zone)

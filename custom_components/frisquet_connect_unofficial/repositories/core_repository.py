@@ -11,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 DEFAULT_USER_AGENT = "Frisquet%20Connect/16 CFNetwork/974.2.1 Darwin/18.0.0"
 
 
-async def _async_call_api(url, method: str, data_json: dict = None, params: dict = None) -> dict:
+async def _async_call_api(url, method: str, params: dict = None, data_json: dict = None) -> dict:
     """
     Makes an HTTP request to the specified URL using the given method and data.
     Args:
@@ -26,9 +26,9 @@ async def _async_call_api(url, method: str, data_json: dict = None, params: dict
     async with aiohttp.ClientSession(headers=headers) as session:
         try:
             if method == "GET":
-                response = await session.get(url, params=params)
+                response = await session.get(url, headers=headers, params=params)
             elif method == "POST":
-                response = await session.post(url, headers=headers, json=data_json)
+                response = await session.post(url, headers=headers, params=params, json=data_json)
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
 
@@ -46,8 +46,8 @@ async def _async_call_api(url, method: str, data_json: dict = None, params: dict
 
 
 async def async_do_get(url: str, params: dict) -> dict:
-    return await _async_call_api(url, "GET", None, params)
+    return await _async_call_api(url, "GET", params)
 
 
-async def async_do_post(url: str, data: dict) -> dict:
-    return await _async_call_api(url, "POST", data)
+async def async_do_post(url: str, params: dict, data: dict) -> dict:
+    return await _async_call_api(url, "POST", params, data)

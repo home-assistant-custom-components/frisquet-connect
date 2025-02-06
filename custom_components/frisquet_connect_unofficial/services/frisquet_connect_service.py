@@ -33,8 +33,8 @@ class FrisquetConnectService:
     def _get_password(self) -> str:
         return self._entry.data["password"]
 
-    async def refresh_token_and_sites(self) -> Authentication:
-        authentication = await self._repository.get_token_and_sites(self._get_email(), self._get_password())
+    async def async_refresh_token_and_sites(self) -> Authentication:
+        authentication = await self._repository.async_get_token_and_sites(self._get_email(), self._get_password())
         self._token = authentication.token
         self._sites = authentication.sites
         return authentication
@@ -43,30 +43,32 @@ class FrisquetConnectService:
     def sites(self) -> list[SiteLight]:
         return self._sites
 
-    async def get_site_info(self, site_id: str) -> Site:
-        return await self._repository.get_site_info(site_id, self._token)
+    async def async_get_site_info(self, site_id: str) -> Site:
+        return await self._repository.async_get_site_info(site_id, self._token)
 
-    async def set_temperature(self, site_id: str, zone: Zone, temperature: float) -> None:
+    async def async_set_temperature(self, site_id: str, zone: Zone, temperature: float) -> None:
         api_temperature = convert_hass_temperature_to_int(temperature)
-        await self._repository.set_temperature(site_id, zone.label_id, zone.detail.mode, api_temperature, self._token)
+        await self._repository.async_set_temperature(
+            site_id, zone.label_id, zone.detail.mode, api_temperature, self._token
+        )
 
-    async def set_selector(self, site_id: str, zone: Zone, selector: ZoneSelector) -> None:
-        await self._repository.set_selector(site_id, zone.label_id, selector, self._token)
+    async def async_set_selector(self, site_id: str, zone: Zone, selector: ZoneSelector) -> None:
+        await self._repository.async_set_selector(site_id, zone.label_id, selector, self._token)
 
-    async def set_sanitary_water_mode(self, site_id: str, mode: str) -> None:
+    async def async_set_sanitary_water_mode(self, site_id: str, mode: str) -> None:
         mapped_mode = SanitaryWaterMode(mode)
-        await self._repository.set_sanitary_water_mode(site_id, mapped_mode, self._token)
+        await self._repository.async_set_sanitary_water_mode(site_id, mapped_mode, self._token)
 
     ###
 
-    async def set_exemption(self, site_id: str, selector: ZoneSelector) -> None:
-        await self._repository.set_exemption(site_id, selector, self._token)
+    async def async_set_exemption(self, site_id: str, selector: ZoneSelector) -> None:
+        await self._repository.async_set_exemption(site_id, selector, self._token)
 
-    async def cancel_exemption(self, site_id: str) -> None:
-        await self._repository.set_exemption(site_id, ZoneSelector.AUTO, self._token)
+    async def async_cancel_exemption(self, site_id: str) -> None:
+        await self._repository.async_set_exemption(site_id, ZoneSelector.AUTO, self._token)
 
-    async def enable_boost(self, site_id: str, zone: Zone) -> None:
-        await self._repository.set_boost(site_id, zone.label_id, True, self._token)
+    async def async_enable_boost(self, site_id: str, zone: Zone) -> None:
+        await self._repository.async_set_boost(site_id, zone.label_id, True, self._token)
 
-    async def disable_boost(self, site_id: str, zone: Zone) -> None:
-        await self._repository.set_boost(site_id, zone.label_id, False, self._token)
+    async def async_disable_boost(self, site_id: str, zone: Zone) -> None:
+        await self._repository.async_set_boost(site_id, zone.label_id, False, self._token)

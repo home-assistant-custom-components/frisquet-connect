@@ -27,8 +27,11 @@ async def test_async_setup_entry_success(mock_hass: HomeAssistant, mock_entry: C
         assert isinstance(mock_hass.data[DOMAIN][mock_entry.unique_id], FrisquetConnectService)
         mock_forward.assert_called_once_with(mock_entry, PLATFORMS)
 
+    unstub_all()
+
 
 @pytest.mark.asyncio
 async def test_async_setup_entry_no_site_id(mock_hass: HomeAssistant, mock_entry: ConfigEntry):
     await async_core_setup_entry_with_site_id_mutated(async_setup_entry, None, mock_hass, mock_entry)
+
     unstub_all()

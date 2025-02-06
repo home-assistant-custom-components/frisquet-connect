@@ -45,7 +45,7 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
         if self._user_input.get("sites") is None:
             service = FrisquetConnectService(self._user_input)
             try:
-                authentication = await service.refresh_token_and_sites()
+                authentication = await service.async_refresh_token_and_sites()
                 self._user_input["sites"] = authentication.sites
             except ForbiddenAccessException:
                 errors = {"base": "invalid_credentials"}

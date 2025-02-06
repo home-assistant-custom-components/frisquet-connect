@@ -14,7 +14,7 @@ from custom_components.frisquet_connect_unofficial.entities.button.reset_exempti
 )
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
 from tests.conftest import async_core_setup_entry_with_site_id_mutated
-from tests.utils import mock_endpoints
+from tests.utils import mock_endpoints, unstub_all
 
 
 @pytest.mark.asyncio
@@ -56,9 +56,13 @@ async def test_async_setup_entry_success(
         else:
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
+    unstub_all()
+
 
 @pytest.mark.asyncio
 async def test_async_setup_entry_no_site_id(
     mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
 ):
     await async_core_setup_entry_with_site_id_mutated(async_setup_entry, mock_add_entities, mock_hass, mock_entry)
+
+    unstub_all()
