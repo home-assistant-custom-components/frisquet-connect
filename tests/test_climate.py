@@ -7,8 +7,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.components.climate.const import (
-    ClimateEntityFeature,
-    HVACMode,
     PRESET_BOOST,
     PRESET_COMFORT,
     PRESET_SLEEP,
@@ -26,8 +24,7 @@ from custom_components.frisquet_connect_unofficial.services.frisquet_connect_ser
 from tests.conftest import async_core_setup_entry_with_site_id_mutated
 
 
-@pytest.mark.asyncio
-async def test_async_setup_entry_success(
+async def async_init_climate(
     mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
 ):
     # Initialize the mocks
@@ -45,6 +42,15 @@ async def test_async_setup_entry_success(
     assert len(entities) == 1
     assert isinstance(entities[0], DefaultClimateEntity)
 
+    return entities
+
+
+@pytest.mark.asyncio
+async def test_async_setup_entry_success(
+    mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
+):
+    entities = await async_init_climate(mock_hass, mock_entry, mock_add_entities)
+
     entity: DefaultClimateEntity = entities[0]
     await entity.async_update()
 
@@ -61,7 +67,6 @@ async def test_async_setup_entry_success(
     assert site.site_id == "12345678901234"
     assert site.last_updated == datetime(2025, 1, 31, 10, 0, 41)
     assert site.external_temperature == 3.4
-    # TODO: Add more assertions here with the data mocked in the test
 
     # SITE.DETAIL
     assert site.detail is not None
@@ -106,20 +111,7 @@ async def test_async_setup_entry_success(
 async def test_climate_set_preset_mode(
     mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
 ):
-    # Initialize the mocks
-    mock_endpoints()
-
-    # Test the feature
-    service = FrisquetConnectService(mock_entry)
-    mock_hass.data[DOMAIN] = {mock_entry.unique_id: service}
-    await async_setup_entry(mock_hass, mock_entry, mock_add_entities)
-
-    # Assertions
-    mock_add_entities.assert_called_once()
-    entities = mock_add_entities.call_args[0][0]
-
-    assert len(entities) == 1
-    assert isinstance(entities[0], DefaultClimateEntity)
+    entities = await async_init_climate(mock_hass, mock_entry, mock_add_entities)
 
     entity: DefaultClimateEntity = entities[0]
     await entity.async_set_preset_mode(PRESET_BOOST)
@@ -129,6 +121,18 @@ async def test_climate_set_preset_mode(
     await entity.async_set_preset_mode(PRESET_COMFORT)
     await entity.async_set_preset_mode(PRESET_SLEEP)
     await entity.async_set_preset_mode(PRESET_ECO)
+
+    unstub_all()
+
+
+@pytest.mark.asyncio
+async def test_climate_set_temperature(
+    mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
+):
+    entities = await async_init_climate(mock_hass, mock_entry, mock_add_entities)
+
+    entity: DefaultClimateEntity = entities[0]
+    await entity.async_set_temperature(temperature=19.5)
 
     unstub_all()
 

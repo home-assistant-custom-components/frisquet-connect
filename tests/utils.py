@@ -50,7 +50,13 @@ def mock_endpoints() -> None:
     mock_sites_endpoint_with_forbidden()
     mock_sites_endpoint_not_found()
     mock_sites_endpoint()
-    mock_ordres_endpoint("boost")
+    mock_ordres_endpoint("set_temperature_comfort")
+    mock_ordres_endpoint("preset_mode_boost")
+    mock_ordres_endpoint("preset_mode_exemption_home")
+    mock_ordres_endpoint("preset_mode_exemption_away")
+    mock_ordres_endpoint("preset_mode_permanent_comfort")
+    mock_ordres_endpoint("preset_mode_permanent_sleep")
+    mock_ordres_endpoint("preset_mode_permanent_eco")
 
 
 # AUTHENTICATION
