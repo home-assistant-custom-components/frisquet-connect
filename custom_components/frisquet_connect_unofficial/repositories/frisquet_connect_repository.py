@@ -13,9 +13,14 @@ from custom_components.frisquet_connect_unofficial.const import (
 from custom_components.frisquet_connect_unofficial.domains.authentication.authentication_request import (
     AuthenticationRequest,
 )
-from custom_components.frisquet_connect_unofficial.domains.authentication.authentication import Authentication
+from custom_components.frisquet_connect_unofficial.domains.authentication.authentication import (
+    Authentication,
+)
 from custom_components.frisquet_connect_unofficial.domains.site.site import Site
-from custom_components.frisquet_connect_unofficial.repositories.core_repository import async_do_get, async_do_post
+from custom_components.frisquet_connect_unofficial.repositories.core_repository import (
+    async_do_get,
+    async_do_post,
+)
 
 
 FRISQUET_CONNECT_URL = "https://fcutappli.frisquet.com/api/v1"
@@ -75,7 +80,9 @@ class FrisquetConnectRepository:
         response_json = await self._async_do_site_action(site_id, token, payload)
         return response_json
 
-    async def async_set_selector(self, site_id: str, zone_id: str, zone_selector: ZoneSelector, token: str) -> dict:
+    async def async_set_selector(
+        self, site_id: str, zone_id: str, zone_selector: ZoneSelector, token: str
+    ) -> dict:
         LOGGER.debug("Setting selector")
 
         key = f"{SELECTOR_ORDER_LABEL}_{zone_id}"
@@ -85,11 +92,17 @@ class FrisquetConnectRepository:
         response_json = await self._async_do_site_action(site_id, token, payload)
         return response_json
 
-    async def async_set_exemption(self, site_id: str, zone_selector: ZoneSelector, token: str) -> dict:
+    async def async_set_exemption(
+        self, site_id: str, zone_selector: ZoneSelector, token: str
+    ) -> dict:
         LOGGER.debug("Setting exemption")
 
         # TODO : Check if the preset_mode is AUTO
-        if zone_selector not in [ZoneSelector.AUTO, ZoneSelector.COMFORT_PERMANENT, ZoneSelector.REDUCED_PERMANENT]:
+        if zone_selector not in [
+            ZoneSelector.AUTO,
+            ZoneSelector.COMFORT_PERMANENT,
+            ZoneSelector.REDUCED_PERMANENT,
+        ]:
             error_message = f"Incompatible zone selector: {zone_selector}"
             LOGGER.error(error_message)
             raise ValueError(error_message)

@@ -3,7 +3,9 @@ import logging
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from custom_components.frisquet_connect_unofficial.const import HEATING_CONSUMPTION_LABEL
-from custom_components.frisquet_connect_unofficial.entities.sensor.core_consumption import CoreConsumption
+from custom_components.frisquet_connect_unofficial.entities.sensor.core_consumption import (
+    CoreConsumption,
+)
 
 
 LOGGER = logging.getLogger(__name__)

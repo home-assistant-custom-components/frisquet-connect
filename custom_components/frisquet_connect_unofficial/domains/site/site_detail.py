@@ -1,6 +1,8 @@
 from datetime import datetime
 from custom_components.frisquet_connect_unofficial.domains.model_base import ModelBase
-from custom_components.frisquet_connect_unofficial.domains.site.utils import convert_from_epoch_to_datetime
+from custom_components.frisquet_connect_unofficial.domains.site.utils import (
+    convert_from_epoch_to_datetime,
+)
 
 
 class SiteDetail(ModelBase):

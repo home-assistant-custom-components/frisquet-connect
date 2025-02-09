@@ -7,8 +7,12 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.core_setup_entity import async_initialize_entity
-from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import CoreResetButton
-from custom_components.frisquet_connect_unofficial.entities.button.reset_boost_button import ResetBoostButtonEntity
+from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import (
+    CoreResetButton,
+)
+from custom_components.frisquet_connect_unofficial.entities.button.reset_boost_button import (
+    ResetBoostButtonEntity,
+)
 from custom_components.frisquet_connect_unofficial.entities.button.reset_exemption_button import (
     ResetExemptionButtonEntity,
 )
@@ -18,7 +22,9 @@ SCAN_INTERVAL = timedelta(seconds=150)
 LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry)
     if not initialization_success:
         await async_add_entities([], update_before_add=False)

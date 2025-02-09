@@ -4,7 +4,9 @@ from homeassistant.const import STATE_ON, STATE_OFF
 
 from custom_components.frisquet_connect_unofficial.const import EXEMPTION_BUTTON_KEY
 from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
-from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import CoreResetButton
+from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import (
+    CoreResetButton,
+)
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )

@@ -13,7 +13,12 @@ from homeassistant.components.climate.const import (
 
 DOMAIN = "yet_another_frisquet_connect"
 DEVICE_MANUFACTURER = "Frisquet"
-PLATFORMS: list[Platform] = [Platform.CLIMATE, Platform.SENSOR, Platform.WATER_HEATER, Platform.BUTTON]
+PLATFORMS: list[Platform] = [
+    Platform.CLIMATE,
+    Platform.SENSOR,
+    Platform.WATER_HEATER,
+    Platform.BUTTON,
+]
 
 BOOST_BUTTON_KEY = "boost"
 EXEMPTION_BUTTON_KEY = "exemption"

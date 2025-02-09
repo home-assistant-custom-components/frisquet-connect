@@ -1,4 +1,6 @@
-from custom_components.frisquet_connect_unofficial.domains.exceptions.technical_exception import TechnicalException
+from custom_components.frisquet_connect_unofficial.domains.exceptions.technical_exception import (
+    TechnicalException,
+)
 
 
 class CallApiException(TechnicalException):

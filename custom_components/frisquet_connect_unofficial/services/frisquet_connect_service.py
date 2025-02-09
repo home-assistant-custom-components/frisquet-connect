@@ -1,11 +1,14 @@
 import logging
-from homeassistant.config_entries import ConfigEntry
 
 from custom_components.frisquet_connect_unofficial.const import SanitaryWaterMode, ZoneSelector
-from custom_components.frisquet_connect_unofficial.domains.authentication.authentication import Authentication
+from custom_components.frisquet_connect_unofficial.domains.authentication.authentication import (
+    Authentication,
+)
 from custom_components.frisquet_connect_unofficial.domains.site.site import Site
 from custom_components.frisquet_connect_unofficial.domains.site.site_light import SiteLight
-from custom_components.frisquet_connect_unofficial.domains.site.utils import convert_hass_temperature_to_int
+from custom_components.frisquet_connect_unofficial.domains.site.utils import (
+    convert_hass_temperature_to_int,
+)
 from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
 from custom_components.frisquet_connect_unofficial.repositories.frisquet_connect_repository import (
     FrisquetConnectRepository,
@@ -17,24 +20,20 @@ LOGGER = logging.getLogger(__name__)
 
 class FrisquetConnectService:
     _repository: FrisquetConnectRepository
-    _entry: ConfigEntry
+    _email: str
+    _password: str
     _sites: list[SiteLight]
     _token: str
 
-    def __init__(self, entry: ConfigEntry):
-        self._entry = entry
+    def __init__(self, email: str, password: str) -> None:
+        self._email = email
+        self._password = password
         self._repository = FrisquetConnectRepository()
         self._sites = []
         self._token = ""
 
-    def _get_email(self) -> str:
-        return self._entry.data["email"]
-
-    def _get_password(self) -> str:
-        return self._entry.data["password"]
-
     async def async_refresh_token_and_sites(self) -> Authentication:
-        authentication = await self._repository.async_get_token_and_sites(self._get_email(), self._get_password())
+        authentication = await self._repository.async_get_token_and_sites(self._email, self._password)
         self._token = authentication.token
         self._sites = authentication.sites
         return authentication

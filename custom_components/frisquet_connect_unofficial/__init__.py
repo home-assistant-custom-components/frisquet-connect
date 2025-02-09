@@ -4,8 +4,9 @@ import logging
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
-from custom_components.frisquet_connect_unofficial.domains.site.site import Site
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
+    FrisquetConnectService,
+)
 from .const import (
     DOMAIN,
     PLATFORMS,
@@ -24,7 +25,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         return False
 
     hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN][entry.unique_id] = FrisquetConnectService(entry.data)
+    hass.data[DOMAIN][entry.unique_id] = FrisquetConnectService(entry.data.get("email"), entry.data.get("password"))
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True

@@ -1,7 +1,9 @@
 from enum import Enum
 from custom_components.frisquet_connect_unofficial.const import ZoneMode, ZoneSelector
 from custom_components.frisquet_connect_unofficial.domains.model_base import ModelBase
-from custom_components.frisquet_connect_unofficial.domains.site.utils import convert_api_temperature_to_float
+from custom_components.frisquet_connect_unofficial.domains.site.utils import (
+    convert_api_temperature_to_float,
+)
 
 
 class ZoneDetail(ModelBase):

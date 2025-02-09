@@ -7,12 +7,18 @@ from homeassistant.const import STATE_OFF, STATE_ON
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from custom_components.frisquet_connect_unofficial.button import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
-from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import CoreResetButton
-from custom_components.frisquet_connect_unofficial.entities.button.reset_boost_button import ResetBoostButtonEntity
+from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import (
+    CoreResetButton,
+)
+from custom_components.frisquet_connect_unofficial.entities.button.reset_boost_button import (
+    ResetBoostButtonEntity,
+)
 from custom_components.frisquet_connect_unofficial.entities.button.reset_exemption_button import (
     ResetExemptionButtonEntity,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
+    FrisquetConnectService,
+)
 from tests.conftest import async_core_setup_entry_with_site_id_mutated
 from tests.utils import mock_endpoints, unstub_all
 
@@ -25,7 +31,7 @@ async def test_async_setup_entry_success(
     mock_endpoints()
 
     # Test the feature
-    service = FrisquetConnectService(mock_entry)
+    service = FrisquetConnectService(mock_entry.data.get("email"), mock_entry.data.get("password"))
     mock_hass.data[DOMAIN] = {mock_entry.unique_id: service}
     await async_setup_entry(mock_hass, mock_entry, mock_add_entities)
 

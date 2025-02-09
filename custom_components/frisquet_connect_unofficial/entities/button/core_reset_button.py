@@ -16,7 +16,9 @@ LOGGER = logging.getLogger(__name__)
 
 class CoreResetButton(ButtonEntity, CoordinatorEntity):
 
-    def __init__(self, coordinator: FrisquetConnectCoordinator, button_key: str, suffix_id: str = None) -> None:
+    def __init__(
+        self, coordinator: FrisquetConnectCoordinator, button_key: str, suffix_id: str = None
+    ) -> None:
         super().__init__(coordinator)
 
         suffix = f"_{suffix_id}" if suffix_id else ""

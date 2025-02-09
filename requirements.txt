@@ -1,8 +1,9 @@
 aiohttp
+black
 homeassistant
 mockito
 python-dotenv
-pre-commit
+# pre-commit
 pytest
 pytest-mock
 pytest-cov

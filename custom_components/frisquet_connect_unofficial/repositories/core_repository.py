@@ -1,6 +1,8 @@
 import logging
 import aiohttp
-from custom_components.frisquet_connect_unofficial.domains.exceptions.call_api_exception import CallApiException
+from custom_components.frisquet_connect_unofficial.domains.exceptions.call_api_exception import (
+    CallApiException,
+)
 from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_access_exception import (
     ForbiddenAccessException,
 )

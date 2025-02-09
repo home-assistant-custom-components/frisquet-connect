@@ -15,13 +15,17 @@ from custom_components.frisquet_connect_unofficial.entities.water_heater.default
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
+    FrisquetConnectService,
+)
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry)
     if not initialization_success:
         async_add_entities([], update_before_add=False)

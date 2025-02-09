@@ -7,7 +7,9 @@ from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_
     ForbiddenAccessException,
 )
 from custom_components.frisquet_connect_unofficial.domains.site.site import Site
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
+    FrisquetConnectService,
+)
 
 
 LOGGER = logging.getLogger(__name__)

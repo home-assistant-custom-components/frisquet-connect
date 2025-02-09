@@ -5,7 +5,6 @@ from custom_components.frisquet_connect_unofficial.const import (
     DOMAIN,
     ZoneSelector,
 )
-from custom_components.frisquet_connect_unofficial.domains.site.site import Site
 from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
 from custom_components.frisquet_connect_unofficial.entities.climate.utils import (
     get_hvac_and_preset_mode_for_a_zone,
@@ -46,7 +45,9 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
         self._attr_name = f"{coordinator.site.name} - {self._zone.name}"
         self._attr_translation_key = CLIMATE_TRANSLATIONS_KEY
 
-        self._attr_supported_features = ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.PRESET_MODE
+        self._attr_supported_features = (
+            ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.PRESET_MODE
+        )
         self._attr_hvac_modes = [HVACMode.AUTO, HVACMode.HEAT, HVACMode.OFF]
 
         self._attr_temperature_unit = "°C"
@@ -86,15 +87,22 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
                 selector = ZoneSelector.REDUCED_PERMANENT
         elif hvac_mode == HVACMode.OFF:
             selector = ZoneSelector.FROST_PROTECTION
+        else:
+            LOGGER.error(f"Unknown HVAC mode '{hvac_mode}'")
+            raise ValueError(f"Unknown HVAC mode '{hvac_mode}'")
 
         coordinator: FrisquetConnectCoordinator = self.coordinator
-        coordinator.service.async_set_selector(self.coordinator_typed.site.site_id, self._zone, selector)
+        await coordinator.service.async_set_selector(
+            self.coordinator_typed.site.site_id, self._zone, selector
+        )
 
     async def async_set_preset_mode(self, preset_mode: str):
         coordinator: FrisquetConnectCoordinator = self.coordinator
         if preset_mode == PRESET_BOOST:
             # TODO: Only available when the zone is in COMFORT mode
-            await coordinator.service.async_enable_boost(self.coordinator_typed.site.site_id, self._zone)
+            await coordinator.service.async_enable_boost(
+                self.coordinator_typed.site.site_id, self._zone
+            )
         elif preset_mode == PRESET_HOME:
             # TODO: Only available when HVACMode is in AUTO mode and the zone is in REDUCED mode or BOOST mode
             # TODO: If boost is active, it must be disabled before
@@ -122,15 +130,20 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
             await coordinator.service.async_set_selector(
                 self.coordinator_typed.site.site_id, self._zone, ZoneSelector.FROST_PROTECTION
             )
+        else:
+            LOGGER.error(f"Unknown preset mode '{preset_mode}'")
+            raise ValueError(f"Unknown preset mode '{preset_mode}'")
 
     async def async_set_temperature(self, **kwargs):
         coordinator: FrisquetConnectCoordinator = self.coordinator
-        coordinator.service.async_set_temperature(
+        await coordinator.service.async_set_temperature(
             self.coordinator_typed.site.site_id, self._zone, kwargs["temperature"]
         )
 
     async def async_update(self):
-        (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self._zone)
+        (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(
+            self._zone
+        )
         self._attr_preset_modes = available_preset_modes
         self._attr_preset_mode = preset_mode
         self._attr_hvac_mode = hvac_mode

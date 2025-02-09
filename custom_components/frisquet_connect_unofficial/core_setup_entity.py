@@ -8,13 +8,17 @@ from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
+    FrisquetConnectService,
+)
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-async def async_initialize_entity(hass: HomeAssistant, entry: ConfigEntry) -> Tuple[bool, FrisquetConnectCoordinator]:
+async def async_initialize_entity(
+    hass: HomeAssistant, entry: ConfigEntry
+) -> Tuple[bool, FrisquetConnectCoordinator]:
     initialization_result = True
     coordinator: FrisquetConnectCoordinator = None
 

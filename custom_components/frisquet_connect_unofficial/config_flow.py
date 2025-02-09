@@ -8,7 +8,9 @@ from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_
     ForbiddenAccessException,
 )
 from custom_components.frisquet_connect_unofficial.domains.site.site_light import SiteLight
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import FrisquetConnectService
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
+    FrisquetConnectService,
+)
 
 from .const import DOMAIN
 
@@ -32,29 +34,31 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
         # Ask for credentials if not already done
         if user_input is None:
             LOGGER.error("Asking for authentication")
-            return self.async_show_form(step_id="credentials", data_schema=self._get_vol_schema())
+            return self.async_show_form(step_id="credentials", data_schema=self._get_vol_schema_for_authentication())
 
         # Then update user_input
         self._user_input.update(user_input)
 
         # Finally, go to the next step
-        return self._set_auhentication_step(user_input)
+        return await self._set_auhentication_step()
 
-    async def _set_auhentication_step(self, user_input: dict | None = None) -> FlowResult:
+    async def _set_auhentication_step(self) -> FlowResult:
         # Get existing sites if not already done
         if self._user_input.get("sites") is None:
-            service = FrisquetConnectService(self._user_input)
+            service = FrisquetConnectService(self._user_input.get("email"), self._user_input.get("password"))
             try:
                 authentication = await service.async_refresh_token_and_sites()
                 self._user_input["sites"] = authentication.sites
             except ForbiddenAccessException:
                 errors = {"base": "invalid_credentials"}
-                return self.async_show_form(step_id="credentials", data_schema=self._get_vol_schema(), errors=errors)
+                return self.async_show_form(
+                    step_id="credentials", data_schema=self._get_vol_schema_for_authentication(), errors=errors
+                )
             except Exception as e:
                 return self.async_abort(reason=e.message)
 
         # Finally, go to the next step
-        return self._set_site_step()
+        return await self._set_site_step()
 
     async def _set_site_step(self) -> FlowResult:
         # No site so not possible to go further
