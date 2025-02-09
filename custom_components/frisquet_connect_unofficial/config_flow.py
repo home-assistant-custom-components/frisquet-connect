@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from homeassistant.config_entries import ConfigFlow
 from homeassistant.data_entry_flow import FlowResult
-from homeassistant.components.climate import DOMAIN
+from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_access_exception import (
     ForbiddenAccessException,
 )
@@ -11,8 +11,6 @@ from custom_components.frisquet_connect_unofficial.domains.site.site_light impor
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
     FrisquetConnectService,
 )
-
-from .const import DOMAIN
 
 
 LOGGER = logging.getLogger(__name__)
