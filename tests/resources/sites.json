@@ -463,6 +463,10 @@
             "code": null
         }
     ],
-    "alarmes": [],
+    "alarmes": [
+        {
+            "nom": "Box Frisquet Connect déconnectée"
+        }
+    ],
     "alarmes_pro": []
 }

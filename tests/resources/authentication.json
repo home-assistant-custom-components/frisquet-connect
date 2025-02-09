@@ -22,7 +22,11 @@
             {
                 "identifiant_chaudiere": "12345678901234",
                 "nom": "Somewhere",
-                "alarmes": []
+                "alarmes": [
+                    {
+                        "nom": "Box Frisquet Connect déconnectée"
+                    }
+                ]
             }
         ]
     }

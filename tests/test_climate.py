@@ -1,6 +1,7 @@
 from datetime import datetime
 import pytest
 
+from custom_components.frisquet_connect_unofficial.domains.site.alarm import Alarm
 from tests.utils import mock_endpoints, unstub_all
 
 from homeassistant.core import HomeAssistant
@@ -20,6 +21,7 @@ from homeassistant.components.climate.const import (
 from custom_components.frisquet_connect_unofficial.climate import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import (
     DOMAIN,
+    AlarmType,
     SanitaryWaterMode,
     SanitaryWaterType,
     ZoneMode,
@@ -123,7 +125,10 @@ async def test_async_setup_entry_success(
         assert mode in SanitaryWaterMode
 
     # SITE.ALARMS
-    assert len(site.alarms) == 0
+    assert len(site.alarms) == 1
+    alarm: Alarm = site.alarms[0]
+    assert alarm.alarme_type == AlarmType.DISCONNECTED
+    assert alarm.description == "Box Frisquet Connect déconnectée"
 
     unstub_all()
 
