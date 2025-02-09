@@ -32,7 +32,7 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
         # Ask for credentials if not already done
         if user_input is None:
             LOGGER.error("Asking for authentication")
-            return self.async_show_form(step_id="credentials", data_schema=self._get_vol_schema_for_authentication())
+            return self.async_show_form(step_id="user", data_schema=self._get_vol_schema_for_authentication())
 
         # Then update user_input
         self._user_input.update(user_input)
@@ -50,7 +50,7 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
             except ForbiddenAccessException:
                 errors = {"base": "invalid_credentials"}
                 return self.async_show_form(
-                    step_id="credentials", data_schema=self._get_vol_schema_for_authentication(), errors=errors
+                    step_id="user", data_schema=self._get_vol_schema_for_authentication(), errors=errors
                 )
             except Exception as e:
                 return self.async_abort(reason=e.message)
@@ -67,7 +67,7 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
         # Ask for site if not already done
         elif self._user_input.get("site") is None:
             LOGGER.info("Asking for site")
-            return self.async_show_form(step_id="site_id", data_schema=self._get_vol_schema_for_site())
+            return self.async_show_form(step_id="user", data_schema=self._get_vol_schema_for_site())
 
         site_light: SiteLight = self._user_input["sites"].index(self._user_input["site"])
         await self.async_set_unique_id(site_light.site_id)
