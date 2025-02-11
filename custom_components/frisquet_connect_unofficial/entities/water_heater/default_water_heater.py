@@ -1,10 +1,8 @@
 import logging
 from homeassistant.components.water_heater import WaterHeaterEntity, WaterHeaterEntityFeature
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.helpers.entity import DeviceInfo
 
 from custom_components.frisquet_connect_unofficial.const import WATER_HEATER_TRANSLATIONS_KEY
-from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
@@ -27,20 +25,22 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
         self._attr_temperature_unit = "°C"
         self._attr_operation_list = coordinator.site.available_sanitary_water_modes
 
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await self.async_update()
+
     @property
     def should_poll(self) -> bool:
         return True
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.coordinator)
 
     @property
     def coordinator_typed(self) -> FrisquetConnectCoordinator:
         return self.coordinator
 
     async def async_set_operation_mode(self, operation_mode: str) -> None:
-        self.coordinator_typed.service.async_set_sanitary_water_mode(self._site, operation_mode)
+        self.coordinator_typed.service.async_set_sanitary_water_mode(
+            self.coordinator_typed.site.site_id, operation_mode
+        )
 
     async def async_update(self):
         self.current_operation = self.coordinator_typed.site.water_heater.sanitary_water_mode

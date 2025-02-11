@@ -26,6 +26,7 @@ from custom_components.frisquet_connect_unofficial.const import (
     DOMAIN,
     AlarmType,
     SanitaryWaterMode,
+    SanitaryWaterModeLabel,
     SanitaryWaterType,
     ZoneMode,
     ZoneSelector,
@@ -126,7 +127,7 @@ async def test_async_setup_entry_success(
     # SITE.SANITARY_WATER
     assert len(site.available_sanitary_water_modes) == 4
     for mode in site.available_sanitary_water_modes:
-        assert mode in SanitaryWaterMode
+        assert mode in SanitaryWaterModeLabel
 
     # SITE.ALARMS
     assert len(site.alarms) == 1

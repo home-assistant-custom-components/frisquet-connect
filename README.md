@@ -91,3 +91,6 @@ pre-commit autoupdate --repo https://github.com/pre-commit/pre-commit-hooks
 pre-commit installed at .git/hooks/pre-commit
 pre-commit install
 ```
+
+## TODO :
+Add decorator to log function of service/coordinator in debug

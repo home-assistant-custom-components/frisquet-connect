@@ -52,6 +52,10 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
         self._attr_target_temperature_low = 5
         self._attr_target_temperature_high = 25
 
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await self.async_update()
+
     @property
     def coordinator_typed(self) -> FrisquetConnectCoordinator:
         return self.coordinator

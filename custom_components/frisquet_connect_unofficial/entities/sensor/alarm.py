@@ -2,14 +2,12 @@ import logging
 from homeassistant.components.sensor import SensorEntity
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.helpers.entity import DeviceInfo
 
 from custom_components.frisquet_connect_unofficial.const import (
     ALARM_TRANSLATIONS_KEY,
     NO_ALARM,
     AlarmType,
 )
-from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
@@ -35,10 +33,6 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
     def should_poll(self) -> bool:
         """Poll for those entities"""
         return True
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.coordinator)
 
     @property
     def coordinator_typed(self) -> FrisquetConnectCoordinator:

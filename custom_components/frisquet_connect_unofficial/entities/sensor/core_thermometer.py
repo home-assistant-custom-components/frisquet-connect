@@ -1,7 +1,6 @@
 import logging
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass, SensorStateClass
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.helpers.entity import DeviceInfo
 
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
@@ -23,6 +22,10 @@ class CoreThermometer(SensorEntity, CoordinatorEntity):
         self._attr_native_unit_of_measurement = "°C"
         self._attr_unit_of_measurement = "°C"
 
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await self.async_update()
+
     @property
     def icon(self) -> str | None:
         return "mdi:thermometer"
@@ -30,10 +33,6 @@ class CoreThermometer(SensorEntity, CoordinatorEntity):
     @property
     def should_poll(self) -> bool:
         return True
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.coordinator)
 
     @property
     def device_class(self) -> SensorDeviceClass | None:

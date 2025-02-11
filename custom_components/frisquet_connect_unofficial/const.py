@@ -61,7 +61,16 @@ class SanitaryWaterType(Enum):
     HEAT_PUMP = 2
 
 
-class SanitaryWaterMode(Enum):  # StrEnum
+class SanitaryWaterModeLabel(StrEnum):
+    MAX = "Max"
+    ECO = "Eco"
+    ECO_TIMER = "Eco Timer"
+    ECO_PLUS = "Eco+"
+    ECO_PLUS_TIMER = "Eco+ Timer"
+    STOP = "Stop"
+
+
+class SanitaryWaterMode(Enum):
     MAX = 0  # "Max"
     ECO = 1  # "Eco"
     ECO_TIMER = 2  # "Eco Timer"

@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from custom_components.frisquet_connect_unofficial.const import SanitaryWaterMode
+from custom_components.frisquet_connect_unofficial.const import SanitaryWaterMode, SanitaryWaterModeLabel
 from custom_components.frisquet_connect_unofficial.domains.model_base import ModelBase
 from custom_components.frisquet_connect_unofficial.domains.site.alarm import Alarm
 from custom_components.frisquet_connect_unofficial.domains.site.product import Product
@@ -82,8 +82,8 @@ class Site(ModelBase):
         return self._zones
 
     @property
-    def available_sanitary_water_modes(self) -> list[SanitaryWaterMode]:
-        return [SanitaryWaterMode(mode["id"]) for mode in self._modes_ecs]
+    def available_sanitary_water_modes(self) -> list[SanitaryWaterModeLabel]:
+        return [SanitaryWaterModeLabel[SanitaryWaterMode(mode["id"]).name] for mode in self._modes_ecs]
 
     @property
     def alarms(self) -> List[Alarm]:
