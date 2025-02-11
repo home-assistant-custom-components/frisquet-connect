@@ -18,15 +18,15 @@
         }
     },
     "entity": {
-        "button": {
-            "boost_button": {
+        "switch": {
+            "boost_switch": {
                 "name": "{zone_name} - Boost",
                 "state": {
                     "off": "Enable boost for {zone_name}",
                     "on": "Disable boost for {zone_name}"
                 }
             },
-            "exemption_button": {
+            "exemption_switch": {
                 "name": "Exemption",
                 "state": {
                     "off": "No action available",

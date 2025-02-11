@@ -5,8 +5,8 @@ from homeassistant.config_entries import ConfigEntry
 
 from custom_components.frisquet_connect_unofficial import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN, PLATFORMS
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
-    FrisquetConnectService,
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+    FrisquetConnectCoordinator,
 )
 from tests.utils import mock_endpoints, unstub_all
 
@@ -17,15 +17,13 @@ async def test_async_setup_entry_success(mock_hass: HomeAssistant, mock_entry: C
     mock_endpoints()
 
     # Test the feature
-    with patch.object(
-        mock_hass.config_entries, "async_forward_entry_setups", return_value=AsyncMock()
-    ) as mock_forward:
+    with patch.object(mock_hass.config_entries, "async_forward_entry_setups", return_value=AsyncMock()) as mock_forward:
         result = await async_setup_entry(mock_hass, mock_entry)
 
         # Assertions
         assert result is True
         assert mock_hass.data[DOMAIN][mock_entry.unique_id] is not None
-        assert isinstance(mock_hass.data[DOMAIN][mock_entry.unique_id], FrisquetConnectService)
+        assert isinstance(mock_hass.data[DOMAIN][mock_entry.unique_id], FrisquetConnectCoordinator)
         mock_forward.assert_called_once_with(mock_entry, PLATFORMS)
 
     unstub_all()

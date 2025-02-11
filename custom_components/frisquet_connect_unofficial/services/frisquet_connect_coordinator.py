@@ -12,7 +12,7 @@ from custom_components.frisquet_connect_unofficial.services.frisquet_connect_ser
 )
 
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=300)
 
 
@@ -24,7 +24,7 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
     def __init__(self, hass: HomeAssistant, service: FrisquetConnectService, site_id: str):
         super().__init__(
             hass,
-            LOGGER,
+            _LOGGER,
             name="Frisquet Connect Coordinator",
             update_interval=SCAN_INTERVAL,
             update_method=self._async_update,
@@ -36,6 +36,7 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
     async def _async_update(self):
         try_count = 1
         while try_count >= 0:
+            _LOGGER.debug(f"Fetching data for site {self._site_id} (try {try_count})")
             try_count -= 1
             try:
                 self._site = await self._service.async_get_site_info(self._site_id)
@@ -43,7 +44,7 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
             except ForbiddenAccessException:
                 await self._service.async_refresh_token_and_sites()
             except Exception as e:
-                LOGGER.error(f"Error unknown during fetching data: {e}")
+                _LOGGER.error(f"Error unknown during fetching data: {e}")
 
     @property
     def is_site_loaded(self) -> bool:

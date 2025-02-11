@@ -5,16 +5,16 @@ from homeassistant.config_entries import ConfigEntry
 
 from homeassistant.const import STATE_OFF, STATE_ON
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from custom_components.frisquet_connect_unofficial.button import async_setup_entry
+from custom_components.frisquet_connect_unofficial.switch import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
-from custom_components.frisquet_connect_unofficial.entities.button.core_reset_button import (
-    CoreResetButton,
+from custom_components.frisquet_connect_unofficial.entities.switch.core_reset_switch import (
+    CoreResetSwitch,
 )
-from custom_components.frisquet_connect_unofficial.entities.button.reset_boost_button import (
-    ResetBoostButtonEntity,
+from custom_components.frisquet_connect_unofficial.entities.switch.reset_boost_switch import (
+    ResetBoostSwitchEntity,
 )
-from custom_components.frisquet_connect_unofficial.entities.button.reset_exemption_button import (
-    ResetExemptionButtonEntity,
+from custom_components.frisquet_connect_unofficial.entities.switch.reset_exemption_switch import (
+    ResetExemptionSwitchEntity,
 )
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
     FrisquetConnectService,
@@ -41,20 +41,20 @@ async def test_async_setup_entry_success(
 
     # Assertions
     for entity in entities:
-        if not isinstance(entity, CoreResetButton):
+        if not isinstance(entity, CoreResetSwitch):
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
         await entity.async_update()
 
-        if isinstance(entity, ResetBoostButtonEntity):
-            entity: ResetBoostButtonEntity
+        if isinstance(entity, ResetBoostSwitchEntity):
+            entity: ResetBoostSwitchEntity
             assert entity._zone.label_id == "Z1"
             assert entity._attr_state == STATE_OFF
 
             # TODO : test the action to reset
 
-        elif isinstance(entity, ResetExemptionButtonEntity):
-            entity: ResetExemptionButtonEntity
+        elif isinstance(entity, ResetExemptionSwitchEntity):
+            entity: ResetExemptionSwitchEntity
             assert entity._attr_state == STATE_ON
 
             # TODO : test the action to reset
@@ -69,8 +69,6 @@ async def test_async_setup_entry_success(
 async def test_async_setup_entry_no_site_id(
     mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
 ):
-    await async_core_setup_entry_with_site_id_mutated(
-        async_setup_entry, mock_add_entities, mock_hass, mock_entry
-    )
+    await async_core_setup_entry_with_site_id_mutated(async_setup_entry, mock_add_entities, mock_hass, mock_entry)
 
     unstub_all()

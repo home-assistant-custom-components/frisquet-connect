@@ -8,9 +8,6 @@ from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
-    FrisquetConnectService,
-)
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -28,9 +25,7 @@ async def async_initialize_entity(
         _LOGGER.error("No site_id found in the config entry. Please configure the device")
         initialization_result = False
     else:
-        service: FrisquetConnectService = hass.data[DOMAIN][entry.unique_id]
-        coordinator = FrisquetConnectCoordinator(hass, service, entry.data["site_id"])
-        await coordinator._async_update()
+        coordinator: FrisquetConnectCoordinator = hass.data[DOMAIN][entry.unique_id]
 
         if not coordinator.is_site_loaded:
             _LOGGER.error("Site not found")

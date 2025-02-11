@@ -2,6 +2,9 @@ from datetime import datetime
 import pytest
 
 from custom_components.frisquet_connect_unofficial.domains.site.alarm import Alarm
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+    FrisquetConnectCoordinator,
+)
 from tests.utils import mock_endpoints, unstub_all
 
 from homeassistant.core import HomeAssistant
@@ -38,15 +41,16 @@ from custom_components.frisquet_connect_unofficial.services.frisquet_connect_ser
 from tests.conftest import async_core_setup_entry_with_site_id_mutated
 
 
-async def async_init_climate(
-    mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
-):
+async def async_init_climate(mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback):
     # Initialize the mocks
     mock_endpoints()
 
     # Test the feature
     service = FrisquetConnectService(mock_entry.data.get("email"), mock_entry.data.get("password"))
-    mock_hass.data[DOMAIN] = {mock_entry.unique_id: service}
+    coordinator = FrisquetConnectCoordinator(mock_hass, service, mock_entry.data.get("site_id"))
+    await coordinator._async_update()
+    mock_hass.data[DOMAIN] = {mock_entry.unique_id: coordinator}
+
     await async_setup_entry(mock_hass, mock_entry, mock_add_entities)
 
     # Assertions
@@ -210,9 +214,7 @@ async def test_climate_set_temperature(
 async def test_async_setup_entry_no_site_id(
     mock_hass: HomeAssistant, mock_entry: ConfigEntry, mock_add_entities: AddEntitiesCallback
 ):
-    await async_core_setup_entry_with_site_id_mutated(
-        async_setup_entry, mock_add_entities, mock_hass, mock_entry
-    )
+    await async_core_setup_entry_with_site_id_mutated(async_setup_entry, mock_add_entities, mock_hass, mock_entry)
 
     unstub_all()
 

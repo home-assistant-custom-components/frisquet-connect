@@ -8,6 +8,9 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+    FrisquetConnectCoordinator,
+)
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
     FrisquetConnectService,
 )
@@ -57,7 +60,9 @@ async def async_core_setup_entry_with_site_id_mutated(
     entry.data = {"site_id": site_id}
 
     service = FrisquetConnectService(entry.data.get("email"), entry.data.get("password"))
-    hass.data[DOMAIN] = {entry.unique_id: service}
+    coordinator = FrisquetConnectCoordinator(hass, service, entry.data.get("site_id"))
+    await coordinator._async_update()
+    hass.data[DOMAIN] = {entry.unique_id: coordinator}
 
     if mock_add_entities:
         # Test the feature

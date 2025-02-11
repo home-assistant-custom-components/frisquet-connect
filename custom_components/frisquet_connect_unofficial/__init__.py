@@ -4,6 +4,9 @@ import logging
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+    FrisquetConnectCoordinator,
+)
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
     FrisquetConnectService,
 )
@@ -13,21 +16,31 @@ from .const import (
 )
 
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    LOGGER.debug("Initializating Frisquet Connect")
+    _LOGGER.debug("Initializating Frisquet Connect")
 
     site_id = entry.data.get("site_id")
     if site_id is None:
-        LOGGER.error("No site_id found - Please reconfigure the integration")
+        _LOGGER.error("No site_id found - Please reconfigure the integration")
+        return False
+
+    service = FrisquetConnectService(entry.data.get("email"), entry.data.get("password"))
+    coordinator = FrisquetConnectCoordinator(hass, service, entry.data.get("site_id"))
+    await coordinator._async_update()
+
+    if not coordinator.is_site_loaded:
+        _LOGGER.error("Site not found")
         return False
 
     hass.data.setdefault(DOMAIN, {})
-    hass.data[DOMAIN][entry.unique_id] = FrisquetConnectService(entry.data.get("email"), entry.data.get("password"))
+    hass.data[DOMAIN][entry.unique_id] = coordinator
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    _LOGGER.debug("Device Frisquet Connect initialized")
+
     return True
 
 
