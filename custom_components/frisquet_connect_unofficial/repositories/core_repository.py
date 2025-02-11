@@ -23,7 +23,7 @@ async def _async_call_api(url, method: str, params: dict = None, data_json: dict
     Returns:
         requests.Response: The response object resulting from the HTTP request.
     """
-    _LOGGER.debug(f"Calling API: {url}")
+    _LOGGER.debug(f"Calling API: {method} {url}")
     headers = {"Content-Type": "application/json", "User-Agent": DEFAULT_USER_AGENT}
     async with aiohttp.ClientSession(headers=headers) as session:
         try:
