@@ -17,15 +17,15 @@ PLATFORMS: list[Platform] = [
     Platform.CLIMATE,
     Platform.SENSOR,
     Platform.WATER_HEATER,
-    Platform.BUTTON,
+    Platform.SWITCH,
 ]
 
 ### TRANSLATIONS KEYS
 CLIMATE_TRANSLATIONS_KEY = "default_climate"
 ALARM_TRANSLATIONS_KEY = "default_alarm"
 WATER_HEATER_TRANSLATIONS_KEY = "default_water_heater"
-BOOST_BUTTON_TRANSLATIONS_KEY = "boost_button"
-EXEMPTION_BUTTON_TRANSLATIONS_KEY = "exemption_button"
+BOOST_SWITCH_TRANSLATIONS_KEY = "boost_switch"
+EXEMPTION_SWITCH_TRANSLATIONS_KEY = "exemption_switch"
 OUTSIDE_THERMOMETER_TRANSLATIONS_KEY = "outside_thermometer"
 INSIDE_THERMOMETER_TRANSLATIONS_KEY = "inside_thermometer"
 SANITARY_CONSUMPTION_TRANSLATIONS_KEY = "sanitary_consumption"

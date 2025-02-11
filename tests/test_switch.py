@@ -3,8 +3,10 @@ import pytest
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
-from homeassistant.const import STATE_OFF, STATE_ON
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+    FrisquetConnectCoordinator,
+)
 from custom_components.frisquet_connect_unofficial.switch import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
 from custom_components.frisquet_connect_unofficial.entities.switch.core_reset_switch import (
@@ -32,7 +34,10 @@ async def test_async_setup_entry_success(
 
     # Test the feature
     service = FrisquetConnectService(mock_entry.data.get("email"), mock_entry.data.get("password"))
-    mock_hass.data[DOMAIN] = {mock_entry.unique_id: service}
+    coordinator = FrisquetConnectCoordinator(mock_hass, service, mock_entry.data.get("site_id"))
+    await coordinator._async_update()
+    mock_hass.data[DOMAIN] = {mock_entry.unique_id: coordinator}
+
     await async_setup_entry(mock_hass, mock_entry, mock_add_entities)
 
     mock_add_entities.assert_called_once()
@@ -49,13 +54,13 @@ async def test_async_setup_entry_success(
         if isinstance(entity, ResetBoostSwitchEntity):
             entity: ResetBoostSwitchEntity
             assert entity._zone.label_id == "Z1"
-            assert entity._attr_state == STATE_OFF
+            assert entity.is_on == False
 
             # TODO : test the action to reset
 
         elif isinstance(entity, ResetExemptionSwitchEntity):
             entity: ResetExemptionSwitchEntity
-            assert entity._attr_state == STATE_ON
+            assert entity.is_on == True
 
             # TODO : test the action to reset
 
