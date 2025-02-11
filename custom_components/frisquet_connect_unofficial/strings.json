@@ -19,23 +19,40 @@
     },
     "entity": {
         "button": {
-            "boost": {
-                "name": "Handle boost for {zone_name}",
+            "boost_button": {
+                "name": "{zone_name} - Boost",
                 "state": {
                     "off": "Enable boost for {zone_name}",
                     "on": "Disable boost for {zone_name}"
                 }
             },
-            "exemption": {
-                "name": "Handle exemption for all zones",
+            "exemption_button": {
+                "name": "Exemption",
                 "state": {
                     "off": "No action available",
                     "on": "Cancel the exemption"
                 }
             }
         },
+        "water_heater": {
+            "default_water_heater": {
+                "name": "Water heater at {site_name}",
+            }
+        },
+        "sensor": {
+            "alarm": {
+                "name": "Alert at {site_name}"
+            },
+            "inside_thermometer": {
+                "name": "Inside thermometer for {zone_name}"
+            },
+            "outside_thermometer": {
+                "name": "Outside thermometer at {site_name}"
+            }
+        },
         "climate": {
             "default_climate": {
+                "name": "{zone_name} - Thermostat",
                 "state_attributes": {
                     "preset_mode": {
                         "state": {

@@ -30,7 +30,9 @@ class MockResponse(AsyncMock):
 
     def raise_for_status(self):
         if self.status != 200:
-            raise aiohttp.ClientResponseError(request_info=Mock(), history=[], status=self.status, message=self._text)
+            raise aiohttp.ClientResponseError(
+                request_info=Mock(), history=[], status=self.status, message=self._text
+            )
 
     async def json(self):
         return json.loads(self._text)
@@ -63,7 +65,9 @@ def mock_endpoints() -> None:
 # AUTHENTICATION
 def mock_authentication_endpoint() -> None:
     mock = MockResponse(read_json_file_as_text("authentication"), 200)
-    when(aiohttp.ClientSession).post(contains(AUTH_ENDPOINT), headers=ANY, params=None, json=ANY).thenReturn(mock)
+    when(aiohttp.ClientSession).post(
+        contains(AUTH_ENDPOINT), headers=ANY, params=None, json=ANY
+    ).thenReturn(mock)
 
 
 # SITES

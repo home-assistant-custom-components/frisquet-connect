@@ -80,9 +80,7 @@ class FrisquetConnectRepository:
         response_json = await self._async_do_site_action(site_id, token, payload)
         return response_json
 
-    async def async_set_selector(
-        self, site_id: str, zone_id: str, zone_selector: ZoneSelector, token: str
-    ) -> dict:
+    async def async_set_selector(self, site_id: str, zone_id: str, zone_selector: ZoneSelector, token: str) -> dict:
         LOGGER.debug("Setting selector")
 
         key = f"{SELECTOR_ORDER_LABEL}_{zone_id}"
@@ -92,9 +90,7 @@ class FrisquetConnectRepository:
         response_json = await self._async_do_site_action(site_id, token, payload)
         return response_json
 
-    async def async_set_exemption(
-        self, site_id: str, zone_selector: ZoneSelector, token: str
-    ) -> dict:
+    async def async_set_exemption(self, site_id: str, zone_selector: ZoneSelector, token: str) -> dict:
         LOGGER.debug("Setting exemption")
 
         # TODO : Check if the preset_mode is AUTO

@@ -29,7 +29,7 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
@@ -37,13 +37,14 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, zone_label_id: str) -> None:
         super().__init__(coordinator)
+        _LOGGER.debug(f"Creating Climate entity for zone {zone_label_id}")
 
         self._zone = coordinator.site.get_zone_by_label_id(zone_label_id)
 
         self._attr_unique_id = f"{coordinator.site.name}_{zone_label_id}"
         self._attr_has_entity_name = True
-        self._attr_name = f"{coordinator.site.name} - {self._zone.name}"
         self._attr_translation_key = CLIMATE_TRANSLATIONS_KEY
+        self._attr_translation_placeholders = {"zone_name": self._zone.name}
 
         self._attr_supported_features = (
             ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.PRESET_MODE
@@ -88,7 +89,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
         elif hvac_mode == HVACMode.OFF:
             selector = ZoneSelector.FROST_PROTECTION
         else:
-            LOGGER.error(f"Unknown HVAC mode '{hvac_mode}'")
+            _LOGGER.error(f"Unknown HVAC mode '{hvac_mode}'")
             raise ValueError(f"Unknown HVAC mode '{hvac_mode}'")
 
         coordinator: FrisquetConnectCoordinator = self.coordinator
@@ -131,7 +132,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
                 self.coordinator_typed.site.site_id, self._zone, ZoneSelector.FROST_PROTECTION
             )
         else:
-            LOGGER.error(f"Unknown preset mode '{preset_mode}'")
+            _LOGGER.error(f"Unknown preset mode '{preset_mode}'")
             raise ValueError(f"Unknown preset mode '{preset_mode}'")
 
     async def async_set_temperature(self, **kwargs):
@@ -151,6 +152,6 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
         self._attr_current_temperature = self._zone.detail.current_temperature
         self._attr_target_temperature = self._zone.detail.target_temperature
         if self._attr_target_temperature != get_target_temperature(self._zone):
-            LOGGER.warning(
+            _LOGGER.warning(
                 f"Current target temperature '{self._zone.detail.target_temperature}' is not the same as the one predefined in the zone {self._zone.name}: '{get_target_temperature(self._zone)}'"
             )

@@ -10,17 +10,19 @@ from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coo
 )
 
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 class CoreConsumption(SensorEntity, CoordinatorEntity):
 
-    def __init__(self, coordinator: FrisquetConnectCoordinator, suffix_id: str, label: str) -> None:
+    def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str) -> None:
         super().__init__(coordinator)
+        _LOGGER.debug(f"Creating CoreConsumption entity for {translation_key}")
 
-        self._attr_unique_id = f"{self.coordinator.site.site_id}_{suffix_id}"
-        self._attr_name = label
+        self._attr_unique_id = f"{self.coordinator.site.site_id}_{translation_key}"
         self._attr_has_entity_name = True
+        self._attr_translation_key = translation_key
+        self._attr_translation_placeholders = {"site_name": coordinator.site.name}
 
         self._attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
         self._attr_state_class = SensorStateClass.TOTAL_INCREASING

@@ -8,7 +8,7 @@ from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_
 )
 
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 DEFAULT_USER_AGENT = "Frisquet%20Connect/16 CFNetwork/974.2.1 Darwin/18.0.0"
 
@@ -23,7 +23,7 @@ async def _async_call_api(url, method: str, params: dict = None, data_json: dict
     Returns:
         requests.Response: The response object resulting from the HTTP request.
     """
-    LOGGER.debug(f"Calling API: {url}")
+    _LOGGER.debug(f"Calling API: {url}")
     headers = {"Content-Type": "application/json", "User-Agent": DEFAULT_USER_AGENT}
     async with aiohttp.ClientSession(headers=headers) as session:
         try:
@@ -34,6 +34,7 @@ async def _async_call_api(url, method: str, params: dict = None, data_json: dict
             else:
                 raise ValueError(f"Unsupported HTTP method: {method}")
 
+            _LOGGER.debug(f"API called with url: {response.request_info.url}")
             response.raise_for_status()
             return await response.json()
         except aiohttp.ClientResponseError as e:
@@ -43,7 +44,7 @@ async def _async_call_api(url, method: str, params: dict = None, data_json: dict
             if e.status == 403:
                 class_exception = ForbiddenAccessException
 
-            LOGGER.error(error_message)
+            _LOGGER.error(error_message)
             raise class_exception(error_message)
 
 

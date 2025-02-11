@@ -19,23 +19,40 @@
     },
     "entity": {
         "button": {
-            "boost": {
-                "name": "Gérer le boost pour {zone_name}",
+            "boost_button": {
+                "name": "{zone_name} - Boost",
                 "state": {
                     "off": "Activer le boost",
                     "on": "Désactiver le Boost"
                 }
             },
-            "exemption": {
-                "name": "Gérer la dérogation pour toutes les zones",
+            "exemption_button": {
+                "name": "Dérogation",
                 "state": {
                     "off": "Aucune action",
                     "on": "Annuler la dérogation"
                 }
             }
         },
+        "water_heater": {
+            "default_water_heater": {
+                "name": "Eau Chaude Sanitaire de {site_name}"
+            }
+        },
+        "sensor": {
+            "alarm": {
+                "name": "Alerte de {site_name}"
+            },
+            "inside_thermometer": {
+                "name": "Thermomètre int. ({zone_name})"
+            },
+            "outside_thermometer": {
+                "name": "Thermomètre ext. ({site_name})"
+            }
+        },
         "climate": {
             "frisquet_connect_unofficial": {
+                "name": "{zone_name} - Thermostat",
                 "state_attributes": {
                     "preset_mode": {
                         "state": {

@@ -13,17 +13,19 @@ from custom_components.frisquet_connect_unofficial.services.frisquet_connect_ser
 )
 
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
 async def async_initialize_entity(
-    hass: HomeAssistant, entry: ConfigEntry
+    hass: HomeAssistant, entry: ConfigEntry, entity_name: str
 ) -> Tuple[bool, FrisquetConnectCoordinator]:
+    _LOGGER.debug(f"Initializing entity '{entity_name}'")
+
     initialization_result = True
     coordinator: FrisquetConnectCoordinator = None
 
     if entry.data.get("site_id") is None:
-        LOGGER.error("No site_id found in the config entry. Please configure the device")
+        _LOGGER.error("No site_id found in the config entry. Please configure the device")
         initialization_result = False
     else:
         service: FrisquetConnectService = hass.data[DOMAIN][entry.unique_id]
@@ -31,7 +33,9 @@ async def async_initialize_entity(
         await coordinator._async_update()
 
         if not coordinator.is_site_loaded:
-            LOGGER.error("Site not found")
+            _LOGGER.error("Site not found")
             initialization_result = False
+
+    _LOGGER.debug(f"Initialization result for entity '{entity_name}' : {initialization_result}")
 
     return (initialization_result, coordinator)

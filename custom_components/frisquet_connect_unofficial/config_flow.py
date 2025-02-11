@@ -14,7 +14,12 @@ from custom_components.frisquet_connect_unofficial.services.frisquet_connect_ser
 
 from homeassistant.const import CONF_EMAIL, CONF_PASSWORD, CONF_SELECTOR
 
-from homeassistant.helpers.selector import TextSelector, TextSelectorConfig, TextSelectorType, selector
+from homeassistant.helpers.selector import (
+    TextSelector,
+    TextSelectorConfig,
+    TextSelectorType,
+    selector,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -79,7 +84,9 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
             except ForbiddenAccessException:
                 errors = {"base": "invalid_credentials"}
                 return self.async_show_form(
-                    step_id="user", data_schema=self._get_vol_schema_for_authentication(), errors=errors
+                    step_id="user",
+                    data_schema=self._get_vol_schema_for_authentication(),
+                    errors=errors,
                 )
 
         # Finally, go to the next step
@@ -105,5 +112,11 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
         _LOGGER.debug(f"Setting unique id '{site_light.site_id}'")
         await self.async_set_unique_id(site_light.site_id)
 
+        title = self._user_input[CONF_SELECTOR]
+        data = {
+            CONF_EMAIL: self._user_input[CONF_EMAIL],
+            CONF_PASSWORD: self._user_input[CONF_PASSWORD],
+            "site_id": site_light.site_id,
+        }
         _LOGGER.info(f"Configuration completed: '{str(site_light)}'")
-        return self.async_create_entry(title=site_light.name, data=site_light)
+        return self.async_create_entry(title=title, data=data)

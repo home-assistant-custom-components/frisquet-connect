@@ -20,22 +20,19 @@ PLATFORMS: list[Platform] = [
     Platform.BUTTON,
 ]
 
-BOOST_BUTTON_KEY = "boost"
-EXEMPTION_BUTTON_KEY = "exemption"
-
 ### TRANSLATIONS KEYS
 CLIMATE_TRANSLATIONS_KEY = "default_climate"
+ALARM_TRANSLATIONS_KEY = "default_alarm"
+WATER_HEATER_TRANSLATIONS_KEY = "default_water_heater"
 BOOST_BUTTON_TRANSLATIONS_KEY = "boost_button"
 EXEMPTION_BUTTON_TRANSLATIONS_KEY = "exemption_button"
+OUTSIDE_THERMOMETER_TRANSLATIONS_KEY = "outside_thermometer"
+INSIDE_THERMOMETER_TRANSLATIONS_KEY = "inside_thermometer"
+SANITARY_CONSUMPTION_TRANSLATIONS_KEY = "sanitary_consumption"
+HEATING_CONSUMPTION_TRANSLATIONS_KEY = "heating_consumption"
 
-ALARM_CARD_NAME = "Alert"  # TODO : use translation
+
 NO_ALARM = "Aucune alerte en cours"  # TODO : use translation
-
-SANITARY_CONSUMPTION_LABEL = "Consommation Eau Chaude"  # TODO : use translation
-HEATING_CONSUMPTION_LABEL = "Consommation Chauffage"  # TODO : use translation
-
-INSIDE_THERMOMETER_LABEL = "Consommation Eau Chaude"  # TODO : use translation
-OUTSIDE_THERMOMETER_LABEL = "Consommation Chauffage"  # TODO : use translation
 
 
 class ZoneModeLabelOrder(StrEnum):
