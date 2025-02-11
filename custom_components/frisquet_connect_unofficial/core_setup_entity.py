@@ -36,6 +36,6 @@ async def async_initialize_entity(
             _LOGGER.error("Site not found")
             initialization_result = False
 
-    _LOGGER.debug(f"Initialization result for entity '{entity_name}' : {initialization_result}")
+    _LOGGER.debug(f"Pre-initialization result for entity '{entity_name}' : {initialization_result}")
 
     return (initialization_result, coordinator)

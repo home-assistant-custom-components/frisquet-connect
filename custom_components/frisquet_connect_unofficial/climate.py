@@ -9,10 +9,12 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 
-LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry, __name__)
     if not initialization_success:
         await async_add_entities([], update_before_add=False)
@@ -22,5 +24,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     for zone in coordinator.site.zones:
         entity = DefaultClimateEntity(coordinator, zone.label_id)
         entities.append(entity)
+
+    _LOGGER.debug(f"{len(entities)} entity/entities initialized")
 
     await async_add_entities(entities, update_before_add=False)

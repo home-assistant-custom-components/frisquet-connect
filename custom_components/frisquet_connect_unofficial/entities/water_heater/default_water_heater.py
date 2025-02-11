@@ -29,9 +29,12 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
     def should_poll(self) -> bool:
         return True
 
+    @property
+    def coordinator_typed(self) -> FrisquetConnectCoordinator:
+        return self.coordinator
+
     async def async_set_operation_mode(self, operation_mode: str) -> None:
-        coordinator: FrisquetConnectCoordinator = self.coordinator
-        coordinator.service.async_set_sanitary_water_mode(self._site, operation_mode)
+        self.coordinator_typed.service.async_set_sanitary_water_mode(self._site, operation_mode)
 
     async def async_update(self):
-        self.current_operation = self._site.water_heater.sanitary_water_mode
+        self.current_operation = self.coordinator_typed.site.water_heater.sanitary_water_mode

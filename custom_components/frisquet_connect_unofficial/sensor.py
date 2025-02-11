@@ -48,4 +48,6 @@ async def async_setup_entry(
         entity = InsideThermoeterEntity(coordinator, zone.label_id)
         entities.append(entity)
 
+    _LOGGER.debug(f"{len(entities)} entity/entities initialized")
+
     async_add_entities(entities, update_before_add=False)
