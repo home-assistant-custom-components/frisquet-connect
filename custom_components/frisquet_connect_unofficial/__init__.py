@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    _LOGGER.debug("Initializating Frisquet Connect")
+    _LOGGER.debug("Initializing Device Frisquet Connect")
 
     try:
         site_id = entry.data.get("site_id")
@@ -39,7 +39,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data.setdefault(DOMAIN, {})
         hass.data[DOMAIN][entry.unique_id] = coordinator
 
+        _LOGGER.debug("Pre-Initializing entities")
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+        _LOGGER.debug("Post-Initializing entities")
     except Exception as e:
         _LOGGER.error(f"Error during setup: {str(e)}")
         return False

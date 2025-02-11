@@ -26,7 +26,10 @@ class CoreResetSwitch(SwitchEntity, CoordinatorEntity):
         self._attr_translation_key = translation_key
         self._attr_device_class = SwitchDeviceClass.SWITCH
 
-    @property
+    async def async_added_to_hass(self) -> None:
+        """When entity is added to hass."""
+        await self.async_update()
+
     def should_poll(self) -> bool:
         """Poll for those entities"""
         return True

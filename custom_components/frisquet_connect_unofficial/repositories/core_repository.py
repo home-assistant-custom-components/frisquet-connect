@@ -43,8 +43,9 @@ async def _async_call_api(url, method: str, params: dict = None, data_json: dict
 
             if e.status == 403:
                 class_exception = ForbiddenAccessException
-
-            _LOGGER.error(error_message)
+                _LOGGER.warning(error_message)
+            else:
+                _LOGGER.error(error_message)
             raise class_exception(error_message)
 
 
