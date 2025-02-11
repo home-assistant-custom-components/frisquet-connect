@@ -2,9 +2,11 @@ import logging
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import UnitOfEnergy
+from homeassistant.helpers.entity import DeviceInfo
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
 from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
@@ -35,6 +37,10 @@ class CoreConsumption(SensorEntity, CoordinatorEntity):
     @property
     def should_poll(self) -> bool:
         return True
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        return get_device_info(self.coordinator)
 
     @property
     def device_class(self) -> SensorDeviceClass | None:
