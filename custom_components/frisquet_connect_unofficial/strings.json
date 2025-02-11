@@ -36,7 +36,7 @@
         },
         "water_heater": {
             "default_water_heater": {
-                "name": "Water heater at {site_name}",
+                "name": "Water heater at {site_name}"
             }
         },
         "sensor": {
