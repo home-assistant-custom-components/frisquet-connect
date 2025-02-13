@@ -32,7 +32,7 @@ class CoreConsumption(SensorEntity, CoordinatorEntity):
 
     @property
     def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.coordinator)
+        return get_device_info(self.name, self.unique_id, self.coordinator)
 
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""

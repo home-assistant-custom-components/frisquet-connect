@@ -5,7 +5,7 @@ from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from custom_components.frisquet_connect_unofficial.const import (
-    ALARM_TRANSLATIONS_KEY,
+    SENSOR_ALARM_TRANSLATIONS_KEY,
     NO_ALARM,
     AlarmType,
 )
@@ -25,11 +25,11 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
         _LOGGER.debug(f"Creating Alarm entity")
 
         self._attr_unique_id = f"{coordinator.site.site_id}-alert"
-        self._attr_translation_key = ALARM_TRANSLATIONS_KEY
+        self._attr_translation_key = SENSOR_ALARM_TRANSLATIONS_KEY
 
     @property
     def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.coordinator)
+        return get_device_info(self.name, self.unique_id, self.coordinator)
 
     @property
     def icon(self) -> str | None:

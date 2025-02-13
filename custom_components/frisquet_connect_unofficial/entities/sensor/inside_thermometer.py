@@ -1,5 +1,5 @@
 from custom_components.frisquet_connect_unofficial.const import (
-    INSIDE_THERMOMETER_TRANSLATIONS_KEY,
+    SENSOR_INSIDE_THERMOMETER_TRANSLATIONS_KEY,
 )
 from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
 from custom_components.frisquet_connect_unofficial.entities.sensor.core_thermometer import (
@@ -17,7 +17,7 @@ class InsideThermoeterEntity(CoreThermometer):
         super().__init__(
             coordinator,
             f"inside-{zone_label_id}",
-            f"{INSIDE_THERMOMETER_TRANSLATIONS_KEY}_{zone_label_id}",
+            f"{SENSOR_INSIDE_THERMOMETER_TRANSLATIONS_KEY}_{zone_label_id}",
         )
 
         self._zone = self._site.get_zone_by_label_id(zone_label_id)

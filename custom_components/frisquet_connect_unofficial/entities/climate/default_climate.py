@@ -65,7 +65,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
 
     @property
     def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.coordinator)
+        return get_device_info(self.name, self.unique_id, self.coordinator)
 
     @property
     def icon(self) -> str | None:
