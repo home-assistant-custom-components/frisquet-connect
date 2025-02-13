@@ -30,9 +30,7 @@ class MockResponse(AsyncMock):
 
     def raise_for_status(self):
         if self.status != 200:
-            raise aiohttp.ClientResponseError(
-                request_info=Mock(), history=[], status=self.status, message=self._text
-            )
+            raise aiohttp.ClientResponseError(request_info=Mock(), history=[], status=self.status, message=self._text)
 
     async def json(self):
         return json.loads(self._text)
@@ -65,9 +63,7 @@ def mock_endpoints() -> None:
 # AUTHENTICATION
 def mock_authentication_endpoint() -> None:
     mock = MockResponse(read_json_file_as_text("authentication"), 200)
-    when(aiohttp.ClientSession).post(
-        contains(AUTH_ENDPOINT), headers=ANY, params=None, json=ANY
-    ).thenReturn(mock)
+    when(aiohttp.ClientSession).post(contains(AUTH_ENDPOINT), headers=ANY, params=None, json=ANY).thenReturn(mock)
 
 
 # SITES
@@ -124,3 +120,11 @@ def read_json_file_as_json(file_path) -> dict:
 def read_json_file_as_text(file_path) -> str:
     with open(f"{RESOURCES_PATH}/{file_path}.json", "r", encoding="utf-8") as file:
         return file.read()
+
+
+def read_translation_file(language: str = None) -> dict:
+    file = "strings"
+    if language:
+        file = f"translations/{language}"
+    with open(f"custom_components/frisquet_connect_unofficial/{file}.json", "r", encoding="utf-8") as file:
+        return json.loads(file.read())

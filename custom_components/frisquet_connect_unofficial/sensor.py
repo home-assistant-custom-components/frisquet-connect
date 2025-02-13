@@ -30,12 +30,10 @@ SCAN_INTERVAL = timedelta(seconds=150)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(
-    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
-):
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry, __name__)
     if not initialization_success:
-        async_add_entities([], update_before_add=False)
+        await async_add_entities([], update_before_add=True)
         return
 
     entities: list[CoreConsumption | CoreThermometer | AlarmEntity] = [
@@ -50,4 +48,4 @@ async def async_setup_entry(
 
     _LOGGER.debug(f"{len(entities)} entity/entities initialized")
 
-    async_add_entities(entities, update_before_add=False)
+    await async_add_entities(entities, update_before_add=True)
