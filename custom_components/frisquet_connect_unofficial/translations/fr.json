@@ -51,7 +51,7 @@
             }
         },
         "climate": {
-            "frisquet_connect_unofficial": {
+            "default_climate": {
                 "name": "{zone_name} - Thermostat",
                 "state_attributes": {
                     "preset_mode": {
