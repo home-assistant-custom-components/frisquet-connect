@@ -8,10 +8,12 @@ from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coor
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
+from custom_components.frisquet_connect_unofficial.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
 
 
+@log_methods
 class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:

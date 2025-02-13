@@ -10,10 +10,13 @@ from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coor
 from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
 from homeassistant.helpers.entity import DeviceInfo
 
+from custom_components.frisquet_connect_unofficial.utils import log_methods
+
 
 LOGGER = logging.getLogger(__name__)
 
 
+@log_methods
 class CoreResetSwitch(SwitchEntity, CoordinatorEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str, suffix_id: str = None) -> None:

@@ -7,10 +7,12 @@ from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coor
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
+from custom_components.frisquet_connect_unofficial.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
 
 
+@log_methods
 class CoreThermometer(SensorEntity, CoordinatorEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, suffix_id: str, translation_key: str) -> None:

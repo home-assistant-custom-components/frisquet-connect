@@ -54,6 +54,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
         self._attr_temperature_unit = "°C"
         self._attr_target_temperature_low = 5
         self._attr_target_temperature_high = 25
+        _LOGGER.debug(f"Climate entity for zone {zone_label_id} created")
 
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""

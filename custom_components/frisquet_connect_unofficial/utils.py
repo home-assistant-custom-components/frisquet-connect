@@ -15,7 +15,8 @@ def log_methods(cls, logger=None):
 
 def log_method(logger, func):
     def wrapper(*args, **kwargs):
-        logger.debug(f"Calling method: '{func.__name__}' with '{len(args)}' args")
+        cls_name = args[0].__class__.__name__ if args else "UnknownClass"
+        logger.debug(f"Calling '{cls_name}.{func.__name__}' with '{len(args)}' args")
         return func(*args, **kwargs)
 
     return wrapper
