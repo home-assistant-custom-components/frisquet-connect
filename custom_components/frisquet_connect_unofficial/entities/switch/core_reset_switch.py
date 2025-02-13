@@ -4,9 +4,11 @@ from homeassistant.components.switch import SwitchEntity, SwitchDeviceClass
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
+from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
+from homeassistant.helpers.entity import DeviceInfo
 
 
 LOGGER = logging.getLogger(__name__)
@@ -23,6 +25,10 @@ class CoreResetSwitch(SwitchEntity, CoordinatorEntity):
         self._attr_has_entity_name = True
         self._attr_translation_key = translation_key
         self._attr_device_class = SwitchDeviceClass.SWITCH
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        return get_device_info(self.name, self.coordinator)
 
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""

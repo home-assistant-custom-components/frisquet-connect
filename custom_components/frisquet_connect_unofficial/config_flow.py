@@ -8,8 +8,8 @@ from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_
     ForbiddenAccessException,
 )
 from custom_components.frisquet_connect_unofficial.domains.site.site_light import SiteLight
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
-    FrisquetConnectService,
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+    FrisquetConnectDevice,
 )
 
 from homeassistant.const import CONF_EMAIL, CONF_PASSWORD, CONF_SELECTOR
@@ -77,7 +77,7 @@ class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
     async def _set_auhentication_step(self) -> FlowResult:
         # Get existing sites if not already done
         if self._user_input.get("sites") is None:
-            service = FrisquetConnectService(self._user_input.get(CONF_EMAIL), self._user_input.get(CONF_PASSWORD))
+            service = FrisquetConnectDevice(self._user_input.get(CONF_EMAIL), self._user_input.get(CONF_PASSWORD))
             try:
                 authentication = await service.async_refresh_token_and_sites()
                 self._user_input["sites"] = authentication.sites

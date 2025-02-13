@@ -5,7 +5,7 @@ from homeassistant.config_entries import ConfigEntry
 
 from custom_components.frisquet_connect_unofficial import async_setup_entry
 from custom_components.frisquet_connect_unofficial.const import DOMAIN, PLATFORMS
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 from tests.utils import mock_endpoints, unstub_all

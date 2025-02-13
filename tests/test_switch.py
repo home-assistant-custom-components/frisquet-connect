@@ -4,7 +4,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect_unofficial.switch import async_setup_entry
@@ -18,8 +18,8 @@ from custom_components.frisquet_connect_unofficial.entities.switch.reset_boost_s
 from custom_components.frisquet_connect_unofficial.entities.switch.reset_exemption_switch import (
     ResetExemptionSwitchEntity,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
-    FrisquetConnectService,
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+    FrisquetConnectDevice,
 )
 from tests.conftest import async_core_setup_entry_with_site_id_mutated
 from tests.utils import mock_endpoints, unstub_all
@@ -33,7 +33,7 @@ async def test_async_setup_entry_success(
     mock_endpoints()
 
     # Test the feature
-    service = FrisquetConnectService(mock_entry.data.get("email"), mock_entry.data.get("password"))
+    service = FrisquetConnectDevice(mock_entry.data.get("email"), mock_entry.data.get("password"))
     coordinator = FrisquetConnectCoordinator(mock_hass, service, mock_entry.data.get("site_id"))
     await coordinator._async_update()
     mock_hass.data[DOMAIN] = {mock_entry.unique_id: coordinator}

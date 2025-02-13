@@ -2,7 +2,7 @@ from datetime import datetime
 import pytest
 
 from custom_components.frisquet_connect_unofficial.domains.site.alarm import Alarm
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 from tests.utils import mock_endpoints, unstub_all
@@ -36,8 +36,8 @@ from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
 from custom_components.frisquet_connect_unofficial.entities.climate.default_climate import (
     DefaultClimateEntity,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
-    FrisquetConnectService,
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+    FrisquetConnectDevice,
 )
 from tests.conftest import async_core_setup_entry_with_site_id_mutated
 
@@ -47,7 +47,7 @@ async def async_init_climate(mock_hass: HomeAssistant, mock_entry: ConfigEntry, 
     mock_endpoints()
 
     # Test the feature
-    service = FrisquetConnectService(mock_entry.data.get("email"), mock_entry.data.get("password"))
+    service = FrisquetConnectDevice(mock_entry.data.get("email"), mock_entry.data.get("password"))
     coordinator = FrisquetConnectCoordinator(mock_hass, service, mock_entry.data.get("site_id"))
     await coordinator._async_update()
     mock_hass.data[DOMAIN] = {mock_entry.unique_id: coordinator}

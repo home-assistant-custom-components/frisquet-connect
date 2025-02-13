@@ -9,7 +9,7 @@ from custom_components.frisquet_connect_unofficial.entities.climate.utils import
     get_target_temperature,
 )
 from custom_components.frisquet_connect_unofficial.entities.utils import get_device_info
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 
@@ -28,9 +28,12 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
+from custom_components.frisquet_connect_unofficial.utils import log_methods
+
 _LOGGER = logging.getLogger(__name__)
 
 
+@log_methods
 class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
     _zone: Zone
 
@@ -62,7 +65,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
 
     @property
     def device_info(self) -> DeviceInfo:
-        return get_device_info(self.coordinator)
+        return get_device_info(self.name, self.coordinator)
 
     @property
     def icon(self) -> str | None:

@@ -4,7 +4,7 @@ from custom_components.frisquet_connect_unofficial.const import (
 from custom_components.frisquet_connect_unofficial.entities.sensor.core_thermometer import (
     CoreThermometer,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 

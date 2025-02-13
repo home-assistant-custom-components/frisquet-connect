@@ -7,8 +7,8 @@ from custom_components.frisquet_connect_unofficial.domains.exceptions.forbidden_
     ForbiddenAccessException,
 )
 from custom_components.frisquet_connect_unofficial.domains.site.site import Site
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
-    FrisquetConnectService,
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+    FrisquetConnectDevice,
 )
 
 
@@ -17,11 +17,11 @@ SCAN_INTERVAL = timedelta(seconds=300)
 
 
 class FrisquetConnectCoordinator(DataUpdateCoordinator):
-    _service: FrisquetConnectService
+    _service: FrisquetConnectDevice
     _site_id: str
     _site: Site
 
-    def __init__(self, hass: HomeAssistant, service: FrisquetConnectService, site_id: str):
+    def __init__(self, hass: HomeAssistant, service: FrisquetConnectDevice, site_id: str):
         super().__init__(
             hass,
             _LOGGER,
@@ -55,5 +55,5 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
         return self._site
 
     @property
-    def service(self) -> FrisquetConnectService:
+    def service(self) -> FrisquetConnectDevice:
         return self._service

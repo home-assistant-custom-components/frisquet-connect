@@ -3,7 +3,7 @@ import logging
 from custom_components.frisquet_connect_unofficial.const import BOOST_SWITCH_TRANSLATIONS_KEY
 from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
 from custom_components.frisquet_connect_unofficial.entities.switch.core_reset_switch import CoreResetSwitch
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 

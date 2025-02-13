@@ -5,7 +5,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 

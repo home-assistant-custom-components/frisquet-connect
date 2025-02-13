@@ -18,7 +18,7 @@ from custom_components.frisquet_connect_unofficial.repositories.frisquet_connect
 _LOGGER = logging.getLogger(__name__)
 
 
-class FrisquetConnectService:
+class FrisquetConnectDevice:
     _repository: FrisquetConnectRepository
     _email: str
     _password: str
@@ -26,7 +26,7 @@ class FrisquetConnectService:
     _token: str
 
     def __init__(self, email: str, password: str) -> None:
-        _LOGGER.debug("Creating FrisquetConnectService")
+        _LOGGER.debug("Creating FrisquetConnectDevice")
         self._email = email
         self._password = password
         self._repository = FrisquetConnectRepository()
@@ -34,9 +34,7 @@ class FrisquetConnectService:
         self._token = ""
 
     async def async_refresh_token_and_sites(self) -> Authentication:
-        authentication = await self._repository.async_get_token_and_sites(
-            self._email, self._password
-        )
+        authentication = await self._repository.async_get_token_and_sites(self._email, self._password)
         self._token = authentication.token
         self._sites = authentication.sites
         return authentication

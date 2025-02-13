@@ -8,11 +8,11 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from custom_components.frisquet_connect_unofficial.const import DOMAIN
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect_unofficial.services.frisquet_connect_service import (
-    FrisquetConnectService,
+from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+    FrisquetConnectDevice,
 )
 from tests.utils import mock_endpoints, read_json_file_as_json
 
@@ -59,7 +59,7 @@ async def async_core_setup_entry_with_site_id_mutated(
     mock_endpoints()
     entry.data = {"site_id": site_id}
 
-    service = FrisquetConnectService(entry.data.get("email"), entry.data.get("password"))
+    service = FrisquetConnectDevice(entry.data.get("email"), entry.data.get("password"))
     coordinator = FrisquetConnectCoordinator(hass, service, entry.data.get("site_id"))
     await coordinator._async_update()
     hass.data[DOMAIN] = {entry.unique_id: coordinator}
