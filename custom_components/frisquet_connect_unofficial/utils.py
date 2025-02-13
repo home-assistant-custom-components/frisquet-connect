@@ -1,6 +1,6 @@
 import logging
 
-_LOGGER_DEFAULT = logging.getLogger("Default")
+_LOGGER_DEFAULT = logging.getLogger(__name__)
 
 
 # https://blog.stackademic.com/understanding-python-decorators-a-guide-to-using-class-decorators-7327c9b42916
