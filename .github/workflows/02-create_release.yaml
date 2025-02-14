@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   create_release:
@@ -13,21 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Get the previous release tag
-        id: prev-tag
-        run: |
-          prev_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
-          echo "::set-output name=prev_tag::$prev_tag"
-
-      - name: Calculate new tag
+      - name: Calculate tag
         id: new-tag
         run: |
-          prev_tag=${{ steps.prev-tag.outputs.prev_tag }}
-          if [[ $prev_tag =~ ^v0\.1-beta\.([0-9]+)$ ]]; then
-            new_tag=v0.1-beta.$((BASH_REMATCH[1]+1))
-          else
-            new_tag=v0.1-beta.1
-          fi
+          new_tag=v0.1-beta.$(date +'%m%d%H%M')
           echo "::set-output name=new_tag::$new_tag"
 
       - name: Create Release
