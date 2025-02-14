@@ -27,4 +27,4 @@ class SiteLight(ModelBase):
         return self._alarms
 
     def __repr__(self):
-        return {self.name}
+        return self.name
