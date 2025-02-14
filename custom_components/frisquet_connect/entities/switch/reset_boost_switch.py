@@ -12,17 +12,21 @@ LOGGER = logging.getLogger(__name__)
 
 
 class ResetBoostSwitchEntity(CoreResetSwitch):
-    _zone: Zone
+    _zone_label_id: str
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, zone_label_id: str) -> None:
         super().__init__(coordinator, SWITCH_BOOST_TRANSLATIONS_KEY, zone_label_id)
 
-        self._zone = coordinator.site.get_zone_by_label_id(zone_label_id)
-        self._attr_translation_placeholders = {"zone_name": self._zone.name}
+        self._zone_label_id = zone_label_id
+        self._attr_translation_placeholders = {"zone_name": self.zone.name}
+
+    @property
+    def zone(self) -> Zone:
+        return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
 
     @property
     def icon(self) -> str | None:
         return "mdi:heat-wave"
 
     async def async_update(self):
-        self._attr_is_on = self._zone.detail.is_boosting == True
+        self._attr_is_on = self.zone.detail.is_boosting == True

@@ -15,10 +15,10 @@ from custom_components.frisquet_connect.entities.sensor.heating_consumption impo
     HeatingConsumptionEntity,
 )
 from custom_components.frisquet_connect.entities.sensor.inside_thermometer import (
-    InsideThermoeterEntity,
+    InsideThermometerEntity,
 )
 from custom_components.frisquet_connect.entities.sensor.outside_thermometer import (
-    OutsideThermoeterEntity,
+    OutsideThermometerEntity,
 )
 from custom_components.frisquet_connect.entities.sensor.sanitary_consumption import (
     SanitaryConsumptionEntity,
@@ -39,11 +39,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     entities: list[CoreConsumption | CoreThermometer | AlarmEntity] = [
         SanitaryConsumptionEntity(coordinator),
         HeatingConsumptionEntity(coordinator),
-        OutsideThermoeterEntity(coordinator),
+        OutsideThermometerEntity(coordinator),
         AlarmEntity(coordinator),
     ]
     for zone in coordinator.site.zones:
-        entity = InsideThermoeterEntity(coordinator, zone.label_id)
+        entity = InsideThermometerEntity(coordinator, zone.label_id)
         entities.append(entity)
 
     _LOGGER.debug(f"{len(entities)} entity/entities initialized")

@@ -30,6 +30,10 @@ class CoreResetSwitch(SwitchEntity, CoordinatorEntity):
         self._attr_device_class = SwitchDeviceClass.SWITCH
 
     @property
+    def coordinator_typed(self) -> FrisquetConnectCoordinator:
+        return self.coordinator
+
+    @property
     def device_info(self) -> DeviceInfo:
         return get_device_info(self.name, self.unique_id, self.coordinator)
 

@@ -73,9 +73,9 @@ async def test_async_setup_entry_success(
     entity: DefaultClimateEntity = entities[0]
     await entity.async_update()
 
-    zone: Zone = entity._zone
+    zone: Zone = entity.zone
     assert zone is not None
-    assert entity._zone.label_id == "Z1"
+    assert entity.zone.label_id == "Z1"
 
     # SITE
     site: Site = entity.coordinator_typed.site

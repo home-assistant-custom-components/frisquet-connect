@@ -15,16 +15,20 @@ _LOGGER = logging.getLogger(__name__)
 @log_methods
 class CoreThermometer(SensorEntity, CoordinatorEntity):
 
-    def __init__(self, coordinator: FrisquetConnectCoordinator, suffix_id: str, translation_key: str) -> None:
+    def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str, suffix: str = None) -> None:
         super().__init__(coordinator)
         _LOGGER.debug(f"Creating CoreThermometer entity for {translation_key}")
 
-        self._attr_unique_id = f"{self.coordinator.site.site_id}_{suffix_id}"
+        self._attr_unique_id = f"{self.coordinator.site.site_id}_{translation_key}{suffix}"
         self._attr_has_entity_name = True
         self._attr_translation_key = translation_key
 
         self._attr_native_unit_of_measurement = "°C"
         self._attr_unit_of_measurement = "°C"
+
+    @property
+    def coordinator_typed(self) -> FrisquetConnectCoordinator:
+        return self.coordinator
 
     @property
     def device_info(self) -> DeviceInfo:

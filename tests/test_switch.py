@@ -53,7 +53,7 @@ async def test_async_setup_entry_success(
 
         if isinstance(entity, ResetBoostSwitchEntity):
             entity: ResetBoostSwitchEntity
-            assert entity._zone.label_id == "Z1"
+            assert entity.zone.label_id == "Z1"
             assert entity.is_on == False
 
             # TODO : test the action to reset
