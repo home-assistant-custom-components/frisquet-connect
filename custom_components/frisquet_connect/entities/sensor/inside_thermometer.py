@@ -17,7 +17,7 @@ class InsideThermometerEntity(CoreThermometer):
         super().__init__(coordinator, SENSOR_INSIDE_THERMOMETER_TRANSLATIONS_KEY, zone_label_id)
 
         self._zone_label_id = zone_label_id
-        self._attr_translation_placeholders = {"zone_name": self._zone.name}
+        self._attr_translation_placeholders = {"zone_name": self.zone.name}
 
     @property
     def zone(self) -> Zone:
