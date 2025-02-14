@@ -17,17 +17,19 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Calculate tag
-        id: new-tag
+        id: calculate-tag
         run: |
           new_tag=v0.1-beta.$(date +'%m%d%H%M')
           echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
+          echo "release_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.new-tag.outputs.new_tag }}
-          release_name: ${{ steps.new-tag.outputs.new_tag }} - $(date +'%Y-%m-%d')
+          tag_name: ${{ steps.calculate-tag.outputs.new_tag }}
+          release_date: ${{ steps.calculate-tag.outputs.release_date }}
+          release_name: ${{ steps.calculate-tag.outputs.new_tag }} - ${{ steps.calculate-tag.outputs.release_date }}
           draft: false
           prerelease: false
