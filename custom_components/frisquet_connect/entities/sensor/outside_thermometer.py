@@ -16,4 +16,4 @@ class OutsideThermometerEntity(CoreThermometer):
         self._attr_translation_placeholders = {"site_name": coordinator.site.name}
 
     async def async_update(self):
-        self._attr_native_value = self._site.external_temperature
+        self._attr_native_value = self.coordinator_typed.site.external_temperature

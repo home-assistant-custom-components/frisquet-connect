@@ -47,4 +47,6 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
         )
 
     async def async_update(self):
-        self.current_operation = SanitaryWaterModeLabel[self.coordinator_typed.site.water_heater.sanitary_water_mode]
+        self.current_operation = SanitaryWaterModeLabel[
+            self.coordinator_typed.site.water_heater.sanitary_water_mode.name
+        ]

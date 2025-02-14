@@ -26,6 +26,7 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
 
         self._attr_unique_id = f"{coordinator.site.site_id}-alert"
         self._attr_translation_key = SENSOR_ALARM_TRANSLATIONS_KEY
+        self._attr_options = [alarm_type for alarm_type in AlarmType]
 
     @property
     def device_info(self) -> DeviceInfo:

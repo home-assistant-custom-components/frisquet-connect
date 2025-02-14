@@ -7,6 +7,7 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
 
 
 # https://developers.home-assistant.io/docs/device_registry_index/
+# TODO: Create a decorator for that
 def get_device_info(name: str, unique_id: str, coordinator: FrisquetConnectCoordinator) -> DeviceInfo:
     return DeviceInfo(
         identifiers={(DOMAIN, unique_id)},

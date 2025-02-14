@@ -71,6 +71,8 @@ async def test_async_setup_entry_success(
     entities = await async_init_climate(mock_hass, mock_entry, mock_add_entities)
 
     entity: DefaultClimateEntity = entities[0]
+    if not isinstance(entity, (DefaultClimateEntity)):
+        assert False, f"Unknown entity type: {entity.__class__.__name__}"
     await entity.async_update()
 
     zone: Zone = entity.zone

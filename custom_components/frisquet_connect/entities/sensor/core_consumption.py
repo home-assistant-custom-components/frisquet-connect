@@ -36,6 +36,7 @@ class CoreConsumption(SensorEntity, CoordinatorEntity):
     def device_info(self) -> DeviceInfo:
         return get_device_info(self.name, self.unique_id, self.coordinator)
 
+    # TODO : put in the icons.json file
     @property
     def icon(self) -> str | None:
         return "mdi:gas-burner"
