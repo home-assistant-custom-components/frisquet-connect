@@ -17,7 +17,7 @@ jobs:
         id: new-tag
         run: |
           new_tag=v0.1-beta.$(date +'%m%d%H%M')
-          echo "name=$new_tag" >> $GITHUB_OUTPUT
+          echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: actions/create-release@v1
