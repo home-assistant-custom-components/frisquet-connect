@@ -48,6 +48,12 @@
             },
             "outside_thermometer": {
                 "name": "Thermomètre ext. ({site_name})"
+            },
+            "heating_consumption": {
+                "name": "Consommation du chauffage"
+            },
+            "sanitary_consumption": {
+                "name": "Consommation de l'Eau Chaude Sanitaire"
             }
         },
         "climate": {

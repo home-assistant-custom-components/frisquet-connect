@@ -39,6 +39,12 @@ async def test_async_sanity_check_missing_key():
         Platform.SWITCH: [SWITCH_BOOST_TRANSLATIONS_KEY, SWITCH_EXEMPTION_TRANSLATIONS_KEY],
     }
 
+    # Check if all entities defined the platform are in the translation file
+    for platform, translation_keys in types.items():
+        for translation_key in translation_keys:
+            assert translation_key in default_entities[platform]
+
+    # Check if all entities defined in the translation file are in the dedicated platform
     for platform, platform_entities in default_entities.items():
         for entity in platform_entities.keys():
             assert entity in types[platform]

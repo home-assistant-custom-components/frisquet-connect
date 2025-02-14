@@ -48,6 +48,12 @@
             },
             "outside_thermometer": {
                 "name": "Outside thermometer at {site_name}"
+            },
+            "heating_consumption": {
+                "name": "Heating consumption"
+            },
+            "sanitary_consumption": {
+                "name": "Sanitary consumption"
             }
         },
         "climate": {
