@@ -20,7 +20,7 @@
     "entity": {
         "switch": {
             "boost_switch": {
-                "name": "{zone_name} - Boost",
+                "name": "Boost - {zone_name}",
                 "state": {
                     "off": "Activer le boost",
                     "on": "Désactiver le Boost"
@@ -40,7 +40,7 @@
             }
         },
         "sensor": {
-            "alarm": {
+            "default_alarm": {
                 "name": "Alerte de {site_name}"
             },
             "inside_thermometer": {
@@ -52,7 +52,7 @@
         },
         "climate": {
             "default_climate": {
-                "name": "{zone_name} - Thermostat",
+                "name": "Thermostat - {zone_name}",
                 "state_attributes": {
                     "preset_mode": {
                         "state": {
