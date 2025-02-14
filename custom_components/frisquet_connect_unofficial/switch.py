@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry, __name__)
     if not initialization_success:
-        await async_add_entities([], update_before_add=True)
+        async_add_entities([], update_before_add=True)
         return
 
     entities: list[CoreResetSwitch] = []
@@ -41,4 +41,4 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 
     _LOGGER.debug(f"{len(entities)} entity/entities initialized")
 
-    await async_add_entities(entities, update_before_add=True)
+    async_add_entities(entities, update_before_add=True)

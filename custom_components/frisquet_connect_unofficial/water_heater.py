@@ -16,9 +16,9 @@ _LOGGER = logging.getLogger(__name__)
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry, __name__)
     if not initialization_success:
-        await async_add_entities([], update_before_add=True)
+        async_add_entities([], update_before_add=True)
         return
 
     _LOGGER.debug(f"1 entity/entities initialized")
 
-    await async_add_entities([DefaultWaterHeaterEntity(coordinator)], update_before_add=True)
+    async_add_entities([DefaultWaterHeaterEntity(coordinator)], update_before_add=True)

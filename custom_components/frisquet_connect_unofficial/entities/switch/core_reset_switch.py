@@ -33,10 +33,6 @@ class CoreResetSwitch(SwitchEntity, CoordinatorEntity):
     def device_info(self) -> DeviceInfo:
         return get_device_info(self.name, self.unique_id, self.coordinator)
 
-    async def async_added_to_hass(self) -> None:
-        """When entity is added to hass."""
-        await self.async_update()
-
     def should_poll(self) -> bool:
         """Poll for those entities"""
         return True

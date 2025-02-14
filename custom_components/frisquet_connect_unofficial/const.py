@@ -11,7 +11,7 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
-DOMAIN = "frisquet_connect_unofficial"
+DOMAIN = "frisquet_connect"
 DEVICE_MANUFACTURER = "Frisquet"
 PLATFORMS: list[Platform] = [
     Platform.CLIMATE,

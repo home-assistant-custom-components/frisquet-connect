@@ -1,6 +1,6 @@
 {
-    "domain": "frisquet_connect_unofficial",
-    "name": "Frisquet Connect",
+    "domain": "frisquet_connect",
+    "name": "Frisquet Connect (Yet another unofficial)",
     "codeowners": [
         "@brunohead"
     ],
