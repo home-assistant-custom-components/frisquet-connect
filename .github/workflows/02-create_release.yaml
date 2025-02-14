@@ -17,7 +17,7 @@ jobs:
         id: new-tag
         run: |
           new_tag=v0.1-beta.$(date +'%m%d%H%M')
-          echo "::set-output name=new_tag::$new_tag"
+          echo "name=$new_tag" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: actions/create-release@v1
@@ -25,9 +25,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.new-tag.outputs.new_tag }}
-          release_name: ${{ steps.new-tag.outputs.new_tag }} $(date +'%Y-%m-%d')
+          release_name: ${{ steps.new-tag.outputs.new_tag }} - $(date +'%Y-%m-%d')
           draft: false
-          prerelease: true
-          body: |
-            Changes since ${{ steps.prev-tag.outputs.prev_tag }}:
-            $(git log --pretty=format:"%h %s" ${{ steps.prev-tag.outputs.prev_tag }}..HEAD)
+          prerelease: false
