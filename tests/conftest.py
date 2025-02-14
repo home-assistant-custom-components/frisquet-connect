@@ -7,11 +7,11 @@ from homeassistant.config_entries import ConfigEntry
 
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from custom_components.frisquet_connect_unofficial.const import DOMAIN
-from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect.const import DOMAIN
+from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+from custom_components.frisquet_connect.devices.frisquet_connect_device import (
     FrisquetConnectDevice,
 )
 from tests.utils import mock_endpoints, read_json_file_as_json

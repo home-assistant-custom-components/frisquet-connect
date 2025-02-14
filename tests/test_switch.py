@@ -4,21 +4,21 @@ from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect_unofficial.switch import async_setup_entry
-from custom_components.frisquet_connect_unofficial.const import DOMAIN
-from custom_components.frisquet_connect_unofficial.entities.switch.core_reset_switch import (
+from custom_components.frisquet_connect.switch import async_setup_entry
+from custom_components.frisquet_connect.const import DOMAIN
+from custom_components.frisquet_connect.entities.switch.core_reset_switch import (
     CoreResetSwitch,
 )
-from custom_components.frisquet_connect_unofficial.entities.switch.reset_boost_switch import (
+from custom_components.frisquet_connect.entities.switch.reset_boost_switch import (
     ResetBoostSwitchEntity,
 )
-from custom_components.frisquet_connect_unofficial.entities.switch.reset_exemption_switch import (
+from custom_components.frisquet_connect.entities.switch.reset_exemption_switch import (
     ResetExemptionSwitchEntity,
 )
-from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+from custom_components.frisquet_connect.devices.frisquet_connect_device import (
     FrisquetConnectDevice,
 )
 from tests.conftest import async_core_setup_entry_with_site_id_mutated

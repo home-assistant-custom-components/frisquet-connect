@@ -2,7 +2,7 @@ import json
 import aiohttp
 
 from mockito import contains, unstub, when, ANY
-from custom_components.frisquet_connect_unofficial.repositories.frisquet_connect_repository import (
+from custom_components.frisquet_connect.repositories.frisquet_connect_repository import (
     AUTH_ENDPOINT,
     ORDER_ENDPOINT,
     SITES_ENDPOINT,
@@ -126,5 +126,5 @@ def read_translation_file(language: str = None) -> dict:
     file = "strings"
     if language:
         file = f"translations/{language}"
-    with open(f"custom_components/frisquet_connect_unofficial/{file}.json", "r", encoding="utf-8") as file:
+    with open(f"custom_components/frisquet_connect/{file}.json", "r", encoding="utf-8") as file:
         return json.loads(file.read())

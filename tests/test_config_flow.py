@@ -2,14 +2,12 @@ import pytest
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
-from custom_components.frisquet_connect_unofficial.config_flow import FrisquetConnectFlow
+from custom_components.frisquet_connect.config_flow import FrisquetConnectFlow
 from tests.utils import unstub_all
 
 
 @pytest.mark.asyncio
-async def test_async_config_flow_step_authentication(
-    mock_hass: HomeAssistant, mock_entry: ConfigEntry
-):
+async def test_async_config_flow_step_authentication(mock_hass: HomeAssistant, mock_entry: ConfigEntry):
     config_flow = FrisquetConnectFlow()
 
     user_input = None

@@ -1,8 +1,8 @@
 from datetime import datetime
 import pytest
 
-from custom_components.frisquet_connect_unofficial.domains.site.alarm import Alarm
-from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect.domains.site.alarm import Alarm
+from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 from tests.utils import mock_endpoints, unstub_all
@@ -21,8 +21,8 @@ from homeassistant.components.climate.const import (
     PRESET_ACTIVITY,
 )
 
-from custom_components.frisquet_connect_unofficial.climate import async_setup_entry
-from custom_components.frisquet_connect_unofficial.const import (
+from custom_components.frisquet_connect.climate import async_setup_entry
+from custom_components.frisquet_connect.const import (
     DOMAIN,
     AlarmType,
     SanitaryWaterMode,
@@ -31,12 +31,12 @@ from custom_components.frisquet_connect_unofficial.const import (
     ZoneMode,
     ZoneSelector,
 )
-from custom_components.frisquet_connect_unofficial.domains.site.site import Site
-from custom_components.frisquet_connect_unofficial.domains.site.zone import Zone
-from custom_components.frisquet_connect_unofficial.entities.climate.default_climate import (
+from custom_components.frisquet_connect.domains.site.site import Site
+from custom_components.frisquet_connect.domains.site.zone import Zone
+from custom_components.frisquet_connect.entities.climate.default_climate import (
     DefaultClimateEntity,
 )
-from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_device import (
+from custom_components.frisquet_connect.devices.frisquet_connect_device import (
     FrisquetConnectDevice,
 )
 from tests.conftest import async_core_setup_entry_with_site_id_mutated

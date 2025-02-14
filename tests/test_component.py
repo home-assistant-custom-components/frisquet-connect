@@ -3,9 +3,9 @@ from unittest.mock import AsyncMock, patch
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 
-from custom_components.frisquet_connect_unofficial import async_setup_entry
-from custom_components.frisquet_connect_unofficial.const import DOMAIN, PLATFORMS
-from custom_components.frisquet_connect_unofficial.devices.frisquet_connect_coordinator import (
+from custom_components.frisquet_connect import async_setup_entry
+from custom_components.frisquet_connect.const import DOMAIN, PLATFORMS
+from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 from tests.utils import mock_endpoints, unstub_all
