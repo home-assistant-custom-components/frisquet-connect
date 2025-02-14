@@ -36,18 +36,18 @@
         },
         "water_heater": {
             "default_water_heater": {
-                "name": "Water heater at {site_name}"
+                "name": "Water heater"
             }
         },
         "sensor": {
             "default_alarm": {
-                "name": "Alert at {site_name}"
+                "name": "Alert"
             },
             "inside_thermometer": {
                 "name": "Inside thermometer for {zone_name}"
             },
             "outside_thermometer": {
-                "name": "Outside thermometer at {site_name}"
+                "name": "Outside thermometer"
             },
             "heating_consumption": {
                 "name": "Heating consumption"

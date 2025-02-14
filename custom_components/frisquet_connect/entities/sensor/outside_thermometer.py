@@ -13,7 +13,6 @@ class OutsideThermometerEntity(CoreThermometer):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator, SENSOR_OUTSIDE_THERMOMETER_TRANSLATIONS_KEY)
-        self._attr_translation_placeholders = {"site_name": coordinator.site.name}
 
     async def async_update(self):
         self._attr_native_value = self.coordinator_typed.site.external_temperature

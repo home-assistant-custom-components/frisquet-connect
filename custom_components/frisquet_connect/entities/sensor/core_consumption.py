@@ -23,14 +23,17 @@ class CoreConsumption(SensorEntity, CoordinatorEntity):
         super().__init__(coordinator)
         _LOGGER.debug(f"Creating CoreConsumption entity for {translation_key}")
 
-        self._attr_unique_id = f"{self.coordinator.site.site_id}_{translation_key}"
+        self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{translation_key}"
         self._attr_has_entity_name = True
         self._attr_translation_key = translation_key
-        self._attr_translation_placeholders = {"site_name": coordinator.site.name}
 
         self._attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
         self._attr_state_class = SensorStateClass.TOTAL_INCREASING
         self._attr_unit_of_measurement = "kWh"
+
+    @property
+    def coordinator_typed(self) -> FrisquetConnectCoordinator:
+        return self.coordinator
 
     @property
     def device_info(self) -> DeviceInfo:

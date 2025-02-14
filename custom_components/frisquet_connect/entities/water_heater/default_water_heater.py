@@ -20,10 +20,9 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
         super().__init__(coordinator)
         _LOGGER.debug(f"Creating WaterHeater entity")
 
-        self._attr_unique_id = f"water_heater_{coordinator.site.site_id}"
+        self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{WATER_HEATER_TRANSLATIONS_KEY}"
         self._attr_has_entity_name = True
         self._attr_translation_key = WATER_HEATER_TRANSLATIONS_KEY
-        self._attr_translation_placeholders = {"site_name": coordinator.site.name}
 
         self._attr_supported_features = WaterHeaterEntityFeature.OPERATION_MODE
         self._attr_temperature_unit = "°C"

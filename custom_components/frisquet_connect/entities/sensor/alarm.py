@@ -24,9 +24,13 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
         super().__init__(coordinator)
         _LOGGER.debug(f"Creating Alarm entity")
 
-        self._attr_unique_id = f"{coordinator.site.site_id}-alert"
+        self._attr_unique_id = f"{self.coordinator_typed.site.site_id}-{SENSOR_ALARM_TRANSLATIONS_KEY}"
         self._attr_translation_key = SENSOR_ALARM_TRANSLATIONS_KEY
-        self._attr_options = [alarm_type for alarm_type in AlarmType]
+        self._attr_options = [alarm_type.name for alarm_type in AlarmType]
+
+    @property
+    def coordinator_typed(self) -> FrisquetConnectCoordinator:
+        return self.coordinator
 
     @property
     def device_info(self) -> DeviceInfo:

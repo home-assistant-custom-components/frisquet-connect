@@ -36,18 +36,18 @@
         },
         "water_heater": {
             "default_water_heater": {
-                "name": "Eau Chaude Sanitaire de {site_name}"
+                "name": "Eau Chaude Sanitaire"
             }
         },
         "sensor": {
             "default_alarm": {
-                "name": "Alerte de {site_name}"
+                "name": "Alerte"
             },
             "inside_thermometer": {
                 "name": "Thermomètre int. ({zone_name})"
             },
             "outside_thermometer": {
-                "name": "Thermomètre ext. ({site_name})"
+                "name": "Thermomètre ext."
             },
             "heating_consumption": {
                 "name": "Consommation du chauffage"

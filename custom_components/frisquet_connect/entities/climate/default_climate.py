@@ -43,7 +43,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
 
         self._zone_label_id = zone_label_id
 
-        self._attr_unique_id = f"{coordinator.site.name}_{zone_label_id}"
+        self._attr_unique_id = f"{coordinator.site.site_id}_{CLIMATE_TRANSLATIONS_KEY}_{zone_label_id}"
         self._attr_has_entity_name = True
         self._attr_translation_key = CLIMATE_TRANSLATIONS_KEY
         self._attr_translation_placeholders = {"zone_name": self.zone.name}
