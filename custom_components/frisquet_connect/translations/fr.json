@@ -46,9 +46,9 @@
             "default_alarm": {
                 "name": "Alerte",
                 "state": {
-                    "NO_ALARM": "Aucune alerte en cours",
-                    "DISCONNECTED": "Box Frisquet Connect déconnectée",
-                    "UNKNOWN": "Alerte inconnue"
+                    "no_alarm": "Aucune alerte en cours",
+                    "disconnected": "Box Frisquet Connect déconnectée",
+                    "unknown": "Alerte inconnue"
                 }
             },
             "inside_thermometer": {

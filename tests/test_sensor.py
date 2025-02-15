@@ -80,7 +80,7 @@ async def test_async_setup_entry_success(
         elif isinstance(entity, AlarmEntity):
             entity: AlarmEntity
             assert entity.device_class == SensorDeviceClass.ENUM
-            assert entity.native_value == AlarmType.DISCONNECTED.name
+            assert entity.native_value == AlarmType.DISCONNECTED
             # TODO : test other case
 
         elif isinstance(entity, LastUpdateEntity):

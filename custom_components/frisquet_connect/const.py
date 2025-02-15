@@ -35,8 +35,6 @@ SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY = "sanitary_consumption"
 SWITCH_BOOST_TRANSLATIONS_KEY = "boost_switch"
 SWITCH_EXEMPTION_TRANSLATIONS_KEY = "exemption_switch"
 
-NO_ALARM = "Aucune alerte en cours"  # TODO : use translation
-
 
 class ZoneModeLabelOrder(StrEnum):
     COMFORT = "CONS_CONF"
@@ -52,10 +50,10 @@ BOOST_ORDER_LABEL = "ACTIVITE_BOOST"
 ## ENUMS
 
 
-class AlarmType(Enum):
-    NO_ALARM = 0
-    DISCONNECTED = 5
-    UNKNOWN = 9
+class AlarmType(StrEnum):
+    NO_ALARM = "no_alarm"
+    DISCONNECTED = "disconnected"
+    UNKNOWN = "unknown"
 
 
 class SanitaryWaterType(Enum):
