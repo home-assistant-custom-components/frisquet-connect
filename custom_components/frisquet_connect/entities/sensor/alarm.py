@@ -1,6 +1,5 @@
 import logging
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass
-from homeassistant.helpers.entity import DeviceInfo
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
@@ -11,7 +10,6 @@ from custom_components.frisquet_connect.const import (
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect.entities.utils import get_device_info
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -24,7 +22,7 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
         super().__init__(coordinator)
         _LOGGER.debug(f"Creating Alarm entity")
 
-        self._attr_unique_id = f"{self.coordinator_typed.site.site_id}-{SENSOR_ALARM_TRANSLATIONS_KEY}"
+        self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{SENSOR_ALARM_TRANSLATIONS_KEY}"
         self._attr_translation_key = SENSOR_ALARM_TRANSLATIONS_KEY
         self._attr_device_class = SensorDeviceClass.ENUM
         self._attr_options = [alarm_type for alarm_type in AlarmType]
@@ -32,14 +30,6 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
     @property
     def coordinator_typed(self) -> FrisquetConnectCoordinator:
         return self.coordinator
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.unique_id, self.coordinator)
-
-    # @property
-    # def icon(self) -> str | None:
-    #     return "mdi:alert"
 
     @property
     def should_poll(self) -> bool:

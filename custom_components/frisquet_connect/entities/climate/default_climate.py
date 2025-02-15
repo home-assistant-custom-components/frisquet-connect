@@ -8,12 +8,10 @@ from custom_components.frisquet_connect.entities.climate.utils import (
     get_hvac_and_preset_mode_for_a_zone,
     get_target_temperature,
 )
-from custom_components.frisquet_connect.entities.utils import get_device_info
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 
-from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from homeassistant.components.climate import ClimateEntity
@@ -63,14 +61,6 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
     @property
     def zone(self) -> Zone:
         return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.unique_id, self.coordinator)
-
-    @property
-    def icon(self) -> str | None:
-        return "mdi:home-thermometer-outline"
 
     @property
     def should_poll(self) -> bool:

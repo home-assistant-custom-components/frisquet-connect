@@ -17,15 +17,26 @@ from homeassistant.const import Platform
 
 @pytest.mark.asyncio
 async def test_async_sanity_check_comparison():
-    default_translation = read_translation_file()
-    fr_translation = read_translation_file("fr")
+    default_translation = read_translation_file("strings")
+    fr_translation = read_translation_file("strings", "fr")
 
     recursive_check(default_translation, fr_translation)
 
 
 @pytest.mark.asyncio
-async def test_async_sanity_check_missing_key():
-    default_translation = read_translation_file()
+async def test_async_sanity_check_missing_key_translations():
+    default_translation = read_translation_file("strings")
+    sanity_check_missing_key_common(default_translation)
+
+
+@pytest.mark.asyncio
+async def test_async_sanity_check_missing_key_icones():
+    default_icons = read_translation_file("icons")
+    sanity_check_missing_key_common(default_icons)
+
+
+def sanity_check_missing_key_common(default_translation: dict):
+
     default_entities = default_translation.get("entity")
     types = {
         Platform.CLIMATE: [CLIMATE_TRANSLATIONS_KEY],

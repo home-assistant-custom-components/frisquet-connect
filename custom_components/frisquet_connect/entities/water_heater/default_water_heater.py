@@ -1,13 +1,11 @@
 import logging
 from homeassistant.components.water_heater import WaterHeaterEntity, WaterHeaterEntityFeature
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.helpers.entity import DeviceInfo
 
 from custom_components.frisquet_connect.const import WATER_HEATER_TRANSLATIONS_KEY, SanitaryWaterModeLabel
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect.entities.utils import get_device_info
 from custom_components.frisquet_connect.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
@@ -27,10 +25,6 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
         self._attr_supported_features = WaterHeaterEntityFeature.OPERATION_MODE
         self._attr_temperature_unit = "°C"
         self._attr_operation_list = coordinator.site.available_sanitary_water_modes
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.unique_id, self.coordinator)
 
     @property
     def should_poll(self) -> bool:

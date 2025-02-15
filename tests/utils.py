@@ -122,8 +122,7 @@ def read_json_file_as_text(file_path) -> str:
         return file.read()
 
 
-def read_translation_file(language: str = None) -> dict:
-    file = "strings"
+def read_translation_file(file: str, language: str = None) -> dict:
     if language:
         file = f"translations/{language}"
     with open(f"custom_components/frisquet_connect/{file}.json", "r", encoding="utf-8") as file:

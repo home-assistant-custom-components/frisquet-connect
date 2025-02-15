@@ -4,12 +4,10 @@ from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import UnitOfEnergy
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
-from homeassistant.helpers.entity import DeviceInfo
 
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect.entities.utils import get_device_info
 from custom_components.frisquet_connect.utils import log_methods
 
 
@@ -34,15 +32,6 @@ class CoreConsumption(SensorEntity, CoordinatorEntity):
     @property
     def coordinator_typed(self) -> FrisquetConnectCoordinator:
         return self.coordinator
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.unique_id, self.coordinator)
-
-    # TODO : put in the icons.json file
-    @property
-    def icon(self) -> str | None:
-        return "mdi:gas-burner"
 
     @property
     def should_poll(self) -> bool:

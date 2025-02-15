@@ -8,17 +8,32 @@
                     "disconnected": "mdi:signal-off",
                     "unknown": "mdi:alarm-light"
                 }
+            },
+            "default_last_update": {
+                "default": "mdi:update"
+            },
+            "inside_thermometer": {
+                "default": "mdi:thermometer"
+            },
+            "outside_thermometer": {
+                "default": "mdi:thermometer"
+            },
+            "heating_consumption": {
+                "default": "mdi:gas-burner"
+            },
+            "sanitary_consumption": {
+                "default": "mdi:gas-burner"
             }
         },
         "switch": {
-            "boost_switch": {
+            "exemption_switch": {
                 "default": "mdi:crosshairs-question",
                 "state": {
                     "on": "mdi:home-import-outline",
                     "off": "mdi:home-export-outline"
                 }
             },
-            "exemption_switch": {
+            "boost_switch": {
                 "default": "mdi:crosshairs-question",
                 "state": {
                     "on": "mdi:heat-wave",
@@ -26,8 +41,14 @@
                 }
             }
         },
+        "water_heater": {
+            "default_water_heater": {
+                "default": "mdi:water-boiler"
+            }
+        },
         "climate": {
             "default_climate": {
+                "default": "mdi:home-thermometer-outline",
                 "state_attributes": {
                     "preset_mode": {
                         "default": "mdi:crosshairs-question",

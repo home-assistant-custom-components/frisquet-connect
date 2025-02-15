@@ -7,8 +7,6 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect.entities.utils import get_device_info
-from homeassistant.helpers.entity import DeviceInfo
 
 from custom_components.frisquet_connect.utils import log_methods
 
@@ -32,10 +30,6 @@ class CoreResetSwitch(SwitchEntity, CoordinatorEntity):
     @property
     def coordinator_typed(self) -> FrisquetConnectCoordinator:
         return self.coordinator
-
-    @property
-    def device_info(self) -> DeviceInfo:
-        return get_device_info(self.name, self.unique_id, self.coordinator)
 
     def should_poll(self) -> bool:
         """Poll for those entities"""

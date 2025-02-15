@@ -39,6 +39,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data.setdefault(DOMAIN, {})
         hass.data[DOMAIN][entry.unique_id] = coordinator
 
+        #################################
+        # device_registry = dr.async_get(hass)
+
+        # device_registry.async_get_or_create(
+        #     config_entry_id=entry.entry_id,
+        #     identifiers={(DOMAIN, site_id)},
+        #     manufacturer=DEVICE_MANUFACTURER,
+        #     suggested_area="Garage",
+        #     name=coordinator.site.name,
+        #     model=coordinator.site.product,
+        #     # model_id=config.modelid,
+        #     serial_number=coordinator.site.serial_number,
+        # )
+        #################################
+
         _LOGGER.debug("Pre-Initializing entities")
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
         _LOGGER.debug("Post-Initializing entities")

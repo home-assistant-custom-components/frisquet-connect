@@ -27,10 +27,6 @@ class ResetBoostSwitchEntity(CoreResetSwitch):
     def zone(self) -> Zone:
         return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
 
-    # @property
-    # def icon(self) -> str | None:
-    #     return "mdi:heat-wave"
-
     def auto_define_availability(self):
         self._attr_available = self.zone.detail.selector == ZoneSelector.AUTO and self.zone.detail.is_boosting == True
 
