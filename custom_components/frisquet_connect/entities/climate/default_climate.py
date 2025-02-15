@@ -76,6 +76,16 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
     def should_poll(self) -> bool:
         return True
 
+    async def async_turn_on(self):
+        await self.coordinator_typed.service.async_set_selector(
+            self.coordinator_typed.site.site_id, self.zone, ZoneSelector.AUTO
+        )
+
+    async def async_turn_off(self):
+        await self.coordinator_typed.service.async_set_selector(
+            self.coordinator_typed.site.site_id, self.zone, ZoneSelector.FROST_PROTECTION
+        )
+
     async def async_set_hvac_mode(self, hvac_mode):
         selector: ZoneSelector
         if hvac_mode == HVACMode.AUTO:
@@ -86,13 +96,15 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
             else:
                 selector = ZoneSelector.REDUCED_PERMANENT
         elif hvac_mode == HVACMode.OFF:
+            # TODO : non utile si turn_off possible
             selector = ZoneSelector.FROST_PROTECTION
         else:
             _LOGGER.error(f"Unknown HVAC mode '{hvac_mode}'")
             raise ValueError(f"Unknown HVAC mode '{hvac_mode}'")
 
-        coordinator: FrisquetConnectCoordinator = self.coordinator
-        await coordinator.service.async_set_selector(self.coordinator_typed.site.site_id, self.zone, selector)
+        await self.coordinator_typed.service.async_set_selector(
+            self.coordinator_typed.site.site_id, self.zone, selector
+        )
 
     async def async_set_preset_mode(self, preset_mode: str):
         current_zone = self.zone
@@ -131,8 +143,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
             raise ValueError(f"Unknown preset mode '{preset_mode}'")
 
     async def async_set_temperature(self, **kwargs):
-        coordinator: FrisquetConnectCoordinator = self.coordinator
-        await coordinator.service.async_set_temperature(
+        await self.coordinator_typed.service.async_set_temperature(
             self.coordinator_typed.site.site_id, self.zone, kwargs["temperature"]
         )
 

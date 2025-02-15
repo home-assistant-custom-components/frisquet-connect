@@ -40,8 +40,16 @@
             }
         },
         "sensor": {
+            "default_last_update": {
+                "name": "Dernière remontée d'information"
+            },
             "default_alarm": {
-                "name": "Alerte"
+                "name": "Alerte",
+                "state": {
+                    "NO_ALARM": "Aucune alerte en cours",
+                    "DISCONNECTED": "Box Frisquet Connect déconnectée",
+                    "UNKNOWN": "Alerte inconnue"
+                }
             },
             "inside_thermometer": {
                 "name": "Thermomètre int. ({zone_name})"

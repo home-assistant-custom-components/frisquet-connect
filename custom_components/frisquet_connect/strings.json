@@ -40,8 +40,16 @@
             }
         },
         "sensor": {
+            "default_last_update": {
+                "name": "Last update from boiler"
+            },
             "default_alarm": {
-                "name": "Alert"
+                "name": "Alert",
+                "state": {
+                    "NO_ALARM": "No alert on going",
+                    "DISCONNECTED": "Frisquet Connect device disconnected",
+                    "UNKNOWN": "Unknown alert"
+                }
             },
             "inside_thermometer": {
                 "name": "Inside thermometer for {zone_name}"

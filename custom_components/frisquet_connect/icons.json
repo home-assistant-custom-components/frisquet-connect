@@ -1,5 +1,31 @@
 {
     "entity": {
+        "sensor": {
+            "default_alarm": {
+                "default": "mdi:crosshairs-question",
+                "state": {
+                    "NO_ALARM": "mdi:alarm-light-off-outline",
+                    "DISCONNECTED": "mdi:signal-off",
+                    "UNKNOWN": "mdi:alarm-light"
+                }
+            }
+        },
+        "switch": {
+            "boost_switch": {
+                "default": "mdi:crosshairs-question",
+                "state": {
+                    "on": "mdi:home-import-outline",
+                    "off": "mdi:home-export-outline"
+                }
+            },
+            "exemption_switch": {
+                "default": "mdi:crosshairs-question",
+                "state": {
+                    "on": "mdi:heat-wave",
+                    "off": "mdi:heat-wave"
+                }
+            }
+        },
         "climate": {
             "default_climate": {
                 "state_attributes": {

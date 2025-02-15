@@ -1,7 +1,9 @@
+from datetime import datetime
 import pytest
 
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.components.sensor import SensorDeviceClass
 
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
@@ -12,6 +14,7 @@ from custom_components.frisquet_connect.entities.sensor.core_consumption import 
 from custom_components.frisquet_connect.entities.sensor.core_thermometer import CoreThermometer
 from custom_components.frisquet_connect.entities.sensor.heating_consumption import HeatingConsumptionEntity
 from custom_components.frisquet_connect.entities.sensor.inside_thermometer import InsideThermometerEntity
+from custom_components.frisquet_connect.entities.sensor.last_update import LastUpdateEntity
 from custom_components.frisquet_connect.entities.sensor.outside_thermometer import OutsideThermometerEntity
 from custom_components.frisquet_connect.entities.sensor.sanitary_consumption import SanitaryConsumptionEntity
 from custom_components.frisquet_connect.sensor import async_setup_entry
@@ -45,11 +48,11 @@ async def test_async_setup_entry_success(
 
     mock_add_entities.assert_called_once()
     entities = mock_add_entities.call_args[0][0]
-    assert len(entities) == 5
+    assert len(entities) == 6
 
     # Assertions
     for entity in entities:
-        if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity)):
+        if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity, LastUpdateEntity)):
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
         await entity.async_update()
@@ -76,9 +79,14 @@ async def test_async_setup_entry_success(
 
         elif isinstance(entity, AlarmEntity):
             entity: AlarmEntity
-            assert entity.native_value == "Box Frisquet Connect déconnectée"
-            assert entity._attr_state == AlarmType.DISCONNECTED.name
+            assert entity.device_class == SensorDeviceClass.ENUM
+            assert entity.native_value == AlarmType.DISCONNECTED.name
             # TODO : test other case
+
+        elif isinstance(entity, LastUpdateEntity):
+            entity: LastUpdateEntity
+            assert entity.device_class == SensorDeviceClass.DATE
+            assert entity.native_value == datetime(2025, 1, 31, 10, 0, 41)
 
         else:
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
