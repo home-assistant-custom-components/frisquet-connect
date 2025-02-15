@@ -26,6 +26,7 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
+from custom_components.frisquet_connect.entities.utils import get_device_info
 from custom_components.frisquet_connect.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
@@ -61,6 +62,10 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
     @property
     def zone(self) -> Zone:
         return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
+
+    @property
+    def device_info(self):
+        return get_device_info(self.name, self.unique_id, self.coordinator_typed)
 
     @property
     def should_poll(self) -> bool:

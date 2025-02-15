@@ -32,6 +32,10 @@ class AlarmEntity(SensorEntity, CoordinatorEntity):
         return self.coordinator
 
     @property
+    def device_info(self):
+        return get_device_info(self.name, self.unique_id, self.coordinator_typed)
+
+    @property
     def should_poll(self) -> bool:
         """Poll for those entities"""
         return True

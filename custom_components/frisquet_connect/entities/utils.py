@@ -11,7 +11,7 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
 def get_device_info(name: str, unique_id: str, coordinator: FrisquetConnectCoordinator) -> DeviceInfo:
     return DeviceInfo(
         identifiers={(DOMAIN, unique_id)},
-        # name=name,
+        name=name,
         manufacturer=DEVICE_MANUFACTURER,
         model=coordinator.site.product,
         serial_number=coordinator.site.serial_number,
