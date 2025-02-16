@@ -18,22 +18,6 @@
         }
     },
     "entity": {
-        "switch": {
-            "boost_switch": {
-                "name": "Boost - {zone_name}",
-                "state": {
-                    "off": "Enable boost for {zone_name}",
-                    "on": "Disable boost for {zone_name}"
-                }
-            },
-            "exemption_switch": {
-                "name": "Exemption",
-                "state": {
-                    "off": "No action available",
-                    "on": "Cancel the exemption"
-                }
-            }
-        },
         "water_heater": {
             "default_water_heater": {
                 "name": "Water heater"

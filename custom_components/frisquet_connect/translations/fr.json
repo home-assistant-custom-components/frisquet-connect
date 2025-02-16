@@ -18,22 +18,6 @@
         }
     },
     "entity": {
-        "switch": {
-            "boost_switch": {
-                "name": "Boost - {zone_name}",
-                "state": {
-                    "off": "Activer le boost",
-                    "on": "Désactiver le Boost"
-                }
-            },
-            "exemption_switch": {
-                "name": "Dérogation",
-                "state": {
-                    "off": "Aucune action",
-                    "on": "Annuler la dérogation"
-                }
-            }
-        },
         "water_heater": {
             "default_water_heater": {
                 "name": "Eau Chaude Sanitaire"

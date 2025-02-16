@@ -1,7 +1,7 @@
 import logging
 from homeassistant.helpers.entity import DeviceInfo
 
-from custom_components.frisquet_connect.const import DEVICE_MANUFACTURER, DEVICE_NAME, DOMAIN
+from custom_components.frisquet_connect.const import DEVICE_MANUFACTURER, DOMAIN
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
@@ -22,8 +22,8 @@ class CoreEntity(Entity):
         self._attr_has_entity_name = True
         self._attr_should_poll = True
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, self.unique_id)},
-            name=f"{DEVICE_NAME} ({self.coordinator_typed.site.name})",
+            identifiers={(DOMAIN, self.coordinator_typed.site.site_id)},
+            name=self.coordinator_typed.site.name,
             manufacturer=DEVICE_MANUFACTURER,
             model=str(self.coordinator_typed.site.product),
             serial_number=self.coordinator_typed.site.serial_number,

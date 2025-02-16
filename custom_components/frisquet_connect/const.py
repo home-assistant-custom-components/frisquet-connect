@@ -19,7 +19,6 @@ DEVICE_NAME = "Frisquet Connect"
 PLATFORMS: list[Platform] = [
     Platform.CLIMATE,
     Platform.SENSOR,
-    Platform.SWITCH,
     Platform.WATER_HEATER,
 ]
 
@@ -35,9 +34,6 @@ SENSOR_INSIDE_THERMOMETER_TRANSLATIONS_KEY = "inside_thermometer"
 SENSOR_OUTSIDE_THERMOMETER_TRANSLATIONS_KEY = "outside_thermometer"
 SENSOR_HEATING_CONSUMPTION_TRANSLATIONS_KEY = "heating_consumption"
 SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY = "sanitary_consumption"
-
-SWITCH_BOOST_TRANSLATIONS_KEY = "boost_switch"
-SWITCH_EXEMPTION_TRANSLATIONS_KEY = "exemption_switch"
 
 
 class ZoneModeLabelOrder(StrEnum):

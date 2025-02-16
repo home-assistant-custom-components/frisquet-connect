@@ -28,22 +28,6 @@
                 "default": "mdi:gas-burner"
             }
         },
-        "switch": {
-            "exemption_switch": {
-                "default": "mdi:crosshairs-question",
-                "state": {
-                    "on": "mdi:home-import-outline",
-                    "off": "mdi:home-export-outline"
-                }
-            },
-            "boost_switch": {
-                "default": "mdi:crosshairs-question",
-                "state": {
-                    "on": "mdi:heat-wave",
-                    "off": "mdi:heat-wave"
-                }
-            }
-        },
         "water_heater": {
             "default_water_heater": {
                 "default": "mdi:water-boiler"

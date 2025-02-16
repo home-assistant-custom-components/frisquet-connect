@@ -8,8 +8,6 @@ from custom_components.frisquet_connect.const import (
     SENSOR_BOILER_LAST_UPDATE_TRANSLATIONS_KEY,
     SENSOR_OUTSIDE_THERMOMETER_TRANSLATIONS_KEY,
     SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY,
-    SWITCH_BOOST_TRANSLATIONS_KEY,
-    SWITCH_EXEMPTION_TRANSLATIONS_KEY,
     WATER_HEATER_TRANSLATIONS_KEY,
 )
 from tests.utils import read_translation_file
@@ -51,7 +49,6 @@ def sanity_check_missing_key_common(default_translation: dict):
             SENSOR_HEATING_CONSUMPTION_TRANSLATIONS_KEY,
             SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY,
         ],
-        Platform.SWITCH: [SWITCH_BOOST_TRANSLATIONS_KEY, SWITCH_EXEMPTION_TRANSLATIONS_KEY],
     }
 
     # Check if all entities defined the platform are in the translation file
