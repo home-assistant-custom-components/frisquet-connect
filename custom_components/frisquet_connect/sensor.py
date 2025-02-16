@@ -17,7 +17,6 @@ from custom_components.frisquet_connect.entities.sensor.heating_consumption impo
 from custom_components.frisquet_connect.entities.sensor.inside_thermometer import (
     InsideThermometerEntity,
 )
-from custom_components.frisquet_connect.entities.sensor.last_update import LastUpdateEntity
 from custom_components.frisquet_connect.entities.sensor.outside_thermometer import (
     OutsideThermometerEntity,
 )
@@ -42,7 +41,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         HeatingConsumptionEntity(coordinator),
         OutsideThermometerEntity(coordinator),
         AlarmEntity(coordinator),
-        LastUpdateEntity(coordinator),
     ]
     for zone in coordinator.site.zones:
         entity = InsideThermometerEntity(coordinator, zone.label_id)

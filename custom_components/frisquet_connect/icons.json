@@ -1,5 +1,10 @@
 {
     "entity": {
+        "datetime": {
+            "default_last_update": {
+                "default": "mdi:update"
+            }
+        },
         "sensor": {
             "default_alarm": {
                 "default": "mdi:crosshairs-question",
@@ -8,9 +13,6 @@
                     "disconnected": "mdi:signal-off",
                     "unknown": "mdi:alarm-light"
                 }
-            },
-            "default_last_update": {
-                "default": "mdi:update"
             },
             "inside_thermometer": {
                 "default": "mdi:thermometer"

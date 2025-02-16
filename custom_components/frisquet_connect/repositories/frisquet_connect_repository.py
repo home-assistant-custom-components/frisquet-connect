@@ -23,14 +23,14 @@ from custom_components.frisquet_connect.repositories.core_repository import (
 )
 
 
-FRISQUET_CONNECT_URL = "https://fcutappli.frisquet.com/api/v1"
+FRISQUET_CONNECT_URL = "https://fcutappli.frisquet.com"
 
-AUTH_ENDPOINT = f"{FRISQUET_CONNECT_URL}/authentifications"
+AUTH_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/authentifications"
 
-SITES_ENDPOINT = f"{FRISQUET_CONNECT_URL}/sites"
+SITES_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/sites"
 SITES_CONSO_ENDPOINT = "{SITES_ENDPOINT}/conso"
 
-ORDER_ENDPOINT = f"{FRISQUET_CONNECT_URL}/ordres"
+ORDER_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/ordres"
 
 
 LOGGER = logging.getLogger(__name__)

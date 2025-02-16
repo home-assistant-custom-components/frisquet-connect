@@ -5,14 +5,14 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect.entities.utils import get_device_info
+from custom_components.frisquet_connect.entities.core_entity import CoreEntity
 from custom_components.frisquet_connect.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
 
 
 @log_methods
-class CoreThermometer(SensorEntity, CoordinatorEntity):
+class CoreThermometer(SensorEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str, suffix: str = None) -> None:
         super().__init__(coordinator)
@@ -24,18 +24,6 @@ class CoreThermometer(SensorEntity, CoordinatorEntity):
 
         self._attr_native_unit_of_measurement = "°C"
         self._attr_unit_of_measurement = "°C"
-
-    @property
-    def coordinator_typed(self) -> FrisquetConnectCoordinator:
-        return self.coordinator
-
-    @property
-    def device_info(self):
-        return get_device_info(self.name, self.unique_id, self.coordinator_typed)
-
-    @property
-    def should_poll(self) -> bool:
-        return True
 
     @property
     def device_class(self) -> SensorDeviceClass | None:

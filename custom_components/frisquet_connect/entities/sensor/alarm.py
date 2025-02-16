@@ -10,35 +10,24 @@ from custom_components.frisquet_connect.const import (
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
+from custom_components.frisquet_connect.entities.core_entity import CoreEntity
+from custom_components.frisquet_connect.utils import log_methods
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
 # https://developers.home-assistant.io/docs/core/entity/sensor/
-class AlarmEntity(SensorEntity, CoordinatorEntity):
+@log_methods
+class AlarmEntity(SensorEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator)
-        _LOGGER.debug(f"Creating Alarm entity")
 
         self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{SENSOR_ALARM_TRANSLATIONS_KEY}"
         self._attr_translation_key = SENSOR_ALARM_TRANSLATIONS_KEY
         self._attr_device_class = SensorDeviceClass.ENUM
         self._attr_options = [alarm_type for alarm_type in AlarmType]
-
-    @property
-    def coordinator_typed(self) -> FrisquetConnectCoordinator:
-        return self.coordinator
-
-    @property
-    def device_info(self):
-        return get_device_info(self.name, self.unique_id, self.coordinator_typed)
-
-    @property
-    def should_poll(self) -> bool:
-        """Poll for those entities"""
-        return True
 
     async def async_update(self):
         value: str = AlarmType.NO_ALARM

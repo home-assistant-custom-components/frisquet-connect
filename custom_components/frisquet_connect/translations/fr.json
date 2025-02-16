@@ -18,6 +18,11 @@
         }
     },
     "entity": {
+        "datetime": {
+            "default_last_update": {
+                "name": "Dernière remontée d'information"
+            }
+        },
         "switch": {
             "boost_switch": {
                 "name": "Boost - {zone_name}",
@@ -40,9 +45,6 @@
             }
         },
         "sensor": {
-            "default_last_update": {
-                "name": "Dernière remontée d'information"
-            },
             "default_alarm": {
                 "name": "Alerte",
                 "state": {
