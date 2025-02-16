@@ -1,14 +1,12 @@
 {
     "entity": {
-        "datetime": {
+        "sensor": {
             "boiler_last_update": {
                 "default": "mdi:update"
             },
             "current_boiler_datetime": {
                 "default": "mdi:clock-digital"
-            }
-        },
-        "sensor": {
+            },
             "default_alarm": {
                 "default": "mdi:crosshairs-question",
                 "state": {

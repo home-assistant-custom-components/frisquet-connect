@@ -55,6 +55,10 @@ def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str
 
     if zone.is_boost_available:
         available_preset_modes = [PRESET_BOOST, *available_preset_modes]
+
+    _LOGGER.debug(
+        f"get_hvac_and_preset_mode_for_a_zone: available_preset_modes={available_preset_modes}, preset_mode={preset_mode}, hvac_mode={hvac_mode}"
+    )
     return (available_preset_modes, preset_mode, hvac_mode)
 
 

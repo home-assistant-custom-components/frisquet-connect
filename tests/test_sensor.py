@@ -1,3 +1,4 @@
+from datetime import datetime
 import pytest
 
 from homeassistant.core import HomeAssistant
@@ -9,10 +10,12 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect.entities.sensor.alarm import AlarmEntity
+from custom_components.frisquet_connect.entities.sensor.boiler_datetime import BoilerDateTime
 from custom_components.frisquet_connect.entities.sensor.core_consumption import CoreConsumption
 from custom_components.frisquet_connect.entities.sensor.core_thermometer import CoreThermometer
 from custom_components.frisquet_connect.entities.sensor.heating_consumption import HeatingConsumptionEntity
 from custom_components.frisquet_connect.entities.sensor.inside_thermometer import InsideThermometerEntity
+from custom_components.frisquet_connect.entities.sensor.last_update import LastUpdateEntity
 from custom_components.frisquet_connect.entities.sensor.outside_thermometer import OutsideThermometerEntity
 from custom_components.frisquet_connect.entities.sensor.sanitary_consumption import SanitaryConsumptionEntity
 from custom_components.frisquet_connect.sensor import async_setup_entry
@@ -46,11 +49,11 @@ async def test_async_setup_entry_success(
 
     mock_add_entities.assert_called_once()
     entities = mock_add_entities.call_args[0][0]
-    assert len(entities) == 5
+    assert len(entities) == 7
 
     # Assertions
     for entity in entities:
-        if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity)):
+        if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity, LastUpdateEntity, BoilerDateTime)):
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
         await entity.async_update()
@@ -80,6 +83,14 @@ async def test_async_setup_entry_success(
             assert entity.device_class == SensorDeviceClass.ENUM
             assert entity.native_value == AlarmType.DISCONNECTED
             # TODO : test other case
+
+        elif isinstance(entity, LastUpdateEntity):
+            entity: LastUpdateEntity
+            assert entity.native_value == datetime(2025, 1, 31, 10, 0, 41)
+
+        elif isinstance(entity, BoilerDateTime):
+            entity: BoilerDateTime
+            assert entity.native_value == datetime(2025, 1, 31, 10, 3, 40)
 
         else:
             assert False, f"Unknown entity type: {entity.__class__.__name__}"

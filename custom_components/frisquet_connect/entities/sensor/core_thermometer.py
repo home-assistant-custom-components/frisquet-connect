@@ -24,11 +24,5 @@ class CoreThermometer(SensorEntity, CoordinatorEntity, CoreEntity):
 
         self._attr_native_unit_of_measurement = "°C"
         self._attr_unit_of_measurement = "°C"
-
-    @property
-    def device_class(self) -> SensorDeviceClass | None:
-        return SensorDeviceClass.TEMPERATURE
-
-    @property
-    def state_class(self) -> SensorStateClass | None:
-        return SensorStateClass.MEASUREMENT
+        self._attr_device_class = SensorDeviceClass.TEMPERATURE
+        self._attr_state_class = SensorStateClass.MEASUREMENT

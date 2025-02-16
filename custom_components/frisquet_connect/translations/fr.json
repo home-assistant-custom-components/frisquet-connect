@@ -18,14 +18,6 @@
         }
     },
     "entity": {
-        "datetime": {
-            "boiler_last_update": {
-                "name": "Dernière remontée d'information"
-            },
-            "current_boiler_datetime": {
-                "name": "Heure actuelle de la chaudière"
-            }
-        },
         "switch": {
             "boost_switch": {
                 "name": "Boost - {zone_name}",
@@ -48,6 +40,12 @@
             }
         },
         "sensor": {
+            "boiler_last_update": {
+                "name": "Dernière remontée d'information"
+            },
+            "current_boiler_datetime": {
+                "name": "Heure actuelle de la chaudière"
+            },
             "default_alarm": {
                 "name": "Alerte",
                 "state": {

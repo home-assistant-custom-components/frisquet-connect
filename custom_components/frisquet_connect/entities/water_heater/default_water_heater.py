@@ -6,18 +6,18 @@ from custom_components.frisquet_connect.const import WATER_HEATER_TRANSLATIONS_K
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from custom_components.frisquet_connect.entities.utils import get_device_info
+from custom_components.frisquet_connect.entities.core_entity import CoreEntity
 from custom_components.frisquet_connect.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
 
 
 @log_methods
-class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
+class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator)
-        _LOGGER.debug(f"Creating WaterHeater entity")
+        CoreEntity.__init__(self)
 
         self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{WATER_HEATER_TRANSLATIONS_KEY}"
         self._attr_has_entity_name = True
@@ -26,21 +26,6 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity):
         self._attr_supported_features = WaterHeaterEntityFeature.OPERATION_MODE
         self._attr_temperature_unit = "°C"
         self._attr_operation_list = coordinator.site.available_sanitary_water_modes
-
-    # TODO: Avoir une classe CoreEntity qui gère les informations de base
-    @property
-    def coordinator_typed(self) -> FrisquetConnectCoordinator:
-        return self.coordinator
-
-    # TODO: Avoir une classe CoreEntity qui gère les informations de base
-    @property
-    def device_info(self):
-        return get_device_info(self.name, self.unique_id, self.coordinator_typed)
-
-    # TODO: Avoir une classe CoreEntity qui gère les informations de base
-    @property
-    def should_poll(self) -> bool:
-        return True
 
     async def async_set_operation_mode(self, operation_mode: str) -> None:
         self.coordinator_typed.service.async_set_sanitary_water_mode(

@@ -26,19 +26,19 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
-from custom_components.frisquet_connect.entities.utils import get_device_info
+from custom_components.frisquet_connect.entities.core_entity import CoreEntity
 from custom_components.frisquet_connect.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
 
 
 @log_methods
-class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
+class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
     _zone_label_id: str
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, zone_label_id: str) -> None:
         super().__init__(coordinator)
-        _LOGGER.debug(f"Creating Climate entity for zone {zone_label_id}")
+        CoreEntity.__init__(self)
 
         self._zone_label_id = zone_label_id
 
@@ -53,23 +53,10 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
         self._attr_temperature_unit = "°C"
         self._attr_target_temperature_low = 5
         self._attr_target_temperature_high = 25
-        _LOGGER.debug(f"Climate entity for zone {zone_label_id} created")
-
-    @property
-    def coordinator_typed(self) -> FrisquetConnectCoordinator:
-        return self.coordinator
 
     @property
     def zone(self) -> Zone:
         return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
-
-    @property
-    def device_info(self):
-        return get_device_info(self.name, self.unique_id, self.coordinator_typed)
-
-    @property
-    def should_poll(self) -> bool:
-        return True
 
     async def async_turn_on(self):
         await self.coordinator_typed.service.async_set_selector(
