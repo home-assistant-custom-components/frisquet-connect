@@ -1,8 +1,11 @@
 {
     "entity": {
         "datetime": {
-            "default_last_update": {
+            "boiler_last_update": {
                 "default": "mdi:update"
+            },
+            "current_boiler_datetime": {
+                "default": "mdi:clock-digital"
             }
         },
         "sensor": {

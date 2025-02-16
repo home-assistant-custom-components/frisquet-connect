@@ -19,8 +19,11 @@
     },
     "entity": {
         "datetime": {
-            "default_last_update": {
+            "boiler_last_update": {
                 "name": "Last update from boiler"
+            },
+            "current_boiler_datetime": {
+                "name": "Current datetime of the boiler"
             }
         },
         "switch": {

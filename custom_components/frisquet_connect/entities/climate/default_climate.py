@@ -101,6 +101,8 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity):
             self.coordinator_typed.site.site_id, self.zone, selector
         )
 
+        self.async_device_update()
+
     async def async_set_preset_mode(self, preset_mode: str):
         current_zone = self.zone
         if preset_mode == PRESET_BOOST:

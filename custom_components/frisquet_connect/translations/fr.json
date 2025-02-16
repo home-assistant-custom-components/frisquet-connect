@@ -19,8 +19,11 @@
     },
     "entity": {
         "datetime": {
-            "default_last_update": {
+            "boiler_last_update": {
                 "name": "Dernière remontée d'information"
+            },
+            "current_boiler_datetime": {
+                "name": "Heure actuelle de la chaudière"
             }
         },
         "switch": {

@@ -4,6 +4,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from custom_components.frisquet_connect.core_setup_entity import async_initialize_entity
+from custom_components.frisquet_connect.entities.datetime.boiler_datetime import BoilerDateTime
 from custom_components.frisquet_connect.entities.datetime.last_update import LastUpdateEntity
 from datetime import timedelta
 
@@ -18,6 +19,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         async_add_entities([], update_before_add=True)
         return
 
-    _LOGGER.debug("1 entity/entities initialized")
+    entities = [
+        LastUpdateEntity(coordinator),
+        BoilerDateTime(coordinator),
+    ]
 
-    async_add_entities([LastUpdateEntity(coordinator)], update_before_add=True)
+    _LOGGER.debug(f"{len(entities)} entity/entities initialized")
+
+    async_add_entities(entities, update_before_add=True)

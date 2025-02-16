@@ -13,7 +13,7 @@ from homeassistant.components.climate.const import (
 
 DOMAIN = "frisquet_connect"
 DEVICE_MANUFACTURER = "Frisquet"
-DEVICE_NAME = "Frisquet Connect - "
+DEVICE_NAME = "Frisquet Connect"
 PLATFORMS: list[Platform] = [
     Platform.CLIMATE,
     Platform.DATETIME,
@@ -27,7 +27,8 @@ CLIMATE_TRANSLATIONS_KEY = "default_climate"
 
 WATER_HEATER_TRANSLATIONS_KEY = "default_water_heater"
 
-DATETIME_LAST_UPDATE_TRANSLATIONS_KEY = "default_last_update"
+DATETIME_BOILER_LAST_UPDATE_TRANSLATIONS_KEY = "boiler_last_update"
+DATETIME_CURRENT_BOILER_DATETIME_TRANSLATIONS_KEY = "current_boiler_datetime"
 
 SENSOR_ALARM_TRANSLATIONS_KEY = "default_alarm"
 SENSOR_INSIDE_THERMOMETER_TRANSLATIONS_KEY = "inside_thermometer"
