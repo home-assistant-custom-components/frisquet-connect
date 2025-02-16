@@ -6,8 +6,8 @@ from custom_components.frisquet_connect.domains.site.utils import (
 
 
 class ZoneDetail(ModelBase):
-    _MODE: ZoneMode
-    _SELECTEUR: ZoneSelector
+    _MODE: int
+    _SELECTEUR: int
     _TAMB: int  # current temperature
     _CAMB: int  # target temperature
     _DERO: bool

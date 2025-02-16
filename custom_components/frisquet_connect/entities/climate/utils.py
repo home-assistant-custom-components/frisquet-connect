@@ -1,3 +1,4 @@
+import logging
 from custom_components.frisquet_connect.const import ZoneMode, ZoneSelector
 from custom_components.frisquet_connect.domains.site.zone import Zone
 from homeassistant.components.climate.const import (
@@ -11,6 +12,8 @@ from homeassistant.components.climate.const import (
     PRESET_ECO,
 )
 
+_LOGGER = logging.getLogger(__name__)
+
 
 def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str, HVACMode]:
     # TODO: Have flag to inform into the card => is_exemption = zone.detail.is_exemption_enabled
@@ -18,6 +21,8 @@ def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str
     # Inputs
     selector = zone.detail.selector
     mode = zone.detail.mode
+
+    _LOGGER.debug(f"get_hvac_and_preset_mode_for_a_zone: selector={selector}, mode={mode}")
 
     # Outputs
     available_preset_modes: list[str]

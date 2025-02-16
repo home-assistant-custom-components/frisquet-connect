@@ -23,6 +23,7 @@ class AlarmEntity(SensorEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator)
+        CoreEntity.__init__(self)
 
         self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{SENSOR_ALARM_TRANSLATIONS_KEY}"
         self._attr_translation_key = SENSOR_ALARM_TRANSLATIONS_KEY

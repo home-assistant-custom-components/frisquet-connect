@@ -15,6 +15,7 @@ class LastUpdateEntity(DateTimeEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
         super().__init__(coordinator)
+        CoreEntity.__init__(self)
 
         self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{DATETIME_BOILER_LAST_UPDATE_TRANSLATIONS_KEY}"
         self._attr_translation_key = DATETIME_BOILER_LAST_UPDATE_TRANSLATIONS_KEY

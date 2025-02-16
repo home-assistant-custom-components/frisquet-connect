@@ -17,7 +17,7 @@ class CoreEntity(Entity):
 
     def __init__(self):
         super().__init__()
-        _LOGGER.debug(f"Creating entity '{self.__class__.__name__}'")
+        _LOGGER.debug(f"Creating CoreEntity '{self.__class__.__name__}'")
 
         self._attr_has_entity_name = True
 

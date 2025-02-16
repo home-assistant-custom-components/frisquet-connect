@@ -16,7 +16,7 @@ class CoreThermometer(SensorEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str, suffix: str = None) -> None:
         super().__init__(coordinator)
-        _LOGGER.debug(f"Creating CoreThermometer entity for {translation_key}")
+        CoreEntity.__init__(self)
 
         self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{translation_key}{suffix}"
         self._attr_has_entity_name = True
