@@ -20,22 +20,15 @@ class CoreEntity(Entity):
         _LOGGER.debug(f"Creating CoreEntity '{self.__class__.__name__}'")
 
         self._attr_has_entity_name = True
-
-    @property
-    def coordinator_typed(self) -> FrisquetConnectCoordinator:
-        return self.coordinator
-
-    @property
-    def device_info(self):
-        return DeviceInfo(
+        self._attr_should_poll = True
+        self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self.unique_id)},
             name=f"{DEVICE_NAME} ({self.coordinator_typed.site.name})",
             manufacturer=DEVICE_MANUFACTURER,
             model=str(self.coordinator_typed.site.product),
             serial_number=self.coordinator_typed.site.serial_number,
-            via_device=(DOMAIN, self.coordinator_typed.site.site_id),
         )
 
     @property
-    def should_poll(self) -> bool:
-        return True
+    def coordinator_typed(self) -> FrisquetConnectCoordinator:
+        return self.coordinator

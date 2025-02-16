@@ -71,9 +71,15 @@
             "default_climate": {
                 "name": "Thermostat - {zone_name}",
                 "state_attributes": {
-                    "preset_mode": {
+                    "hvac_action": {
                         "state": {
                             "auto": "Auto",
+                            "heat": "Permanent",
+                            "off": "Frost protection"
+                        }
+                    },
+                    "preset_mode": {
+                        "state": {
                             "boost": "Boost",
                             "home": "Exemption comfort",
                             "away": "Exemption reduced",

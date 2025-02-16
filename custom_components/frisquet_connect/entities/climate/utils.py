@@ -31,7 +31,7 @@ def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str
 
     # AUTO
     if selector == ZoneSelector.AUTO:
-        available_preset_modes = [PRESET_HOME, PRESET_AWAY, PRESET_NONE]
+        available_preset_modes = [PRESET_NONE, PRESET_HOME, PRESET_AWAY]
         if zone.detail.is_exemption_enabled:
             preset_mode = PRESET_HOME if mode == ZoneMode.COMFORT else PRESET_AWAY
         elif zone.is_boost_available and zone.detail.is_boosting:

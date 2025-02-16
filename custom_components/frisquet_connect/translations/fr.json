@@ -71,6 +71,13 @@
             "default_climate": {
                 "name": "Thermostat - {zone_name}",
                 "state_attributes": {
+                    "hvac_action": {
+                        "state": {
+                            "auto": "Auto",
+                            "heat": "Permanent",
+                            "off": "Hors gel"
+                        }
+                    },
                     "preset_mode": {
                         "state": {
                             "auto": "Auto",
