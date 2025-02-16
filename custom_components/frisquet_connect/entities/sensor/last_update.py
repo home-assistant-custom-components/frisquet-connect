@@ -23,3 +23,7 @@ class LastUpdateEntity(SensorEntity, CoordinatorEntity, CoreEntity):
 
     async def async_update(self):
         self._attr_native_value = self.coordinator_typed.site.last_updated
+
+    @property
+    def should_poll(self) -> bool:
+        return True

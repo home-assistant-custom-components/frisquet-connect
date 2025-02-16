@@ -79,7 +79,8 @@
                             "away": "Dérogation réduit",
                             "comfort": "Confort",
                             "sleep": "Reduit",
-                            "eco": "Hors-gel"
+                            "eco": "Hors-gel",
+                            "none": "Pas de dérogation"
                         }
                     }
                 }

@@ -75,11 +75,12 @@
                         "state": {
                             "auto": "Auto",
                             "boost": "Boost",
-                            "home": "Exemption confort",
+                            "home": "Exemption comfort",
                             "away": "Exemption reduced",
                             "comfort": "Comfort",
                             "sleep": "Reduced",
-                            "eco": "Frost protection"
+                            "eco": "Frost protection",
+                            "none": "No exemption"
                         }
                     }
                 }
