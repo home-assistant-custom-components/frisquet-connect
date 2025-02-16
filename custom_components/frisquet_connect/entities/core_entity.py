@@ -31,7 +31,7 @@ class CoreEntity(Entity):
             identifiers={(DOMAIN, self.unique_id)},
             name=f"{DEVICE_NAME} ({self.coordinator_typed.site.name})",
             manufacturer=DEVICE_MANUFACTURER,
-            model=self.coordinator_typed.site.product,
+            model=str(self.coordinator_typed.site.product),
             serial_number=self.coordinator_typed.site.serial_number,
             via_device=(DOMAIN, self.coordinator_typed.site.site_id),
         )

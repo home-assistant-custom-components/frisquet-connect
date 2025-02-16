@@ -59,7 +59,7 @@ def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str
             preset_mode = PRESET_NONE
             hvac_mode = HVACMode.OFF
 
-    if zone.is_boost_available and preset_mode == PRESET_COMFORT:
+    if zone.is_boost_available and mode == ZoneMode.COMFORT:
         available_preset_modes = [PRESET_BOOST, *available_preset_modes]
 
     return (available_preset_modes, preset_mode, hvac_mode)
