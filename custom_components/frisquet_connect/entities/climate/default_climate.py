@@ -137,10 +137,6 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
         self._attr_preset_mode = preset_mode
         self._attr_hvac_mode = hvac_mode
 
-        _LOGGER.debug(
-            f"available_preset_modes={available_preset_modes}, preset_mode={preset_mode}, hvac_mode={hvac_mode}"
-        )
-
         self._attr_current_temperature = self.zone.detail.current_temperature
         self._attr_target_temperature = self.zone.detail.target_temperature
         if self._attr_target_temperature != get_target_temperature(self.zone):

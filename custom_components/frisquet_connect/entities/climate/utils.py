@@ -35,30 +35,28 @@ def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str
         preset_mode = PRESET_HOME if mode == ZoneMode.COMFORT else PRESET_AWAY
         hvac_mode = HVACMode.AUTO
 
-    # MANUAL HEAT - COMFORT_PERMANENT or REDUCED_PERMANENT
-    available_preset_modes = [PRESET_COMFORT, PRESET_SLEEP]
-    hvac_mode = HVACMode.HEAT
-    if selector == ZoneSelector.COMFORT_PERMANENT:
-        preset_mode = PRESET_COMFORT
-    elif selector == ZoneSelector.REDUCED_PERMANENT:
-        preset_mode = PRESET_SLEEP
-    # MANUAL HEAT - FROST_PROTECTION
-    elif selector == ZoneSelector.FROST_PROTECTION:
-        available_preset_modes = [PRESET_ECO]
-        preset_mode = PRESET_ECO
-        hvac_mode = HVACMode.OFF
-    # UNKNOW
     else:
-        available_preset_modes = [PRESET_NONE]
-        preset_mode = PRESET_NONE
-        hvac_mode = HVACMode.OFF
+        # MANUAL HEAT - COMFORT_PERMANENT or REDUCED_PERMANENT
+        available_preset_modes = [PRESET_COMFORT, PRESET_SLEEP]
+        hvac_mode = HVACMode.HEAT
+        if selector == ZoneSelector.COMFORT_PERMANENT:
+            preset_mode = PRESET_COMFORT
+        elif selector == ZoneSelector.REDUCED_PERMANENT:
+            preset_mode = PRESET_SLEEP
+        # MANUAL HEAT - FROST_PROTECTION
+        elif selector == ZoneSelector.FROST_PROTECTION:
+            available_preset_modes = [PRESET_ECO]
+            preset_mode = PRESET_ECO
+            hvac_mode = HVACMode.OFF
+        # UNKNOW
+        else:
+            available_preset_modes = [PRESET_NONE]
+            preset_mode = PRESET_NONE
+            hvac_mode = HVACMode.OFF
 
     if zone.is_boost_available:
         available_preset_modes = [PRESET_BOOST, *available_preset_modes]
 
-    _LOGGER.debug(
-        f"get_hvac_and_preset_mode_for_a_zone: available_preset_modes={available_preset_modes}, preset_mode={preset_mode}, hvac_mode={hvac_mode}"
-    )
     return (available_preset_modes, preset_mode, hvac_mode)
 
 
