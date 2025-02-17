@@ -5,6 +5,7 @@ from mockito import contains, unstub, when, ANY
 from custom_components.frisquet_connect.repositories.frisquet_connect_repository import (
     AUTH_ENDPOINT,
     ORDER_ENDPOINT,
+    SITES_CONSO_ENDPOINT,
     SITES_ENDPOINT,
 )
 from unittest.mock import AsyncMock, Mock
@@ -58,6 +59,7 @@ def mock_endpoints() -> None:
     mock_ordres_endpoint("preset_mode_permanent_comfort")
     mock_ordres_endpoint("preset_mode_permanent_sleep")
     mock_ordres_endpoint("preset_mode_permanent_eco")
+    mock_site_conso_endpoint()
 
 
 # AUTHENTICATION
@@ -104,6 +106,16 @@ def mock_ordres_endpoint(use_case: str) -> None:
         params=mock_params,
         json=mock_input,
     ).thenReturn(mock_output)
+
+
+# CONSO
+def mock_site_conso_endpoint() -> None:
+    mock = MockResponse(read_json_file_as_text("conso"), 200)
+    mock_params = {"token": "00000000000000000000000000000000", "types": ["CHF", "SAN"]}
+    site_url = f"{SITES_ENDPOINT}/12345678901234"
+    when(aiohttp.ClientSession).get(
+        contains(SITES_CONSO_ENDPOINT.format(site_url=site_url)), headers=ANY, params=mock_params
+    ).thenReturn(mock)
 
 
 def unstub_all():

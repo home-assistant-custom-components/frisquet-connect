@@ -50,6 +50,11 @@ BOOST_ORDER_LABEL = "ACTIVITE_BOOST"
 ## ENUMS
 
 
+class ConsumptionType(Enum):
+    SANITARY = "SAN"
+    HEATING = "CHF"
+
+
 class AlarmType(StrEnum):
     NO_ALARM = "no_alarm"
     DISCONNECTED = "disconnected"

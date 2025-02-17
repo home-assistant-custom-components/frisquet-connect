@@ -40,6 +40,8 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
             try_count -= 1
             try:
                 self._site = await self._service.async_get_site_info(self._site_id)
+                consumptions_site = await self._service.async_get_site_consumptions(self._site_id)
+                self._site._consumptions = consumptions_site._consumptions
                 break
             except ForbiddenAccessException:
                 await self._service.async_refresh_token_and_sites()

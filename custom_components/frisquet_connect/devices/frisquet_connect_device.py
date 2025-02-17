@@ -4,6 +4,7 @@ from custom_components.frisquet_connect.const import SanitaryWaterMode, ZoneSele
 from custom_components.frisquet_connect.domains.authentication.authentication import (
     Authentication,
 )
+from custom_components.frisquet_connect.domains.consumption.consumption_site import ConsumptionSite
 from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.domains.site.site_light import SiteLight
 from custom_components.frisquet_connect.domains.site.utils import (
@@ -45,6 +46,9 @@ class FrisquetConnectDevice:
 
     async def async_get_site_info(self, site_id: str) -> Site:
         return await self._repository.async_get_site_info(site_id, self._token)
+
+    async def async_get_site_consumptions(self, site_id: str) -> ConsumptionSite:
+        return await self._repository.async_get_site_conso(site_id, self._token)
 
     async def async_set_temperature(self, site_id: str, zone: Zone, temperature: float) -> None:
         api_temperature = convert_hass_temperature_to_int(temperature)

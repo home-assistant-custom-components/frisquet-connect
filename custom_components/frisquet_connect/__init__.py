@@ -66,7 +66,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 
 async def update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
-    # TODO: Check if enough
     await hass.config_entries.async_reload(entry.entry_id)
 
 

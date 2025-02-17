@@ -16,8 +16,6 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str, HVACMode]:
-    # TODO: Have flag to inform into the card => is_exemption = zone.detail.is_exemption_enabled
-
     # Inputs
     selector = zone.detail.selector
     mode = zone.detail.mode

@@ -16,6 +16,7 @@ from custom_components.frisquet_connect.domains.authentication.authentication_re
 from custom_components.frisquet_connect.domains.authentication.authentication import (
     Authentication,
 )
+from custom_components.frisquet_connect.domains.consumption.consumption_site import ConsumptionSite
 from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.repositories.core_repository import (
     async_do_get,
@@ -28,7 +29,7 @@ FRISQUET_CONNECT_URL = "https://fcutappli.frisquet.com"
 AUTH_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/authentifications"
 
 SITES_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/sites"
-SITES_CONSO_ENDPOINT = "{SITES_ENDPOINT}/conso"
+SITES_CONSO_ENDPOINT = "{site_url}/conso"
 
 ORDER_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/ordres"
 
@@ -52,12 +53,13 @@ class FrisquetConnectRepository:
         response_json = await async_do_get(f"{SITES_ENDPOINT}/{site_id}", params)
         return Site(response_json)
 
-    async def async_get_site_conso(self, site_id: str, token: str) -> dict:
+    async def async_get_site_conso(self, site_id: str, token: str) -> ConsumptionSite:
         LOGGER.debug("Getting site conso")
 
         params = {"token": token, "types": ["CHF", "SAN"]}
-        response_json = await async_do_get(SITES_CONSO_ENDPOINT.format(site_id=site_id), params)
-        return response_json  # TODO do an object for this
+        site_url = f"{SITES_ENDPOINT}/{site_id}"
+        response_json = await async_do_get(SITES_CONSO_ENDPOINT.format(site_url=site_url), params)
+        return ConsumptionSite(response_json)
 
     async def async_set_temperature(
         self, site_id: str, zone_id: str, zone_mode: ZoneMode, temperature: int, token: str

@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import List
-from custom_components.frisquet_connect.const import SanitaryWaterMode, SanitaryWaterModeLabel
+from custom_components.frisquet_connect.const import ConsumptionType, SanitaryWaterMode, SanitaryWaterModeLabel
+from custom_components.frisquet_connect.domains.consumption.consumption import Consumption
+from custom_components.frisquet_connect.domains.consumption.consumption_month import ConsumptionMonth
 from custom_components.frisquet_connect.domains.model_base import ModelBase
 from custom_components.frisquet_connect.domains.site.alarm import Alarm
 from custom_components.frisquet_connect.domains.site.product import Product
@@ -26,6 +28,8 @@ class Site(ModelBase):
     _modes_ecs: list[dict]
     _alarms: List[Alarm]
 
+    _consumptions: dict[ConsumptionType, ConsumptionMonth]
+
     def __init__(self, response_json: dict):
         super().__init__(response_json)
         if "produit" in response_json:
@@ -44,6 +48,8 @@ class Site(ModelBase):
             self._alarms = []
             for alarm in response_json["alarmes"]:
                 self._alarms.append(Alarm(alarm))
+
+        self._consumptions = {}
 
     @property
     def product(self) -> Product:
@@ -94,3 +100,10 @@ class Site(ModelBase):
             if zone.label_id == zone_label_id:
                 return zone
         return None
+
+    @property
+    def consumptions(self) -> dict[Consumption]:
+        return self._consumptions
+
+    def get_consumptions_by_type(self, consumption_type: ConsumptionType) -> Consumption:
+        return self._consumptions.get(consumption_type, [])

@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal
 import pytest
 
 from homeassistant.core import HomeAssistant
@@ -24,6 +25,7 @@ from custom_components.frisquet_connect.const import (
     SENSOR_HEATING_CONSUMPTION_TRANSLATIONS_KEY,
     SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY,
     AlarmType,
+    ConsumptionType,
 )
 from custom_components.frisquet_connect.devices.frisquet_connect_device import (
     FrisquetConnectDevice,
@@ -61,28 +63,27 @@ async def test_async_setup_entry_success(
         if isinstance(entity, SanitaryConsumptionEntity):
             entity: CoreConsumption
             assert entity.translation_key == SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY
-            # TODO : test other case
+            assert entity._consumption_type == ConsumptionType.SANITARY
+            assert entity.native_value == 196
 
         elif isinstance(entity, HeatingConsumptionEntity):
             entity: CoreConsumption
             assert entity.translation_key == SENSOR_HEATING_CONSUMPTION_TRANSLATIONS_KEY
-            # TODO : test other case
+            assert entity._consumption_type == ConsumptionType.HEATING
+            assert entity.native_value == 1387
 
         elif isinstance(entity, InsideThermometerEntity):
             entity: CoreThermometer
-            assert entity.native_value == 17.0
-            # TODO : test other case
+            assert entity.native_value == Decimal(17.0)
 
         elif isinstance(entity, OutsideThermometerEntity):
             entity: CoreThermometer
-            assert entity.native_value == 3.4
-            # TODO : test other case
+            assert entity.native_value == Decimal(3.4)
 
         elif isinstance(entity, AlarmEntity):
             entity: AlarmEntity
             assert entity.device_class == SensorDeviceClass.ENUM
             assert entity.native_value == AlarmType.DISCONNECTED
-            # TODO : test other case
 
         elif isinstance(entity, LastUpdateEntity):
             entity: LastUpdateEntity
