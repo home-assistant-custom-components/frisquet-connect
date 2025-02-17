@@ -64,11 +64,13 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
         await self.coordinator_typed.service.async_set_selector(
             self.coordinator_typed.site.site_id, self.zone, ZoneSelector.AUTO
         )
+        await self.async_device_update()
 
     async def async_turn_off(self):
         await self.coordinator_typed.service.async_set_selector(
             self.coordinator_typed.site.site_id, self.zone, ZoneSelector.FROST_PROTECTION
         )
+        await self.async_device_update()
 
     async def async_set_hvac_mode(self, hvac_mode):
         selector: ZoneSelector
@@ -89,8 +91,7 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
         await self.coordinator_typed.service.async_set_selector(
             self.coordinator_typed.site.site_id, self.zone, selector
         )
-
-        self.async_device_update()
+        await self.async_device_update(False)
 
     async def async_set_preset_mode(self, preset_mode: str):
         current_zone = self.zone

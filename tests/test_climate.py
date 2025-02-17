@@ -182,6 +182,7 @@ async def test_climate_set_hvac_mode(
     entities = await async_init_climate(mock_hass, mock_entry, mock_add_entities)
 
     entity: DefaultClimateEntity = entities[0]
+    entity.hass = mock_hass
     await entity.async_update()
 
     await entity.async_set_hvac_mode(HVACMode.AUTO)

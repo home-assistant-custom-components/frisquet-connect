@@ -1,6 +1,6 @@
 import logging
 
-from custom_components.frisquet_connect.const import SanitaryWaterMode, ZoneMode, ZoneSelector
+from custom_components.frisquet_connect.const import SanitaryWaterMode, SanitaryWaterModeLabel, ZoneMode, ZoneSelector
 from custom_components.frisquet_connect.domains.authentication.authentication import (
     Authentication,
 )
@@ -60,7 +60,8 @@ class FrisquetConnectDevice:
         await self._repository.async_set_selector(site_id, zone.label_id, selector, self._token)
 
     async def async_set_sanitary_water_mode(self, site_id: str, mode: str) -> None:
-        mapped_mode = SanitaryWaterMode(mode)
+        mapped_mode_label = SanitaryWaterModeLabel(mode)
+        mapped_mode = SanitaryWaterMode[mapped_mode_label.name]
         await self._repository.async_set_sanitary_water_mode(site_id, mapped_mode, self._token)
 
     ###

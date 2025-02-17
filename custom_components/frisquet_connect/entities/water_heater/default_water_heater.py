@@ -28,7 +28,7 @@ class DefaultWaterHeaterEntity(WaterHeaterEntity, CoordinatorEntity, CoreEntity)
         self._attr_operation_list = coordinator.site.available_sanitary_water_modes
 
     async def async_set_operation_mode(self, operation_mode: str) -> None:
-        self.coordinator_typed.service.async_set_sanitary_water_mode(
+        await self.coordinator_typed.service.async_set_sanitary_water_mode(
             self.coordinator_typed.site.site_id, operation_mode
         )
 
