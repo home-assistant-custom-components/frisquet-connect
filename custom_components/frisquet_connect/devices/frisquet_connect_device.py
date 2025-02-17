@@ -1,6 +1,6 @@
 import logging
 
-from custom_components.frisquet_connect.const import SanitaryWaterMode, ZoneSelector
+from custom_components.frisquet_connect.const import SanitaryWaterMode, ZoneMode, ZoneSelector
 from custom_components.frisquet_connect.domains.authentication.authentication import (
     Authentication,
 )
@@ -65,11 +65,11 @@ class FrisquetConnectDevice:
 
     ###
 
-    async def async_set_exemption(self, site_id: str, selector: ZoneSelector) -> None:
-        await self._repository.async_set_exemption(site_id, selector, self._token)
+    async def async_set_exemption(self, site_id: str, mode: ZoneMode) -> None:
+        await self._repository.async_set_exemption(site_id, mode, self._token)
 
     async def async_cancel_exemption(self, site_id: str) -> None:
-        await self._repository.async_set_exemption(site_id, ZoneSelector.AUTO, self._token)
+        await self._repository.async_set_exemption(site_id, None, self._token)
 
     async def async_enable_boost(self, site_id: str, zone: Zone) -> None:
         await self._repository.async_set_boost(site_id, zone.label_id, True, self._token)

@@ -42,7 +42,8 @@ class CoreConsumption(SensorEntity, CoordinatorEntity, CoreEntity):
         current_year = datetime.now().year
         native_value = 0
         consumptions = self.coordinator_typed.site.get_consumptions_by_type(self._consumption_type)
-        for consumption_month in consumptions.consumption_months:
-            if consumption_month.year == current_year:
-                native_value += consumption_month.value
+        if consumptions:
+            for consumption_month in consumptions.consumption_months:
+                if consumption_month.year == current_year:
+                    native_value += consumption_month.value
         self._attr_native_value = native_value

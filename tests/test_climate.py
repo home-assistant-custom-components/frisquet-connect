@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal
 import pytest
 
 from custom_components.frisquet_connect.domains.site.alarm import Alarm
@@ -12,6 +13,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.components.climate.const import (
     HVACMode,
+    PRESET_NONE,
     PRESET_BOOST,
     PRESET_COMFORT,
     PRESET_SLEEP,
@@ -87,7 +89,7 @@ async def test_async_setup_entry_success(
     assert site.name == "Somewhere"
     assert site.site_id == "12345678901234"
     assert site.last_updated == datetime(2025, 1, 31, 10, 0, 41)
-    assert site.external_temperature == 3.4
+    assert site.external_temperature == Decimal(3.4)
 
     # SITE.DETAIL
     assert site.detail is not None
@@ -116,12 +118,12 @@ async def test_async_setup_entry_success(
 
     # SITE.ZONES[0].DETAIL
     assert zone.detail is not None
-    assert zone.detail.current_temperature == 17.0
-    assert zone.detail.target_temperature == 18.5
+    assert zone.detail.current_temperature == Decimal(17.0)
+    assert zone.detail.target_temperature == Decimal(18.5)
     assert zone.detail.is_exemption_enabled == True
-    assert zone.detail.comfort_temperature == 20.0
-    assert zone.detail.reduced_temperature == 18.5
-    assert zone.detail.frost_protection_temperature == 8.0
+    assert zone.detail.comfort_temperature == Decimal(20.0)
+    assert zone.detail.reduced_temperature == Decimal(18.5)
+    assert zone.detail.frost_protection_temperature == Decimal(8.0)
     assert zone.detail.is_boosting == False
     assert zone.detail.mode == ZoneMode.REDUCED
     assert zone.detail.selector == ZoneSelector.AUTO
@@ -149,6 +151,7 @@ async def test_climate_set_preset_mode(
     entity: DefaultClimateEntity = entities[0]
     await entity.async_update()
 
+    await entity.async_set_preset_mode(PRESET_NONE)
     await entity.async_set_preset_mode(PRESET_BOOST)
     await entity.async_set_preset_mode(PRESET_HOME)
     await entity.async_set_preset_mode(PRESET_AWAY)

@@ -56,7 +56,7 @@ class FrisquetConnectRepository:
     async def async_get_site_conso(self, site_id: str, token: str) -> ConsumptionSite:
         LOGGER.debug("Getting site conso")
 
-        params = {"token": token, "types": ["CHF", "SAN"]}
+        params = {"token": token, "types[]": ["CHF", "SAN"]}
         site_url = f"{SITES_ENDPOINT}/{site_id}"
         response_json = await async_do_get(SITES_CONSO_ENDPOINT.format(site_url=site_url), params)
         return ConsumptionSite(response_json)
@@ -92,20 +92,16 @@ class FrisquetConnectRepository:
         response_json = await self._async_do_site_action(site_id, token, payload)
         return response_json
 
-    async def async_set_exemption(self, site_id: str, zone_selector: ZoneSelector, token: str) -> dict:
+    async def async_set_exemption(self, site_id: str, zone_mode: ZoneMode, token: str) -> dict:
         LOGGER.debug("Setting exemption")
 
         # TODO : Check if the preset_mode is AUTO
-        if zone_selector not in [
-            ZoneSelector.AUTO,
-            ZoneSelector.COMFORT_PERMANENT,
-            ZoneSelector.REDUCED_PERMANENT,
-        ]:
-            error_message = f"Incompatible zone selector: {zone_selector}"
+        if zone_mode not in [ZoneMode.COMFORT, ZoneMode.REDUCED, None]:
+            error_message = f"Incompatible zone mode: {zone_mode}"
             LOGGER.error(error_message)
             raise ValueError(error_message)
 
-        value = 0 if zone_selector == ZoneSelector.AUTO else zone_selector.value
+        value = 0 if not zone_mode else zone_mode.value
 
         payload = [{"cle": EXEMPTION_ORDER_LABEL, "valeur": value}]
         response_json = await self._async_do_site_action(site_id, token, payload)

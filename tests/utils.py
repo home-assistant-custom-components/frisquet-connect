@@ -52,6 +52,7 @@ def mock_endpoints() -> None:
     mock_sites_endpoint_not_found()
     mock_sites_endpoint()
     mock_ordres_endpoint("set_temperature_sleep")
+    mock_ordres_endpoint("preset_mode_none")
     mock_ordres_endpoint("preset_mode_boost")
     mock_ordres_endpoint("preset_mode_auto")
     mock_ordres_endpoint("preset_mode_exemption_home")
@@ -111,7 +112,7 @@ def mock_ordres_endpoint(use_case: str) -> None:
 # CONSO
 def mock_site_conso_endpoint() -> None:
     mock = MockResponse(read_json_file_as_text("conso"), 200)
-    mock_params = {"token": "00000000000000000000000000000000", "types": ["CHF", "SAN"]}
+    mock_params = {"token": "00000000000000000000000000000000", "types[]": ["CHF", "SAN"]}
     site_url = f"{SITES_ENDPOINT}/12345678901234"
     when(aiohttp.ClientSession).get(
         contains(SITES_CONSO_ENDPOINT.format(site_url=site_url)), headers=ANY, params=mock_params

@@ -106,4 +106,4 @@ class Site(ModelBase):
         return self._consumptions
 
     def get_consumptions_by_type(self, consumption_type: ConsumptionType) -> Consumption:
-        return self._consumptions.get(consumption_type, [])
+        return self._consumptions.get(consumption_type)

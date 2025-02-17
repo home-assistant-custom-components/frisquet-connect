@@ -1,6 +1,7 @@
 import logging
 from custom_components.frisquet_connect.const import (
     CLIMATE_TRANSLATIONS_KEY,
+    ZoneMode,
     ZoneSelector,
 )
 from custom_components.frisquet_connect.domains.site.zone import Zone
@@ -24,6 +25,7 @@ from homeassistant.components.climate.const import (
     PRESET_HOME,
     PRESET_AWAY,
     PRESET_ECO,
+    PRESET_NONE,
 )
 
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
@@ -99,13 +101,13 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
             # TODO: Only available when HVACMode is in AUTO mode and the zone is in REDUCED mode or BOOST mode
             # TODO: If boost is active, it must be disabled before
             await self.coordinator_typed.service.async_set_exemption(
-                self.coordinator_typed.site.site_id, ZoneSelector.COMFORT_PERMANENT
+                self.coordinator_typed.site.site_id, ZoneMode.COMFORT
             )
         elif preset_mode == PRESET_AWAY:
             # TODO: Only available when HVACMode is in AUTO mode and the zone is in COMFORT mode
             # TODO: If boost is active, it must be disabled before
             await self.coordinator_typed.service.async_set_exemption(
-                self.coordinator_typed.site.site_id, ZoneSelector.REDUCED_PERMANENT
+                self.coordinator_typed.site.site_id, ZoneMode.REDUCED
             )
         elif preset_mode == PRESET_COMFORT:
             # TODO: Only available when HVACMode is in HEAT mode
@@ -122,6 +124,16 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
             await self.coordinator_typed.service.async_set_selector(
                 self.coordinator_typed.site.site_id, current_zone, ZoneSelector.FROST_PROTECTION
             )
+        elif preset_mode == PRESET_NONE:
+            # TODO: Only available when HVACMode is in AUTO mode
+            if self.zone.detail.is_boosting:
+                await self.coordinator_typed.service.async_disable_boost(self.coordinator_typed.site.site_id, self.zone)
+            elif self.zone.detail.is_exemption_enabled:
+                await self.coordinator_typed.service.async_cancel_exemption(self.coordinator_typed.site.site_id)
+            else:
+                await self.coordinator_typed.service.async_set_selector(
+                    self.coordinator_typed.site.site_id, current_zone, ZoneSelector.AUTO
+                )
         else:
             _LOGGER.error(f"Unknown preset mode '{preset_mode}'")
             raise ValueError(f"Unknown preset mode '{preset_mode}'")
