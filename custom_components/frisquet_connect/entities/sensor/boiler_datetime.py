@@ -9,6 +9,7 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
+from homeassistant.core import callback
 
 
 class BoilerDateTime(SensorEntity, CoordinatorEntity, CoreEntity):
@@ -23,5 +24,9 @@ class BoilerDateTime(SensorEntity, CoordinatorEntity, CoreEntity):
         self._attr_translation_key = SENSOR_CURRENT_BOILER_DATETIME_TRANSLATIONS_KEY
         self._attr_device_class = SensorDeviceClass.DATE
 
-    async def async_update(self):
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        """Handle updated data from the coordinator."""
         self._attr_native_value = self.coordinator_typed.site.detail.current_boiler_timestamp
+
+        self.async_write_ha_state()
