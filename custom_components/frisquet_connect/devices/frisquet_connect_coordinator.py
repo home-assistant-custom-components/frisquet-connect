@@ -12,8 +12,9 @@ from custom_components.frisquet_connect.devices.frisquet_connect_device import (
 )
 
 
-_LOGGER = logging.getLogger(__name__)
+# https://developers.home-assistant.io/docs/core/integration-quality-scale/rules/appropriate-polling?_highlight=_attr_should_poll#example-implementation
 SCAN_INTERVAL = timedelta(seconds=60)
+_LOGGER = logging.getLogger(__name__)
 
 
 class FrisquetConnectCoordinator(DataUpdateCoordinator):
