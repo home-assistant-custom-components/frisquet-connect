@@ -1,4 +1,3 @@
-from datetime import timedelta
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass
 
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -10,8 +9,6 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
-
-SCAN_INTERVAL = timedelta(seconds=60)
 
 
 class BoilerDateTime(SensorEntity, CoordinatorEntity, CoreEntity):

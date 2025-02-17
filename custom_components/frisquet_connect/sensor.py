@@ -1,3 +1,4 @@
+from datetime import timedelta
 import logging
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
@@ -27,6 +28,8 @@ from custom_components.frisquet_connect.entities.sensor.sanitary_consumption imp
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+SCAN_INTERVAL = timedelta(seconds=60)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):

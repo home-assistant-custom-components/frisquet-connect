@@ -1,3 +1,4 @@
+from datetime import timedelta
 import logging
 
 from homeassistant.core import HomeAssistant
@@ -12,6 +13,8 @@ from custom_components.frisquet_connect.entities.water_heater.default_water_heat
 
 _LOGGER = logging.getLogger(__name__)
 
+SCAN_INTERVAL = timedelta(seconds=60)
+
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry, __name__)
@@ -19,6 +22,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         async_add_entities([], update_before_add=True)
         return
 
-    _LOGGER.debug(f"1 entity/entities initialized")
+    _LOGGER.debug("1 entity/entities initialized")
 
     async_add_entities([DefaultWaterHeaterEntity(coordinator)], update_before_add=True)

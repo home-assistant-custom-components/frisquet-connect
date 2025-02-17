@@ -1,4 +1,3 @@
-from datetime import timedelta
 import logging
 from homeassistant.helpers.entity import DeviceInfo
 
@@ -12,9 +11,6 @@ from custom_components.frisquet_connect.utils import log_methods
 
 
 _LOGGER = logging.getLogger(__name__)
-
-
-SCAN_INTERVAL = timedelta(seconds=60)
 
 
 @log_methods
