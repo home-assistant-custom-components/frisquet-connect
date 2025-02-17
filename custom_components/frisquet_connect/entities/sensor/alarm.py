@@ -18,7 +18,6 @@ _LOGGER = logging.getLogger(__name__)
 
 
 # https://developers.home-assistant.io/docs/core/entity/sensor/
-@log_methods
 class AlarmEntity(SensorEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:

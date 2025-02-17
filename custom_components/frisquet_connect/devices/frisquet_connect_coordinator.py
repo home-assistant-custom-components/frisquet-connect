@@ -13,7 +13,7 @@ from custom_components.frisquet_connect.devices.frisquet_connect_device import (
 
 
 _LOGGER = logging.getLogger(__name__)
-SCAN_INTERVAL = timedelta(seconds=300)
+SCAN_INTERVAL = timedelta(seconds=60)
 
 
 class FrisquetConnectCoordinator(DataUpdateCoordinator):

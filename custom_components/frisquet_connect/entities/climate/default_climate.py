@@ -29,12 +29,10 @@ from homeassistant.components.climate.const import (
 )
 
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
-from custom_components.frisquet_connect.utils import log_methods
 
 _LOGGER = logging.getLogger(__name__)
 
 
-@log_methods
 class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
     _zone_label_id: str
 

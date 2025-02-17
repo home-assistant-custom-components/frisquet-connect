@@ -7,11 +7,13 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
 )
 from homeassistant.helpers.entity import Entity
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import FrisquetConnectCoordinator
+from custom_components.frisquet_connect.utils import log_methods
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
+@log_methods
 class CoreEntity(Entity):
     """Base class for all entities."""
 
@@ -20,7 +22,7 @@ class CoreEntity(Entity):
         _LOGGER.debug(f"Creating CoreEntity '{self.__class__.__name__}'")
 
         self._attr_has_entity_name = True
-        self._attr_should_poll = True
+        # self._attr_should_poll = True
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self.coordinator_typed.site.site_id)},
             name=self.coordinator_typed.site.name,

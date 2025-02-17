@@ -25,9 +25,6 @@ from custom_components.frisquet_connect.entities.sensor.outside_thermometer impo
 from custom_components.frisquet_connect.entities.sensor.sanitary_consumption import (
     SanitaryConsumptionEntity,
 )
-from datetime import timedelta
-
-SCAN_INTERVAL = timedelta(seconds=150)
 
 _LOGGER = logging.getLogger(__name__)
 

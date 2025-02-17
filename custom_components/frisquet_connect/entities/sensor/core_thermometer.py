@@ -11,7 +11,6 @@ from custom_components.frisquet_connect.utils import log_methods
 _LOGGER = logging.getLogger(__name__)
 
 
-@log_methods
 class CoreThermometer(SensorEntity, CoordinatorEntity, CoreEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str, suffix: str = None) -> None:

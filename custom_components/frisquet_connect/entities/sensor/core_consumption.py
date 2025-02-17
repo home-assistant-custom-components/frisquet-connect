@@ -17,7 +17,6 @@ from custom_components.frisquet_connect.utils import log_methods
 _LOGGER = logging.getLogger(__name__)
 
 
-@log_methods
 class CoreConsumption(SensorEntity, CoordinatorEntity, CoreEntity):
 
     _consumption_type: ConsumptionType

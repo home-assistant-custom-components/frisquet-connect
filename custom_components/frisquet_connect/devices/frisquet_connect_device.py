@@ -14,11 +14,13 @@ from custom_components.frisquet_connect.domains.site.zone import Zone
 from custom_components.frisquet_connect.repositories.frisquet_connect_repository import (
     FrisquetConnectRepository,
 )
+from custom_components.frisquet_connect.utils import log_methods
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
+@log_methods
 class FrisquetConnectDevice:
     _repository: FrisquetConnectRepository
     _email: str
