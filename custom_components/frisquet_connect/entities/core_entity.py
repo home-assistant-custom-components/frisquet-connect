@@ -36,5 +36,5 @@ class CoreEntity(CoordinatorEntity[FrisquetConnectCoordinator]):
         )
 
     @callback
-    async def _handle_coordinator_update(self) -> None:
-        await self.async_update()
+    def _handle_coordinator_update(self) -> None:
+        self.async_update().__await__()
