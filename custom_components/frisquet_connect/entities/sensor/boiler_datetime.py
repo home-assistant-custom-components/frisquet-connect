@@ -22,6 +22,5 @@ class BoilerDateTime(CoreEntity, SensorEntity):
         self._attr_translation_key = SENSOR_CURRENT_BOILER_DATETIME_TRANSLATIONS_KEY
         self._attr_device_class = SensorDeviceClass.DATE
 
-    @callback
-    def _handle_coordinator_update(self) -> None:
+    async def async_update(self) -> None:
         self._attr_native_value = self.coordinator_typed.site.detail.current_boiler_timestamp

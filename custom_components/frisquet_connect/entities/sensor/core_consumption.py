@@ -31,8 +31,7 @@ class CoreConsumption(CoreEntity, SensorEntity):
         self._attr_device_class = SensorDeviceClass.ENERGY
         self._attr_state_class = SensorStateClass.TOTAL_INCREASING
 
-    @callback
-    def _handle_coordinator_update(self) -> None:
+    async def async_update(self) -> None:
         if not self._consumption_type:
             _LOGGER.error("Consumption type not set")
             return

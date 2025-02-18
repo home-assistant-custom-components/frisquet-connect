@@ -10,8 +10,6 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
 )
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
 
-from homeassistant.core import callback
-
 
 class AlarmEntity(CoreEntity, SensorEntity):
 
@@ -23,8 +21,7 @@ class AlarmEntity(CoreEntity, SensorEntity):
         self._attr_device_class = SensorDeviceClass.ENUM
         self._attr_options = [alarm_type for alarm_type in AlarmType]
 
-    @callback
-    def _handle_coordinator_update(self) -> None:
+    async def async_update(self) -> None:
         """Handle updated data from the coordinator."""
 
         value: str = AlarmType.NO_ALARM

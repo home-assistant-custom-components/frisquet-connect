@@ -5,7 +5,6 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
-from homeassistant.core import callback
 
 
 class DefaultWaterHeaterEntity(CoreEntity, WaterHeaterEntity):
@@ -21,8 +20,7 @@ class DefaultWaterHeaterEntity(CoreEntity, WaterHeaterEntity):
         self._attr_temperature_unit = "°C"
         self._attr_operation_list = coordinator.site.available_sanitary_water_modes
 
-    @callback
-    def _handle_coordinator_update(self) -> None:
+    async def async_update(self) -> None:
         self.current_operation = SanitaryWaterModeLabel[
             self.coordinator_typed.site.water_heater.sanitary_water_mode.name
         ]

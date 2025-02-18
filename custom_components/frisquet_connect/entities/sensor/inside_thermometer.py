@@ -1,7 +1,6 @@
 from custom_components.frisquet_connect.const import (
     SENSOR_INSIDE_THERMOMETER_TRANSLATIONS_KEY,
 )
-from homeassistant.core import callback
 
 from custom_components.frisquet_connect.domains.site.zone import Zone
 from custom_components.frisquet_connect.entities.sensor.core_thermometer import (
@@ -25,6 +24,5 @@ class InsideThermometerEntity(CoreThermometer):
     def zone(self) -> Zone:
         return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
 
-    @callback
-    def _handle_coordinator_update(self) -> None:
+    async def async_update(self) -> None:
         self._attr_native_value = self.zone.detail.current_temperature

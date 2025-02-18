@@ -12,7 +12,6 @@ from custom_components.frisquet_connect.entities.climate.utils import (
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
-from homeassistant.core import callback
 
 
 from homeassistant.components.climate import ClimateEntity
@@ -57,8 +56,7 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
     def zone(self) -> Zone:
         return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
 
-    @callback
-    def _handle_coordinator_update(self) -> None:
+    async def async_update(self) -> None:
         (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self.zone)
         self._attr_preset_modes = available_preset_modes
         self._attr_preset_mode = preset_mode

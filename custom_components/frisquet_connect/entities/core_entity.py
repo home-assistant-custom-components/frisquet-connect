@@ -2,6 +2,8 @@ import logging
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+# from homeassistant.core import callback
+
 from custom_components.frisquet_connect.const import DEVICE_MANUFACTURER, DOMAIN
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
@@ -36,3 +38,8 @@ class CoreEntity(CoordinatorEntity):
     @property
     def coordinator_typed(self) -> FrisquetConnectCoordinator:
         return self.coordinator
+
+    # @callback
+    # def _handle_coordinator_update(self) -> None:
+    #     self.async_update()
+    #     self.async_write_ha_state()
