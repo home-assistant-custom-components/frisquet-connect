@@ -8,7 +8,6 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
-from homeassistant.core import callback
 
 
 class LastUpdateEntity(CoreEntity, SensorEntity):
@@ -22,7 +21,3 @@ class LastUpdateEntity(CoreEntity, SensorEntity):
 
     async def async_update(self) -> None:
         self._attr_native_value = self.coordinator.data.last_updated
-
-    @callback
-    def _handle_coordinator_update(self) -> None:
-        self.async_update()
