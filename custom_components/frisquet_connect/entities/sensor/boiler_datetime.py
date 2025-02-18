@@ -1,3 +1,4 @@
+import logging
 from homeassistant.components.sensor import SensorEntity, SensorDeviceClass
 
 
@@ -10,6 +11,9 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
 
 
+_LOGGER = logging.getLogger(__name__)
+
+
 class BoilerDateTime(CoreEntity, SensorEntity):
 
     def __init__(self, coordinator: FrisquetConnectCoordinator) -> None:
@@ -20,4 +24,5 @@ class BoilerDateTime(CoreEntity, SensorEntity):
         self._attr_device_class = SensorDeviceClass.DATE
 
     def update(self) -> None:
+        _LOGGER.debug("BoilerDateTime.update() called")
         self._attr_native_value = self.coordinator.data.detail.current_boiler_timestamp
