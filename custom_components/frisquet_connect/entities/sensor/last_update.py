@@ -19,5 +19,5 @@ class LastUpdateEntity(CoreEntity, SensorEntity):
         self._attr_translation_key = SENSOR_BOILER_LAST_UPDATE_TRANSLATIONS_KEY
         self._attr_device_class = SensorDeviceClass.DATE
 
-    async def async_update(self) -> None:
+    def update(self) -> None:
         self._attr_native_value = self.coordinator.data.last_updated
