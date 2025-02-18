@@ -41,7 +41,7 @@ async def test_async_setup_entry_success(
     entity: DefaultWaterHeaterEntity = entities[0]
     if not isinstance(entity, (DefaultWaterHeaterEntity)):
         assert False, f"Unknown entity type: {entity.__class__.__name__}"
-    await entity.async_update()
+    entity.update()
 
     assert entity.current_operation == "Eco Timer"
 

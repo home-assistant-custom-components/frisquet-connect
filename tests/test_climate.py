@@ -75,7 +75,7 @@ async def test_async_setup_entry_success(
     entity: DefaultClimateEntity = entities[0]
     if not isinstance(entity, (DefaultClimateEntity)):
         assert False, f"Unknown entity type: {entity.__class__.__name__}"
-    await entity.async_update()
+    entity.update()
 
     zone: Zone = entity.zone
     assert zone is not None
@@ -149,7 +149,7 @@ async def test_climate_set_preset_mode(
     entities = await async_init_climate(mock_hass, mock_entry, mock_add_entities)
 
     entity: DefaultClimateEntity = entities[0]
-    await entity.async_update()
+    entity.update()
 
     await entity.async_set_preset_mode(PRESET_NONE)
     await entity.async_set_preset_mode(PRESET_BOOST)
@@ -183,7 +183,7 @@ async def test_climate_set_hvac_mode(
 
     entity: DefaultClimateEntity = entities[0]
     entity.hass = mock_hass
-    await entity.async_update()
+    entity.update()
 
     await entity.async_set_hvac_mode(HVACMode.AUTO)
     await entity.async_set_hvac_mode(HVACMode.HEAT)

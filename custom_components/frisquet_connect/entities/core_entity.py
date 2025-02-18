@@ -38,18 +38,12 @@ class CoreEntity(CoordinatorEntity[FrisquetConnectCoordinator]):
 
     @callback
     def _handle_coordinator_update(self) -> None:
-        try:
-            self.update()
-            super()._handle_coordinator_update()
-        except Exception as e:
-            _LOGGER.error(f"CoreEntity._handle_coordinator_update Error updating {self.name}: {e}")
+        self.update()
+        super()._handle_coordinator_update()
 
     async def async_update(self) -> None:
-        try:
-            self.update()
-            super().async_update()
-        except Exception as e:
-            _LOGGER.error(f"CoreEntity.async_update Error updating {self.name}: {e}")
+        self.update()
+        await super().async_update()
 
     @abstractmethod
     def update(self):

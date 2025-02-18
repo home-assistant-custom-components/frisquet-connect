@@ -31,7 +31,7 @@ class CoreConsumption(CoreEntity, SensorEntity):
         self._attr_device_class = SensorDeviceClass.ENERGY
         self._attr_state_class = SensorStateClass.TOTAL_INCREASING
 
-    async def async_update(self) -> None:
+    def update(self) -> None:
         if not self._consumption_type:
             _LOGGER.error("Consumption type not set")
             return

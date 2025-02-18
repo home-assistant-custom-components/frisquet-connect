@@ -56,7 +56,7 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
     def zone(self) -> Zone:
         return self.coordinator.data.get_zone_by_label_id(self._zone_label_id)
 
-    async def async_update(self) -> None:
+    def update(self) -> None:
         (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self.zone)
         self._attr_preset_modes = available_preset_modes
         self._attr_preset_mode = preset_mode

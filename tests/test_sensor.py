@@ -58,7 +58,7 @@ async def test_async_setup_entry_success(
         if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity, LastUpdateEntity, BoilerDateTime)):
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
-        await entity.async_update()
+        entity.update()
 
         if isinstance(entity, SanitaryConsumptionEntity):
             entity: CoreConsumption

@@ -20,7 +20,7 @@ class DefaultWaterHeaterEntity(CoreEntity, WaterHeaterEntity):
         self._attr_temperature_unit = "°C"
         self._attr_operation_list = coordinator.data.available_sanitary_water_modes
 
-    async def async_update(self) -> None:
+    def update(self) -> None:
         self.current_operation = SanitaryWaterModeLabel[self.coordinator.data.water_heater.sanitary_water_mode.name]
 
     async def async_set_operation_mode(self, operation_mode: str) -> None:

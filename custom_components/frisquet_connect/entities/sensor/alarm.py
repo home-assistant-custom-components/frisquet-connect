@@ -21,7 +21,7 @@ class AlarmEntity(CoreEntity, SensorEntity):
         self._attr_device_class = SensorDeviceClass.ENUM
         self._attr_options = [alarm_type for alarm_type in AlarmType]
 
-    async def async_update(self) -> None:
+    def update(self) -> None:
         """Handle updated data from the coordinator."""
 
         value: str = AlarmType.NO_ALARM

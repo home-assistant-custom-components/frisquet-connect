@@ -24,5 +24,4 @@ class BoilerDateTime(CoreEntity, SensorEntity):
         self._attr_device_class = SensorDeviceClass.DATE
 
     def update(self) -> None:
-        _LOGGER.debug(f"BoilerDateTime.update() called with {self.coordinator.data.detail.current_boiler_timestamp}")
         self._attr_native_value = self.coordinator.data.detail.current_boiler_timestamp
