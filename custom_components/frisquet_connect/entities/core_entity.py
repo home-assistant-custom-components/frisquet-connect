@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
@@ -37,4 +38,4 @@ class CoreEntity(CoordinatorEntity[FrisquetConnectCoordinator]):
 
     @callback
     def _handle_coordinator_update(self) -> None:
-        self.async_update().__await__()
+        asyncio.run(self.async_update())
