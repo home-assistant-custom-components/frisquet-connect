@@ -51,4 +51,4 @@ class CoreEntity(CoordinatorEntity[FrisquetConnectCoordinator]):
 
     @abstractmethod
     def update(self):
-        _LOGGER.debug("CoreEntity.update() called")
+        _LOGGER.debug(f"{self.__class__.__name__}.CoreEntity.update() called")
