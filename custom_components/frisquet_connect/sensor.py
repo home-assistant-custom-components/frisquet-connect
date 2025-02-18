@@ -29,8 +29,6 @@ from custom_components.frisquet_connect.entities.sensor.sanitary_consumption imp
 
 _LOGGER = logging.getLogger(__name__)
 
-SCAN_INTERVAL = timedelta(seconds=60)
-
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):
     (initialization_success, coordinator) = await async_initialize_entity(hass, entry, __name__)

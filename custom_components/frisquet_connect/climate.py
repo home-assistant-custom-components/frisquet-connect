@@ -1,4 +1,3 @@
-from datetime import timedelta
 from custom_components.frisquet_connect.core_setup_entity import async_initialize_entity
 from custom_components.frisquet_connect.entities.climate.default_climate import (
     DefaultClimateEntity,
@@ -11,8 +10,6 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 
 _LOGGER = logging.getLogger(__name__)
-
-SCAN_INTERVAL = timedelta(seconds=60)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback):

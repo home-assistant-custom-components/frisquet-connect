@@ -4,26 +4,24 @@ from homeassistant.components.sensor import SensorEntity
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import UnitOfEnergy
 
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.core import callback
 
 from custom_components.frisquet_connect.const import ConsumptionType
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
 from custom_components.frisquet_connect.entities.core_entity import CoreEntity
-from custom_components.frisquet_connect.utils import log_methods
 
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class CoreConsumption(SensorEntity, CoordinatorEntity, CoreEntity):
+class CoreConsumption(CoreEntity, SensorEntity):
 
     _consumption_type: ConsumptionType
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str) -> None:
         super().__init__(coordinator)
-        CoreEntity.__init__(self)
 
         self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{translation_key}"
         self._attr_translation_key = translation_key
@@ -33,7 +31,8 @@ class CoreConsumption(SensorEntity, CoordinatorEntity, CoreEntity):
         self._attr_device_class = SensorDeviceClass.ENERGY
         self._attr_state_class = SensorStateClass.TOTAL_INCREASING
 
-    async def async_update(self):
+    @callback
+    def _handle_coordinator_update(self) -> None:
         if not self._consumption_type:
             _LOGGER.error("Consumption type not set")
             return

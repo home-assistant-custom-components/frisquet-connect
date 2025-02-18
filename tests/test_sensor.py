@@ -44,7 +44,7 @@ async def test_async_setup_entry_success(
     # Test the feature
     service = FrisquetConnectDevice(mock_entry.data.get("email"), mock_entry.data.get("password"))
     coordinator = FrisquetConnectCoordinator(mock_hass, service, mock_entry.data.get("site_id"))
-    await coordinator._async_update()
+    await coordinator._async_update_data()
     mock_hass.data[DOMAIN] = {mock_entry.unique_id: coordinator}
 
     await async_setup_entry(mock_hass, mock_entry, mock_add_entities)
@@ -58,8 +58,7 @@ async def test_async_setup_entry_success(
         if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity, LastUpdateEntity, BoilerDateTime)):
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
-        # TODO : call entity._handle_coordinator_update() method instead of async_update() method
-        await entity.async_update()
+        entity._handle_coordinator_update()
 
         if isinstance(entity, SanitaryConsumptionEntity):
             entity: CoreConsumption

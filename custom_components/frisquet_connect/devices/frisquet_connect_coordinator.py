@@ -12,7 +12,6 @@ from custom_components.frisquet_connect.devices.frisquet_connect_device import (
 )
 
 
-# https://developers.home-assistant.io/docs/core/integration-quality-scale/rules/appropriate-polling?_highlight=_attr_should_poll#example-implementation
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -27,13 +26,14 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
             logger=_LOGGER,
             name="Frisquet Connect Coordinator",
             update_interval=timedelta(seconds=60),
-            update_method=self._async_update,
+            update_method=self._async_update_data,
+            always_update=True,
         )
         self._service = service
         self._site_id = site_id
         self._site = None
 
-    async def _async_update(self):
+    async def _async_update_data(self):
         try_count = 1
         while try_count >= 0:
             _LOGGER.debug(f"Fetching data for site {self._site_id} (try {try_count})")
@@ -42,12 +42,13 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator):
                 self._site = await self._service.async_get_site_info(self._site_id)
                 consumptions_site = await self._service.async_get_site_consumptions(self._site_id)
                 self._site._consumptions = consumptions_site._consumptions
-                self.async_set_updated_data(self._site)
+                # TODO: keep or not ? self.async_set_updated_data(self._site)
                 break
             except ForbiddenAccessException:
                 await self._service.async_refresh_token_and_sites()
             except Exception as e:
                 _LOGGER.error(f"Error unknown during fetching data: {e}")
+        return self._site
 
     @property
     def is_site_loaded(self) -> bool:

@@ -12,8 +12,8 @@ from custom_components.frisquet_connect.entities.climate.utils import (
 from custom_components.frisquet_connect.devices.frisquet_connect_coordinator import (
     FrisquetConnectCoordinator,
 )
+from homeassistant.core import callback
 
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from homeassistant.components.climate import ClimateEntity
 from homeassistant.components.climate.const import (
@@ -33,12 +33,11 @@ from custom_components.frisquet_connect.entities.core_entity import CoreEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
+class DefaultClimateEntity(CoreEntity, ClimateEntity):
     _zone_label_id: str
 
     def __init__(self, coordinator: FrisquetConnectCoordinator, zone_label_id: str) -> None:
         super().__init__(coordinator)
-        CoreEntity.__init__(self)
 
         self._zone_label_id = zone_label_id
 
@@ -58,17 +57,29 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
     def zone(self) -> Zone:
         return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
 
+    @callback
+    def _handle_coordinator_update(self) -> None:
+        (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self.zone)
+        self._attr_preset_modes = available_preset_modes
+        self._attr_preset_mode = preset_mode
+        self._attr_hvac_mode = hvac_mode
+
+        self._attr_current_temperature = self.zone.detail.current_temperature
+        self._attr_target_temperature = self.zone.detail.target_temperature
+        if self._attr_target_temperature != get_target_temperature(self.zone):
+            _LOGGER.warning(
+                f"Current target temperature '{self.zone.detail.target_temperature}' is not the same as the one predefined in the {self.zone.name}: '{get_target_temperature(self.zone)}'"
+            )
+
     async def async_turn_on(self):
         await self.coordinator_typed.service.async_set_selector(
             self.coordinator_typed.site.site_id, self.zone, ZoneSelector.AUTO
         )
-        await self.async_device_update()
 
     async def async_turn_off(self):
         await self.coordinator_typed.service.async_set_selector(
             self.coordinator_typed.site.site_id, self.zone, ZoneSelector.FROST_PROTECTION
         )
-        await self.async_device_update()
 
     async def async_set_hvac_mode(self, hvac_mode):
         selector: ZoneSelector
@@ -89,7 +100,6 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
         await self.coordinator_typed.service.async_set_selector(
             self.coordinator_typed.site.site_id, self.zone, selector
         )
-        await self.async_device_update(False)
 
     async def async_set_preset_mode(self, preset_mode: str):
         current_zone = self.zone
@@ -141,16 +151,3 @@ class DefaultClimateEntity(ClimateEntity, CoordinatorEntity, CoreEntity):
         await self.coordinator_typed.service.async_set_temperature(
             self.coordinator_typed.site.site_id, self.zone, kwargs["temperature"]
         )
-
-    async def async_update(self):
-        (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self.zone)
-        self._attr_preset_modes = available_preset_modes
-        self._attr_preset_mode = preset_mode
-        self._attr_hvac_mode = hvac_mode
-
-        self._attr_current_temperature = self.zone.detail.current_temperature
-        self._attr_target_temperature = self.zone.detail.target_temperature
-        if self._attr_target_temperature != get_target_temperature(self.zone):
-            _LOGGER.warning(
-                f"Current target temperature '{self.zone.detail.target_temperature}' is not the same as the one predefined in the {self.zone.name}: '{get_target_temperature(self.zone)}'"
-            )
