@@ -55,9 +55,5 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator[Site]):
         return self.data is not None
 
     @property
-    def site(self) -> Site:
-        return self.data
-
-    @property
     def service(self) -> FrisquetConnectDevice:
         return self._service

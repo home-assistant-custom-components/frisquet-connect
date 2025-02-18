@@ -40,7 +40,7 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
 
         self._zone_label_id = zone_label_id
 
-        self._attr_unique_id = f"{coordinator.site.site_id}_{CLIMATE_TRANSLATIONS_KEY}_{zone_label_id}"
+        self._attr_unique_id = f"{coordinator.data.site_id}_{CLIMATE_TRANSLATIONS_KEY}_{zone_label_id}"
         self._attr_has_entity_name = True
         self._attr_translation_key = CLIMATE_TRANSLATIONS_KEY
         self._attr_translation_placeholders = {"zone_name": self.zone.name}
@@ -54,7 +54,7 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
 
     @property
     def zone(self) -> Zone:
-        return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
+        return self.coordinator.data.get_zone_by_label_id(self._zone_label_id)
 
     async def async_update(self) -> None:
         (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self.zone)
@@ -70,13 +70,11 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
             )
 
     async def async_turn_on(self):
-        await self.coordinator_typed.service.async_set_selector(
-            self.coordinator_typed.site.site_id, self.zone, ZoneSelector.AUTO
-        )
+        await self.coordinator.service.async_set_selector(self.coordinator.data.site_id, self.zone, ZoneSelector.AUTO)
 
     async def async_turn_off(self):
-        await self.coordinator_typed.service.async_set_selector(
-            self.coordinator_typed.site.site_id, self.zone, ZoneSelector.FROST_PROTECTION
+        await self.coordinator.service.async_set_selector(
+            self.coordinator.data.site_id, self.zone, ZoneSelector.FROST_PROTECTION
         )
 
     async def async_set_hvac_mode(self, hvac_mode):
@@ -95,57 +93,51 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
             _LOGGER.error(f"Unknown HVAC mode '{hvac_mode}'")
             raise ValueError(f"Unknown HVAC mode '{hvac_mode}'")
 
-        await self.coordinator_typed.service.async_set_selector(
-            self.coordinator_typed.site.site_id, self.zone, selector
-        )
+        await self.coordinator.service.async_set_selector(self.coordinator.data.site_id, self.zone, selector)
 
     async def async_set_preset_mode(self, preset_mode: str):
         current_zone = self.zone
         if preset_mode == PRESET_BOOST:
             # TODO: Only available when the zone is in COMFORT mode
-            await self.coordinator_typed.service.async_enable_boost(self.coordinator_typed.site.site_id, self.zone)
+            await self.coordinator.service.async_enable_boost(self.coordinator.data.site_id, self.zone)
         elif preset_mode == PRESET_HOME:
             # TODO: Only available when HVACMode is in AUTO mode and the zone is in REDUCED mode or BOOST mode
             # TODO: If boost is active, it must be disabled before
-            await self.coordinator_typed.service.async_set_exemption(
-                self.coordinator_typed.site.site_id, ZoneMode.COMFORT
-            )
+            await self.coordinator.service.async_set_exemption(self.coordinator.data.site_id, ZoneMode.COMFORT)
         elif preset_mode == PRESET_AWAY:
             # TODO: Only available when HVACMode is in AUTO mode and the zone is in COMFORT mode
             # TODO: If boost is active, it must be disabled before
-            await self.coordinator_typed.service.async_set_exemption(
-                self.coordinator_typed.site.site_id, ZoneMode.REDUCED
-            )
+            await self.coordinator.service.async_set_exemption(self.coordinator.data.site_id, ZoneMode.REDUCED)
         elif preset_mode == PRESET_COMFORT:
             # TODO: Only available when HVACMode is in HEAT mode
-            await self.coordinator_typed.service.async_set_selector(
-                self.coordinator_typed.site.site_id, current_zone, ZoneSelector.COMFORT_PERMANENT
+            await self.coordinator.service.async_set_selector(
+                self.coordinator.data.site_id, current_zone, ZoneSelector.COMFORT_PERMANENT
             )
         elif preset_mode == PRESET_SLEEP:
             # TODO: Only available when HVACMode is in HEAT mode
-            await self.coordinator_typed.service.async_set_selector(
-                self.coordinator_typed.site.site_id, current_zone, ZoneSelector.REDUCED_PERMANENT
+            await self.coordinator.service.async_set_selector(
+                self.coordinator.data.site_id, current_zone, ZoneSelector.REDUCED_PERMANENT
             )
         elif preset_mode == PRESET_ECO:
             # TODO: Only available when HVACMode is in OFF mode
-            await self.coordinator_typed.service.async_set_selector(
-                self.coordinator_typed.site.site_id, current_zone, ZoneSelector.FROST_PROTECTION
+            await self.coordinator.service.async_set_selector(
+                self.coordinator.data.site_id, current_zone, ZoneSelector.FROST_PROTECTION
             )
         elif preset_mode == PRESET_NONE:
             # TODO: Only available when HVACMode is in AUTO mode
             if self.zone.detail.is_boosting:
-                await self.coordinator_typed.service.async_disable_boost(self.coordinator_typed.site.site_id, self.zone)
+                await self.coordinator.service.async_disable_boost(self.coordinator.data.site_id, self.zone)
             elif self.zone.detail.is_exemption_enabled:
-                await self.coordinator_typed.service.async_cancel_exemption(self.coordinator_typed.site.site_id)
+                await self.coordinator.service.async_cancel_exemption(self.coordinator.data.site_id)
             else:
-                await self.coordinator_typed.service.async_set_selector(
-                    self.coordinator_typed.site.site_id, current_zone, ZoneSelector.AUTO
+                await self.coordinator.service.async_set_selector(
+                    self.coordinator.data.site_id, current_zone, ZoneSelector.AUTO
                 )
         else:
             _LOGGER.error(f"Unknown preset mode '{preset_mode}'")
             raise ValueError(f"Unknown preset mode '{preset_mode}'")
 
     async def async_set_temperature(self, **kwargs):
-        await self.coordinator_typed.service.async_set_temperature(
-            self.coordinator_typed.site.site_id, self.zone, kwargs["temperature"]
+        await self.coordinator.service.async_set_temperature(
+            self.coordinator.data.site_id, self.zone, kwargs["temperature"]
         )

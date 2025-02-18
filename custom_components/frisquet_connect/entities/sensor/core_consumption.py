@@ -23,7 +23,7 @@ class CoreConsumption(CoreEntity, SensorEntity):
     def __init__(self, coordinator: FrisquetConnectCoordinator, translation_key: str) -> None:
         super().__init__(coordinator)
 
-        self._attr_unique_id = f"{self.coordinator_typed.site.site_id}_{translation_key}"
+        self._attr_unique_id = f"{self.coordinator.data.site_id}_{translation_key}"
         self._attr_translation_key = translation_key
 
         self._attr_native_unit_of_measurement = UnitOfEnergy.KILO_WATT_HOUR
@@ -38,7 +38,7 @@ class CoreConsumption(CoreEntity, SensorEntity):
 
         current_year = datetime.now().year
         native_value = 0
-        consumptions = self.coordinator_typed.site.get_consumptions_by_type(self._consumption_type)
+        consumptions = self.coordinator.data.get_consumptions_by_type(self._consumption_type)
         if consumptions:
             for consumption_month in consumptions.consumption_months:
                 if consumption_month.year == current_year:

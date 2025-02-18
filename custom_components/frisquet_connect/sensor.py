@@ -44,7 +44,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         LastUpdateEntity(coordinator),
         BoilerDateTime(coordinator),
     ]
-    for zone in coordinator.site.zones:
+    for zone in coordinator.data.zones:
         entity = InsideThermometerEntity(coordinator, zone.label_id)
         entities.append(entity)
 

@@ -8,8 +8,6 @@ from custom_components.frisquet_connect.devices.frisquet_connect_coordinator imp
     FrisquetConnectCoordinator,
 )
 
-from homeassistant.core import callback
-
 
 class OutsideThermometerEntity(CoreThermometer):
 
@@ -17,4 +15,4 @@ class OutsideThermometerEntity(CoreThermometer):
         super().__init__(coordinator, SENSOR_OUTSIDE_THERMOMETER_TRANSLATIONS_KEY)
 
     async def async_update(self) -> None:
-        self._attr_native_value = self.coordinator_typed.site.external_temperature
+        self._attr_native_value = self.coordinator.data.external_temperature

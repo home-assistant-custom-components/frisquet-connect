@@ -19,7 +19,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
         return
 
     entities: list[DefaultClimateEntity] = []
-    for zone in coordinator.site.zones:
+    for zone in coordinator.data.zones:
         entity = DefaultClimateEntity(coordinator, zone.label_id)
         entities.append(entity)
 

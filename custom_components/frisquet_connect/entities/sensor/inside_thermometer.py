@@ -22,7 +22,7 @@ class InsideThermometerEntity(CoreThermometer):
 
     @property
     def zone(self) -> Zone:
-        return self.coordinator_typed.site.get_zone_by_label_id(self._zone_label_id)
+        return self.coordinator.data.get_zone_by_label_id(self._zone_label_id)
 
     async def async_update(self) -> None:
         self._attr_native_value = self.zone.detail.current_temperature

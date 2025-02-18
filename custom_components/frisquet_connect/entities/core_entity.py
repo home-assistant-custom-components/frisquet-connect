@@ -28,16 +28,12 @@ class CoreEntity(CoordinatorEntity[FrisquetConnectCoordinator]):
         self._attr_has_entity_name = True
         self._attr_should_poll = True
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, self.coordinator_typed.site.site_id)},
-            name=self.coordinator_typed.site.name,
+            identifiers={(DOMAIN, self.coordinator.data.site_id)},
+            name=self.coordinator.data.name,
             manufacturer=DEVICE_MANUFACTURER,
-            model=str(self.coordinator_typed.site.product),
-            serial_number=self.coordinator_typed.site.serial_number,
+            model=str(self.coordinator.data.product),
+            serial_number=self.coordinator.data.serial_number,
         )
-
-    @property
-    def coordinator_typed(self) -> FrisquetConnectCoordinator:
-        return self.coordinator
 
     @callback
     def _handle_coordinator_update(self) -> None:

@@ -82,7 +82,7 @@ async def test_async_setup_entry_success(
     assert entity.zone.label_id == "Z1"
 
     # SITE
-    site: Site = entity.coordinator_typed.site
+    site: Site = entity.coordinator.data
     assert site is not None
     assert str(site.product) == "Hydromotrix - Mixte Eau chaude instantanée (Condensation - 32 kW)"
     assert site.serial_number == "A1AB12345"
