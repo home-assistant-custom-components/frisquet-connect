@@ -30,7 +30,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         service = FrisquetConnectDevice(entry.data.get("email"), entry.data.get("password"))
         coordinator = FrisquetConnectCoordinator(hass, service, entry.data.get("site_id"))
-        await coordinator._async_update_data()
+        await coordinator._async_refresh()
 
         if not coordinator.is_site_loaded:
             _LOGGER.error("Site not found")

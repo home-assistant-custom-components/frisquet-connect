@@ -61,7 +61,7 @@ async def async_core_setup_entry_with_site_id_mutated(
 
     service = FrisquetConnectDevice(entry.data.get("email"), entry.data.get("password"))
     coordinator = FrisquetConnectCoordinator(hass, service, entry.data.get("site_id"))
-    await coordinator._async_update_data()
+    await coordinator._async_refresh()
     hass.data[DOMAIN] = {entry.unique_id: coordinator}
 
     if mock_add_entities:
