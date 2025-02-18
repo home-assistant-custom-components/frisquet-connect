@@ -72,10 +72,15 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
     async def async_turn_on(self):
         await self.coordinator.service.async_set_selector(self.coordinator.data.site_id, self.zone, ZoneSelector.AUTO)
 
+        # TODO : if it works, how to fix test with hass...
+        await self.coordinator.async_request_refresh()
+
     async def async_turn_off(self):
         await self.coordinator.service.async_set_selector(
             self.coordinator.data.site_id, self.zone, ZoneSelector.FROST_PROTECTION
         )
+
+        await self.coordinator.async_request_refresh()
 
     async def async_set_hvac_mode(self, hvac_mode):
         selector: ZoneSelector
@@ -94,6 +99,7 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
             raise ValueError(f"Unknown HVAC mode '{hvac_mode}'")
 
         await self.coordinator.service.async_set_selector(self.coordinator.data.site_id, self.zone, selector)
+        await self.coordinator.async_request_refresh()
 
     async def async_set_preset_mode(self, preset_mode: str):
         current_zone = self.zone
@@ -137,7 +143,11 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
             _LOGGER.error(f"Unknown preset mode '{preset_mode}'")
             raise ValueError(f"Unknown preset mode '{preset_mode}'")
 
+        await self.coordinator.async_request_refresh()
+
     async def async_set_temperature(self, **kwargs):
         await self.coordinator.service.async_set_temperature(
             self.coordinator.data.site_id, self.zone, kwargs["temperature"]
         )
+
+        await self.coordinator.async_request_refresh()

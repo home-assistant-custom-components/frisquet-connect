@@ -24,7 +24,7 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator[Site]):
             hass=hass,
             logger=_LOGGER,
             name="Frisquet Connect Coordinator",
-            update_interval=timedelta(seconds=60),
+            update_interval=timedelta(seconds=20),
             update_method=self._async_update_data,
             always_update=True,
         )
@@ -41,7 +41,6 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator[Site]):
                 site_up_to_date = await self._service.async_get_site_info(self._site_id)
                 consumptions_site = await self._service.async_get_site_consumptions(self._site_id)
                 site_up_to_date._consumptions = consumptions_site._consumptions
-                # TODO: keep or not ? self.async_set_updated_data(self._site)
                 break
             except ForbiddenAccessException:
                 await self._service.async_refresh_token_and_sites()

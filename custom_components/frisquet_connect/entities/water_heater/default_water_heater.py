@@ -25,3 +25,5 @@ class DefaultWaterHeaterEntity(CoreEntity, WaterHeaterEntity):
 
     async def async_set_operation_mode(self, operation_mode: str) -> None:
         await self.coordinator.service.async_set_sanitary_water_mode(self.coordinator.data.site_id, operation_mode)
+
+        await self.coordinator.async_request_refresh()
