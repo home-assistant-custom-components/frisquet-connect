@@ -6,8 +6,8 @@
 
 # Frisquet Connect "Unofficial" For Home Assistant
 
-[![Overview](./overview.png)]
-[![Dashboard](./dashboard.png)]
+![Overview](./overview.png)
+![Dashboard](./dashboard.png)
 
 ## Installation
 
