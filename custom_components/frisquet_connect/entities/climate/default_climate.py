@@ -72,7 +72,6 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
     async def async_turn_on(self):
         await self.coordinator.service.async_set_selector(self.coordinator.data.site_id, self.zone, ZoneSelector.AUTO)
 
-        # TODO : if it works, how to fix test with hass...
         await self.coordinator.async_request_refresh()
 
     async def async_turn_off(self):

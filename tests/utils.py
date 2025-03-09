@@ -1,6 +1,8 @@
 import json
 import aiohttp
 
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+
 from mockito import contains, unstub, when, ANY
 from custom_components.frisquet_connect.repositories.frisquet_connect_repository import (
     AUTH_ENDPOINT,
@@ -47,6 +49,9 @@ class MockResponse(AsyncMock):
 # Mocks
 #
 def mock_endpoints() -> None:
+    async_request_refresh = AsyncMock()
+    when(DataUpdateCoordinator).async_request_refresh().thenReturn(async_request_refresh)
+
     mock_authentication_endpoint()
     mock_sites_endpoint_with_forbidden()
     mock_sites_endpoint_not_found()

@@ -6,13 +6,14 @@
 
 # Frisquet Connect "Unofficial" For Home Assistant
 
-TODO: Add screenshot of the integration
+[![Overview](./overview.png)]
+[![Dashboard](./dashboard.png)]
 
 ## Installation
 
 ### HACS
 
-TBD: Frisquet Connect "unofficial" is available in HACS (Home Assistant Community Store).
+Frisquet Connect "Yet Another Unofficial" is available in HACS (Home Assistant Community Store).
 
 #### Automatic way
 
@@ -91,6 +92,3 @@ pre-commit autoupdate --repo https://github.com/pre-commit/pre-commit-hooks
 pre-commit installed at .git/hooks/pre-commit
 pre-commit install
 ```
-
-## TODO :
-Add decorator to log function of service/coordinator in debug
