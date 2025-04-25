@@ -24,7 +24,7 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator[Site]):
             hass=hass,
             logger=_LOGGER,
             name="Frisquet Connect Coordinator",
-            update_interval=timedelta(seconds=20),
+            update_interval=timedelta(minutes=5),
             update_method=self._async_update_data,
             always_update=True,
         )

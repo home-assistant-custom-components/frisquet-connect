@@ -23,6 +23,14 @@ class DefaultWaterHeaterEntity(CoreEntity, WaterHeaterEntity):
     def update(self) -> None:
         self.current_operation = SanitaryWaterModeLabel[self.coordinator.data.water_heater.sanitary_water_mode.name]
 
+    async def async_turn_on(self) -> None:
+        """Turn the water heater on."""
+        await self.async_set_operation_mode(SanitaryWaterModeLabel.ECO_TIMER)
+
+    async def async_turn_off(self) -> None:
+        """Turn the water heater off."""
+        await self.async_set_operation_mode(SanitaryWaterModeLabel.STOP)
+
     async def async_set_operation_mode(self, operation_mode: str) -> None:
         await self.coordinator.service.async_set_sanitary_water_mode(self.coordinator.data.site_id, operation_mode)
 
