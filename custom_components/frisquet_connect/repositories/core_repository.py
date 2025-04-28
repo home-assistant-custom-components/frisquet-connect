@@ -81,12 +81,12 @@ async def async_do_websocket(url: str, params: dict, data_json: dict = None) -> 
                 ws_response_json = await ws.receive_json(timeout=300)
                 if ws_response_json.get("type") == "ORDRE_OK":
                     _LOGGER.info(f"WebSocket expected response: {ws_response_json}")
-                    ws.close()
+                    await ws.close()
                     return
                 else:
                     _LOGGER.debug(f"WebSocket other response: {ws_response_json}")
 
-            ws.close()
+            await ws.close()
             raise CallApiException("WebSocket response timeout")
 
         except aiohttp.ClientResponseError as e:

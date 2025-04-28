@@ -63,10 +63,10 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
         self._attr_hvac_mode = hvac_mode
 
         self._attr_current_temperature = self.zone.detail.current_temperature
-        self._attr_target_temperature = self.zone.detail.target_temperature
-        if self._attr_target_temperature != get_target_temperature(self.zone):
+        self._attr_target_temperature = get_target_temperature(self.zone)
+        if self.zone.detail.target_temperature != get_target_temperature(self.zone):
             _LOGGER.warning(
-                f"Current target temperature '{self.zone.detail.target_temperature}' is not the same as the one predefined in the {self.zone.name}: '{get_target_temperature(self.zone)}'"
+                f"Current target temperature '{self.zone.detail.target_temperature}' is not (yet) the same as the one predefined in the {self.zone.name}: '{get_target_temperature(self.zone)}'"
             )
 
     async def async_turn_on(self):
