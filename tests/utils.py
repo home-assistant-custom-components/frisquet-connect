@@ -1,4 +1,5 @@
 import json
+from typing import Optional
 import aiohttp
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
@@ -6,6 +7,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from mockito import contains, unstub, when, ANY
 from custom_components.frisquet_connect.repositories.frisquet_connect_repository import (
     AUTH_ENDPOINT,
+    FRISQUET_CONNECT_WEBSOCKET_URL,
     ORDER_ENDPOINT,
     SITES_CONSO_ENDPOINT,
     SITES_ENDPOINT,
@@ -45,6 +47,28 @@ class MockResponse(AsyncMock):
         return self
 
 
+class MockClientWebSocketResponse(AsyncMock):
+    def __init__(self, send_json: dict, receive_text: str):
+        super().__init__()
+        self._send_json = send_json
+        self._receive_text = receive_text
+
+    async def send_json(self, data_json, compress: Optional[int] = None, *, dumps: json.JSONEncoder = json.dumps):
+        if data_json != self._send_json:
+            raise aiohttp.ClientResponseError(request_info=Mock(), history=[], status=400, message="Bad Request")
+
+    async def receive_json(self, timeout=None):
+        if timeout != 300:
+            raise aiohttp.ClientResponseError(request_info=Mock(), history=[], status=400, message="Bad Request")
+        return json.loads(self._receive_text)
+
+    async def __aexit__(self, exc_type, exc, tb):
+        pass
+
+    async def __aenter__(self):
+        return self
+
+
 #
 # Mocks
 #
@@ -65,6 +89,7 @@ def mock_endpoints() -> None:
     mock_ordres_endpoint("preset_mode_permanent_comfort")
     mock_ordres_endpoint("preset_mode_permanent_sleep")
     mock_ordres_endpoint("preset_mode_permanent_eco")
+    mock_websocket_endpoint()
     mock_site_conso_endpoint()
 
 
@@ -111,6 +136,19 @@ def mock_ordres_endpoint(use_case: str) -> None:
         headers=ANY,
         params=mock_params,
         json=mock_input,
+    ).thenReturn(mock_output)
+
+
+# WEB SOCKETS
+def mock_websocket_endpoint() -> None:
+    mock_params = {"token": "00000000000000000000000000000000", "identifiant_chaudiere": "12345678901234"}
+
+    mock_input = read_json_file_as_json("/ordres/ws_input")
+    mock_output = MockClientWebSocketResponse(mock_input, read_json_file_as_text("/ordres/ws_output"))
+
+    when(aiohttp.ClientSession).ws_connect(
+        contains(FRISQUET_CONNECT_WEBSOCKET_URL),
+        params=mock_params,
     ).thenReturn(mock_output)
 
 

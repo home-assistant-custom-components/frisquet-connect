@@ -1,9 +1,5 @@
-import json
-
-
 class AuthenticationRequest:
-    def __init__(self, email: str, password: str, locale: str = "fr", type_client: str = "IOS"):
-        self.locale = locale
+    def __init__(self, email: str, password: str, type_client: str = "ANDROID"):
         self.email = email
         self.password = password
         self.type_client = type_client

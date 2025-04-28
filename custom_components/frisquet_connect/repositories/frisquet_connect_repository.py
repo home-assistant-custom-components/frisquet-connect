@@ -21,18 +21,21 @@ from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.repositories.core_repository import (
     async_do_get,
     async_do_post,
+    async_do_websocket,
 )
 from custom_components.frisquet_connect.utils import log_methods
 
 
-FRISQUET_CONNECT_URL = "https://fcutappli.frisquet.com"
+FRISQUET_CONNECT_WEBSOCKET_URL = "wss://fcappcom.frisquet.com/"
 
-AUTH_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/authentifications"
+FRISQUET_CONNECT_API_URL = "https://fcutappli.frisquet.com"
 
-SITES_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/sites"
+AUTH_ENDPOINT = f"{FRISQUET_CONNECT_API_URL}/api/v1/authentifications"
+
+SITES_ENDPOINT = f"{FRISQUET_CONNECT_API_URL}/api/v1/sites"
 SITES_CONSO_ENDPOINT = "{site_url}/conso"
 
-ORDER_ENDPOINT = f"{FRISQUET_CONNECT_URL}/api/v1/ordres"
+ORDER_ENDPOINT = f"{FRISQUET_CONNECT_API_URL}/api/v1/ordres"
 
 
 LOGGER = logging.getLogger(__name__)
@@ -109,4 +112,9 @@ class FrisquetConnectRepository:
     async def _async_do_site_action(self, site_id: str, token: str, payload: list[dict]) -> dict:
         params = {"token": token}
         response_json = await async_do_post(f"{ORDER_ENDPOINT}/{site_id}", params, payload)
+
+        params["identifiant_chaudiere"] = site_id
+        payload = {"type": "ORDRE_EN_ATTENTE"}
+        await async_do_websocket(FRISQUET_CONNECT_WEBSOCKET_URL, params, payload)
+
         return response_json
