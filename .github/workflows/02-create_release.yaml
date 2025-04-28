@@ -35,22 +35,23 @@ jobs:
         with:
           tag_name: ${{ steps.calculate-tag.outputs.new_tag }}
           release_date: ${{ steps.calculate-tag.outputs.release_date }}
-          release_name: ${{ steps.calculate-tag.outputs.new_tag }} - ${{ steps.calculate-tag.outputs.release_date }}
+          release_name: ${{ steps.calculate-tag.outputs.new_tag }}
           draft: false
           prerelease: true
           body: |
-            # Enhancements
+            # ${{ steps.calculate-tag.outputs.release_date }}
+            ## Enhancements
 
             - Add new feature X
 
-            # Bug fixes
+            ## Bug fixes
 
             - Fix issue Y
 
-            # Breaking changes
+            ## Breaking changes
 
             - Remove feature Z
 
-            # Known issues
+            ## Known issues
 
             - No known issues
