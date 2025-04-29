@@ -18,9 +18,9 @@ class WaterHeater(ModelBase):
 
     @property
     def sanitary_water_mode(self) -> SanitaryWaterMode:
-        if self.sanitary_water_type == SanitaryWaterType.NORMAL:
+        if not self._solaire:
             return SanitaryWaterMode(self._MODE_ECS.get("id"))
-        if self.sanitary_water_type == SanitaryWaterType.SOLAR:
+        else:
             return SanitaryWaterMode(self._MODE_ECS_SOLAIRE.get("id"))
-        if self.sanitary_water_type == SanitaryWaterType.HEAT_PUMP:
-            return SanitaryWaterMode(self._MODE_ECS_PAC.get("id"))
+        # TODO: What about the PAC mode ?
+        # return SanitaryWaterMode(self._MODE_ECS_PAC.get("id"))

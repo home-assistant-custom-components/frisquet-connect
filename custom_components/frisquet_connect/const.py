@@ -62,9 +62,8 @@ class AlarmType(StrEnum):
 
 
 class SanitaryWaterType(Enum):
-    NORMAL = 0
-    SOLAR = 1
-    HEAT_PUMP = 2
+    WITHTOU_TANK = 0
+    WITH_TANK = 1
 
 
 class SanitaryWaterModeLabel(StrEnum):

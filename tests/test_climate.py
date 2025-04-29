@@ -99,7 +99,7 @@ async def test_async_setup_entry_success(
 
     # SITE.WATER_HEATER
     assert site.water_heater is not None
-    assert site.water_heater.sanitary_water_type == SanitaryWaterType.NORMAL
+    assert site.water_heater.sanitary_water_type == SanitaryWaterType.WITHTOU_TANK
     assert site.water_heater.sanitary_water_mode == SanitaryWaterMode.ECO_TIMER
 
     # SITE.ZONES

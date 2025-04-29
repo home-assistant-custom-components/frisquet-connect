@@ -145,8 +145,12 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
         await self.coordinator.async_request_refresh()
 
     async def async_set_temperature(self, **kwargs):
-        await self.coordinator.service.async_set_temperature(
-            self.coordinator.data.site_id, self.zone, kwargs["temperature"]
-        )
+        temperature = kwargs.get("temperature")
+        await self.coordinator.service.async_set_temperature(self.coordinator.data.site_id, self.zone, temperature)
+
+        # Update the target temperature attribute to reflect the new value
+        # This is necessary because the coordinator may not have updated the data yet
+        # and we want to ensure that the UI reflects the new target temperature immediately
+        self._attr_target_temperature = temperature
 
         await self.coordinator.async_request_refresh()
