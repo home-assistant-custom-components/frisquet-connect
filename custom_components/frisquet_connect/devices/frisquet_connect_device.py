@@ -1,4 +1,5 @@
 import logging
+from random import random
 
 from custom_components.frisquet_connect.const import SanitaryWaterMode, SanitaryWaterModeLabel, ZoneMode, ZoneSelector
 from custom_components.frisquet_connect.domains.authentication.authentication import (
@@ -15,6 +16,8 @@ from custom_components.frisquet_connect.repositories.frisquet_connect_repository
     FrisquetConnectRepository,
 )
 from custom_components.frisquet_connect.utils import log_methods
+import string
+import random
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -37,10 +40,15 @@ class FrisquetConnectDevice:
         self._token = ""
 
     async def async_refresh_token_and_sites(self) -> Authentication:
-        authentication = await self._repository.async_get_token_and_sites(self._email, self._password)
+        app_id = self.generate_random_app_id()
+        authentication = await self._repository.async_get_token_and_sites(self._email, self._password, app_id)
         self._token = authentication.token
         self._sites = authentication.sites
         return authentication
+
+    def generate_random_app_id(self, length=22):
+        characters = string.ascii_letters + string.digits
+        return "".join(random.choice(characters) for _ in range(length))
 
     @property
     def sites(self) -> list[SiteLight]:

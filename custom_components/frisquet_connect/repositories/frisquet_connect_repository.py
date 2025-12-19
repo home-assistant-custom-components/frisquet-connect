@@ -44,9 +44,9 @@ LOGGER = logging.getLogger(__name__)
 @log_methods
 class FrisquetConnectRepository:
 
-    async def async_get_token_and_sites(self, email: str, password: str) -> Authentication:
+    async def async_get_token_and_sites(self, email: str, password: str, app_id: str) -> Authentication:
         payload = AuthenticationRequest(email, password).to_dict()
-        response_json = await async_do_post(AUTH_ENDPOINT, None, payload)
+        response_json = await async_do_post(AUTH_ENDPOINT, {"app_id": app_id}, payload)
         return Authentication(response_json)
 
     async def async_get_site_info(self, site_id: str, token: str) -> Site:
