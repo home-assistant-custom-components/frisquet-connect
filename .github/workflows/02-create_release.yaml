@@ -23,35 +23,36 @@ jobs:
       - name: Calculate tag
         id: calculate-tag
         run: |
-          build_number="$(date +'%m%d%H%M')"
+          build_number="$(date +'%y%m%d%H%M')"
           new_tag=v${{ github.event.inputs.version }}-${{ github.event.inputs.quality }}-${build_number} # e.g. v0.1-rc-101012
           echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
           echo "release_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.calculate-tag.outputs.new_tag }}
-          release_date: ${{ steps.calculate-tag.outputs.release_date }}
-          release_name: ${{ steps.calculate-tag.outputs.new_tag }}
-          draft: false
-          prerelease: true
-          body: |
-            # ${{ steps.calculate-tag.outputs.release_date }}
-            ## Enhancements
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.calculate-tag.outputs.new_tag }}
+          RELEASE_DATE: ${{ steps.calculate-tag.outputs.release_date }}
+        run: |
+          release_notes=$(printf '%s\n' \
+            "# $RELEASE_DATE" \
+            "## Enhancements" \
+            "" \
+            "- Add new feature X" \
+            "" \
+            "## Bug fixes" \
+            "" \
+            "- Fix issue Y" \
+            "" \
+            "## Breaking changes" \
+            "" \
+            "- Remove feature Z" \
+            "" \
+            "## Known issues" \
+            "" \
+            "- No known issues")
 
-            - Add new feature X
-
-            ## Bug fixes
-
-            - Fix issue Y
-
-            ## Breaking changes
-
-            - Remove feature Z
-
-            ## Known issues
-
-            - No known issues
+          gh release create "$TAG_NAME" \
+            --title "$TAG_NAME" \
+            --prerelease \
+            --notes "$release_notes"
