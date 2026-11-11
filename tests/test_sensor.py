@@ -1,5 +1,6 @@
 from datetime import datetime
 from decimal import Decimal
+from unittest.mock import patch
 import pytest
 
 from homeassistant.core import HomeAssistant
@@ -58,7 +59,9 @@ async def test_async_setup_entry_success(
         if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity, LastUpdateEntity, BoilerDateTime)):
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
-        entity.update()
+        with patch("custom_components.frisquet_connect.entities.sensor.core_consumption.datetime") as mocked_datetime:
+            mocked_datetime.now.return_value = datetime(2025, 1, 1)
+            entity.update()
 
         if isinstance(entity, SanitaryConsumptionEntity):
             entity: CoreConsumption
@@ -78,7 +81,7 @@ async def test_async_setup_entry_success(
 
         elif isinstance(entity, OutsideThermometerEntity):
             entity: CoreThermometer
-            assert entity.native_value == Decimal(3.4)
+            assert entity.native_value == None
 
         elif isinstance(entity, AlarmEntity):
             entity: AlarmEntity

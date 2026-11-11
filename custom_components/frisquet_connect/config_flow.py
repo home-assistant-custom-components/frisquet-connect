@@ -28,7 +28,7 @@ _LOGGER = logging.getLogger(__name__)
 class FrisquetConnectFlow(ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
-    _user_input: dict = dict()
+    _user_input: dict = {}
 
     def _get_sites(self) -> list[str]:
         return [str(site) for site in self._user_input["sites"]]

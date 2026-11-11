@@ -14,6 +14,7 @@ from homeassistant.components.climate.const import (
 DOMAIN = "frisquet_connect"
 DEVICE_MANUFACTURER = "Frisquet"
 DEVICE_NAME = "Frisquet Connect"
+COORDINATOR_UPDATE_INTERVAL_IN_MINUTES = 15
 
 # TODO : Check if for all platform there is at least one translation key & .py file
 PLATFORMS: list[Platform] = [

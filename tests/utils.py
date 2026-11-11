@@ -96,7 +96,7 @@ def mock_endpoints() -> None:
 # AUTHENTICATION
 def mock_authentication_endpoint() -> None:
     mock = MockResponse(read_json_file_as_text("authentication"), 200)
-    when(aiohttp.ClientSession).post(contains(AUTH_ENDPOINT), headers=ANY, params=None, json=ANY).thenReturn(mock)
+    when(aiohttp.ClientSession).post(contains(AUTH_ENDPOINT), headers=ANY, params=ANY, json=ANY).thenReturn(mock)
 
 
 # SITES

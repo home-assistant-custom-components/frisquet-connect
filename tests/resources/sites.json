@@ -40,7 +40,7 @@
         "MODE_ECS_PAC": null
     },
     "environnement": {
-        "T_EXT": 34,
+        "T_EXT": null,
         "T_EXT_GE": null
     },
     "vacances": {

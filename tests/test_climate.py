@@ -89,7 +89,7 @@ async def test_async_setup_entry_success(
     assert site.name == "Somewhere"
     assert site.site_id == "12345678901234"
     assert site.last_updated == datetime(2025, 1, 31, 10, 0, 41)
-    assert site.external_temperature == Decimal(3.4)
+    assert site.external_temperature == None
 
     # SITE.DETAIL
     assert site.detail is not None

@@ -3,6 +3,7 @@ import logging
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
+from custom_components.frisquet_connect.const import COORDINATOR_UPDATE_INTERVAL_IN_MINUTES
 from custom_components.frisquet_connect.domains.exceptions.forbidden_access_exception import (
     ForbiddenAccessException,
 )
@@ -10,7 +11,6 @@ from custom_components.frisquet_connect.domains.site.site import Site
 from custom_components.frisquet_connect.devices.frisquet_connect_device import (
     FrisquetConnectDevice,
 )
-
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class FrisquetConnectCoordinator(DataUpdateCoordinator[Site]):
             hass=hass,
             logger=_LOGGER,
             name="Frisquet Connect Coordinator",
-            update_interval=timedelta(minutes=5),
+            update_interval=timedelta(minutes=COORDINATOR_UPDATE_INTERVAL_IN_MINUTES),
             update_method=self._async_update_data,
             always_update=True,
         )
