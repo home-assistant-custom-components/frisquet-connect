@@ -19,8 +19,12 @@ def get_hvac_and_preset_mode_for_a_zone(zone: Zone) -> tuple[list[HVACMode], str
     # Inputs
     selector = zone.detail.selector
     mode = zone.detail.mode
+    is_exemption_enabled = zone.detail.is_exemption_enabled
+    is_boost_available = zone.is_boost_available
 
-    _LOGGER.debug(f"get_hvac_and_preset_mode_for_a_zone: selector={selector}, mode={mode}")
+    _LOGGER.debug(
+        f"get_hvac_and_preset_mode_for_a_zone: selector={selector}, mode={mode}, is_exemption_enabled={is_exemption_enabled}, is_boost_available={is_boost_available}"
+    )
 
     # Outputs
     available_preset_modes: list[str]
