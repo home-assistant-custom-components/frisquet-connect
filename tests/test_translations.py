@@ -8,6 +8,8 @@ from custom_components.frisquet_connect.const import (
     SENSOR_BOILER_LAST_UPDATE_TRANSLATIONS_KEY,
     SENSOR_OUTSIDE_THERMOMETER_TRANSLATIONS_KEY,
     SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY,
+    SENSOR_ZONE_EXEMPTION_TRANSLATIONS_KEY,
+    BUTTON_REFRESH_DATA_TRANSLATIONS_KEY,
     WATER_HEATER_TRANSLATIONS_KEY,
 )
 from tests.utils import read_translation_file
@@ -38,6 +40,7 @@ def sanity_check_missing_key_common(default_translation: dict):
 
     default_entities = default_translation.get("entity")
     types = {
+        Platform.BUTTON: [BUTTON_REFRESH_DATA_TRANSLATIONS_KEY],
         Platform.CLIMATE: [CLIMATE_TRANSLATIONS_KEY],
         Platform.WATER_HEATER: [WATER_HEATER_TRANSLATIONS_KEY],
         Platform.SENSOR: [
@@ -48,6 +51,7 @@ def sanity_check_missing_key_common(default_translation: dict):
             SENSOR_OUTSIDE_THERMOMETER_TRANSLATIONS_KEY,
             SENSOR_HEATING_CONSUMPTION_TRANSLATIONS_KEY,
             SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY,
+            SENSOR_ZONE_EXEMPTION_TRANSLATIONS_KEY,
         ],
     }
 

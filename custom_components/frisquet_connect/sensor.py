@@ -26,6 +26,9 @@ from custom_components.frisquet_connect.entities.sensor.outside_thermometer impo
 from custom_components.frisquet_connect.entities.sensor.sanitary_consumption import (
     SanitaryConsumptionEntity,
 )
+from custom_components.frisquet_connect.entities.sensor.zone_exemption import (
+    ZoneExemptionEntity,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,6 +50,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
     for zone in coordinator.data.zones:
         entity = InsideThermometerEntity(coordinator, zone.label_id)
         entities.append(entity)
+        exemption_entity = ZoneExemptionEntity(coordinator, zone.label_id)
+        entities.append(exemption_entity)
 
     _LOGGER.debug(f"{len(entities)} entity/entities initialized")
 

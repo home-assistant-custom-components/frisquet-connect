@@ -11,7 +11,7 @@
 
 ## Installation
 
-### HACS
+### Marketplace (Ex HACS)
 
 Frisquet Connect "Yet Another Unofficial" is available in HACS (Home Assistant Community Store).
 
@@ -21,10 +21,9 @@ Frisquet Connect "Yet Another Unofficial" is available in HACS (Home Assistant C
 
 #### Manual way
 
-1. Install HACS if you don't have it already
-2. Open HACS in Home Assistant
-3. Search for "Frisquet Connect"
-4. Click the download button. ⬇️
+1. Go to Settings -> Marketplace
+2. Search for "Frisquet Connect"
+3. Click the download button. ⬇️
 
 ### local install
 

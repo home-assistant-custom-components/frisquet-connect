@@ -20,6 +20,7 @@ from custom_components.frisquet_connect.entities.sensor.inside_thermometer impor
 from custom_components.frisquet_connect.entities.sensor.last_update import LastUpdateEntity
 from custom_components.frisquet_connect.entities.sensor.outside_thermometer import OutsideThermometerEntity
 from custom_components.frisquet_connect.entities.sensor.sanitary_consumption import SanitaryConsumptionEntity
+from custom_components.frisquet_connect.entities.sensor.zone_exemption import ZoneExemptionEntity
 from custom_components.frisquet_connect.sensor import async_setup_entry
 from custom_components.frisquet_connect.const import (
     DOMAIN,
@@ -27,6 +28,7 @@ from custom_components.frisquet_connect.const import (
     SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY,
     AlarmType,
     ConsumptionType,
+    ZoneExemptionType,
 )
 from custom_components.frisquet_connect.devices.frisquet_connect_device import (
     FrisquetConnectDevice,
@@ -52,11 +54,21 @@ async def test_async_setup_entry_success(
 
     mock_add_entities.assert_called_once()
     entities = mock_add_entities.call_args[0][0]
-    assert len(entities) == 7
+    assert len(entities) == 8
 
     # Assertions
     for entity in entities:
-        if not isinstance(entity, (CoreConsumption, CoreThermometer, AlarmEntity, LastUpdateEntity, BoilerDateTime)):
+        if not isinstance(
+            entity,
+            (
+                CoreConsumption,
+                CoreThermometer,
+                AlarmEntity,
+                LastUpdateEntity,
+                BoilerDateTime,
+                ZoneExemptionEntity,
+            ),
+        ):
             assert False, f"Unknown entity type: {entity.__class__.__name__}"
 
         with patch("custom_components.frisquet_connect.entities.sensor.core_consumption.datetime") as mocked_datetime:
@@ -95,6 +107,11 @@ async def test_async_setup_entry_success(
         elif isinstance(entity, BoilerDateTime):
             entity: BoilerDateTime
             assert entity.native_value == datetime(2025, 1, 31, 10, 3, 40)
+
+        elif isinstance(entity, ZoneExemptionEntity):
+            entity: ZoneExemptionEntity
+            assert entity.device_class == SensorDeviceClass.ENUM
+            assert entity.native_value == ZoneExemptionType.REDUCED
 
         else:
             assert False, f"Unknown entity type: {entity.__class__.__name__}"

@@ -18,7 +18,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Calculate tag
         id: calculate-tag
@@ -28,11 +28,19 @@ jobs:
           echo "new_tag=$new_tag" >> $GITHUB_OUTPUT
           echo "release_date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
+      - name: Create integration ZIP
+        env:
+          FILENAME: frisquet_connect_yet_another_unofficial.zip
+        run: |
+          zip -r "$FILENAME" custom_components/frisquet_connect
+          unzip -t "$FILENAME"
+
       - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ steps.calculate-tag.outputs.new_tag }}
           RELEASE_DATE: ${{ steps.calculate-tag.outputs.release_date }}
+          ARCHIVE_NAME: frisquet_connect_yet_another_unofficial.zip
         run: |
           release_notes=$(printf '%s\n' \
             "# $RELEASE_DATE" \
@@ -55,4 +63,5 @@ jobs:
           gh release create "$TAG_NAME" \
             --title "$TAG_NAME" \
             --prerelease \
-            --notes "$release_notes"
+            --notes "$release_notes" \
+            "$ARCHIVE_NAME"

@@ -57,13 +57,13 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
         return self.coordinator.data.get_zone_by_label_id(self._zone_label_id)
 
     def update(self) -> None:
-        (available_preset_modes, preset_mode, hvac_mode) = get_hvac_and_preset_mode_for_a_zone(self.zone)
+        available_preset_modes, preset_mode, hvac_mode = get_hvac_and_preset_mode_for_a_zone(self.zone)
         self._attr_preset_modes = available_preset_modes
         self._attr_preset_mode = preset_mode
         self._attr_hvac_mode = hvac_mode
 
         self._attr_current_temperature = self.zone.detail.current_temperature
-        self._attr_target_temperature = get_target_temperature(self.zone)
+        self._attr_native_target_temperature = get_target_temperature(self.zone)
         if self.zone.detail.target_temperature != get_target_temperature(self.zone):
             _LOGGER.warning(
                 f"Current target temperature '{self.zone.detail.target_temperature}' is not (yet) the same as the one predefined in the {self.zone.name}: '{get_target_temperature(self.zone)}'"
@@ -151,6 +151,6 @@ class DefaultClimateEntity(CoreEntity, ClimateEntity):
         # Update the target temperature attribute to reflect the new value
         # This is necessary because the coordinator may not have updated the data yet
         # and we want to ensure that the UI reflects the new target temperature immediately
-        self._attr_target_temperature = temperature
+        self._attr_native_target_temperature = temperature
 
         await self.coordinator.async_request_refresh()
