@@ -18,6 +18,7 @@ COORDINATOR_UPDATE_INTERVAL_IN_MINUTES = 15
 
 # TODO : Check if for all platform there is at least one translation key & .py file
 PLATFORMS: list[Platform] = [
+    Platform.BUTTON,
     Platform.CLIMATE,
     Platform.SENSOR,
     Platform.WATER_HEATER,
@@ -28,6 +29,7 @@ CLIMATE_TRANSLATIONS_KEY = "default_climate"
 
 WATER_HEATER_TRANSLATIONS_KEY = "default_water_heater"
 
+BUTTON_REFRESH_DATA_TRANSLATIONS_KEY = "refresh_data"
 SENSOR_BOILER_LAST_UPDATE_TRANSLATIONS_KEY = "boiler_last_update"
 SENSOR_CURRENT_BOILER_DATETIME_TRANSLATIONS_KEY = "current_boiler_datetime"
 SENSOR_ALARM_TRANSLATIONS_KEY = "default_alarm"
@@ -35,6 +37,7 @@ SENSOR_INSIDE_THERMOMETER_TRANSLATIONS_KEY = "inside_thermometer"
 SENSOR_OUTSIDE_THERMOMETER_TRANSLATIONS_KEY = "outside_thermometer"
 SENSOR_HEATING_CONSUMPTION_TRANSLATIONS_KEY = "heating_consumption"
 SENSOR_SANITARY_CONSUMPTION_TRANSLATIONS_KEY = "sanitary_consumption"
+SENSOR_ZONE_EXEMPTION_TRANSLATIONS_KEY = "zone_exemption"
 
 
 class ZoneModeLabelOrder(StrEnum):
@@ -60,6 +63,12 @@ class AlarmType(StrEnum):
     NO_ALARM = "no_alarm"
     DISCONNECTED = "disconnected"
     UNKNOWN = "unknown"
+
+
+class ZoneExemptionType(StrEnum):
+    COMFORT = "comfort"
+    REDUCED = "reduced"
+    NONE = "none"
 
 
 class SanitaryWaterType(Enum):

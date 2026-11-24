@@ -1,7 +1,10 @@
 {
     "name": "Frisquet Connect (Yet Another Unofficial)",
     "content_in_root": false,
-    "homeassistant": "2025.1.4",
+    "homeassistant": "2026.11.0",
+    "render_readme": true,
+    "zip_release": true,
+    "filename": "frisquet_connect_yet_another_unofficial.zip",
     "country": [
         "FR"
     ]

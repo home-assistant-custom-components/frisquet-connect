@@ -9,6 +9,6 @@
     "integration_type": "device",
     "iot_class": "cloud_polling",
     "issue_tracker": "https://github.com/home-assistant-custom-components/frisquet-connect/issues",
-    "quality_scale": "silver",
-    "version": "0.4.0"
+    "quality_scale": "gold",
+    "version": "0.6.0"
 }

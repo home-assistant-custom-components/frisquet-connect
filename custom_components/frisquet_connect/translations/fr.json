@@ -18,12 +18,25 @@
         }
     },
     "entity": {
+        "button": {
+            "refresh_data": {
+                "name": "Actualiser les données"
+            }
+        },
         "water_heater": {
             "default_water_heater": {
                 "name": "Eau Chaude Sanitaire"
             }
         },
         "sensor": {
+            "zone_exemption": {
+                "name": "Dérogation - {zone_name}",
+                "state": {
+                    "comfort": "Confort",
+                    "reduced": "Réduit",
+                    "none": "Aucune"
+                }
+            },
             "boiler_last_update": {
                 "name": "Dernière remontée d'information"
             },

@@ -1,6 +1,19 @@
 {
     "entity": {
+        "button": {
+            "refresh_data": {
+                "default": "mdi:refresh"
+            }
+        },
         "sensor": {
+            "zone_exemption": {
+                "default": "mdi:home-thermometer",
+                "state": {
+                    "comfort": "mdi:weather-sunny",
+                    "reduced": "mdi:moon-waxing-crescent",
+                    "none": "mdi:thermostat-auto"
+                }
+            },
             "boiler_last_update": {
                 "default": "mdi:update"
             },

@@ -18,12 +18,25 @@
         }
     },
     "entity": {
+        "button": {
+            "refresh_data": {
+                "name": "Refresh data"
+            }
+        },
         "water_heater": {
             "default_water_heater": {
                 "name": "Water heater"
             }
         },
         "sensor": {
+            "zone_exemption": {
+                "name": "Exemption - {zone_name}",
+                "state": {
+                    "comfort": "Comfort",
+                    "reduced": "Reduced",
+                    "none": "None"
+                }
+            },
             "boiler_last_update": {
                 "name": "Last update from boiler"
             },
